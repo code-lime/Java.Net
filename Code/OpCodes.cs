@@ -15,7 +15,7 @@ namespace Java.Net.Code
         /// No change
         /// </code>
         /// </summary>
-        public static readonly OpCode NOP = new OpCode(Names.NOP, "Do nothing");
+        public static readonly OpCode<SingleInstruction> NOP = new OpCode<SingleInstruction>(Names.NOP, "Do nothing");
         /// <summary>
         /// Push the null object reference onto the operand stack.
         /// <code>
@@ -23,7 +23,7 @@ namespace Java.Net.Code
         /// ..., null
         /// </code>
         /// </summary>
-        public static readonly OpCode ACONST_NULL = new OpCode(Names.ACONST_NULL, "Push null");
+        public static readonly OpCode<SingleInstruction> ACONST_NULL = new OpCode<SingleInstruction>(Names.ACONST_NULL, "Push null");
         /// <summary>
         /// Push the int constant [i] (-1, 0, 1, 2, 3, 4 or 5) onto the operand stack.
         /// <code>
@@ -31,7 +31,7 @@ namespace Java.Net.Code
         /// ..., [i]
         /// </code>
         /// </summary>
-        public static readonly OpCode ICONST_M1 = new OpCode(Names.ICONST_M1, "Push int constant");
+        public static readonly OpCode<SingleInstruction> ICONST_M1 = new OpCode<SingleInstruction>(Names.ICONST_M1, "Push int constant");
         /// <summary>
         /// Push the int constant [i] (-1, 0, 1, 2, 3, 4 or 5) onto the operand stack.
         /// <code>
@@ -39,7 +39,7 @@ namespace Java.Net.Code
         /// ..., [i]
         /// </code>
         /// </summary>
-        public static readonly OpCode ICONST_0 = new OpCode(Names.ICONST_0, "Push int constant");
+        public static readonly OpCode<SingleInstruction> ICONST_0 = new OpCode<SingleInstruction>(Names.ICONST_0, "Push int constant");
         /// <summary>
         /// Push the int constant [i] (-1, 0, 1, 2, 3, 4 or 5) onto the operand stack.
         /// <code>
@@ -47,7 +47,7 @@ namespace Java.Net.Code
         /// ..., [i]
         /// </code>
         /// </summary>
-        public static readonly OpCode ICONST_1 = new OpCode(Names.ICONST_1, "Push int constant");
+        public static readonly OpCode<SingleInstruction> ICONST_1 = new OpCode<SingleInstruction>(Names.ICONST_1, "Push int constant");
         /// <summary>
         /// Push the int constant [i] (-1, 0, 1, 2, 3, 4 or 5) onto the operand stack.
         /// <code>
@@ -55,7 +55,7 @@ namespace Java.Net.Code
         /// ..., [i]
         /// </code>
         /// </summary>
-        public static readonly OpCode ICONST_2 = new OpCode(Names.ICONST_2, "Push int constant");
+        public static readonly OpCode<SingleInstruction> ICONST_2 = new OpCode<SingleInstruction>(Names.ICONST_2, "Push int constant");
         /// <summary>
         /// Push the int constant [i] (-1, 0, 1, 2, 3, 4 or 5) onto the operand stack.
         /// <code>
@@ -63,7 +63,7 @@ namespace Java.Net.Code
         /// ..., [i]
         /// </code>
         /// </summary>
-        public static readonly OpCode ICONST_3 = new OpCode(Names.ICONST_3, "Push int constant");
+        public static readonly OpCode<SingleInstruction> ICONST_3 = new OpCode<SingleInstruction>(Names.ICONST_3, "Push int constant");
         /// <summary>
         /// Push the int constant [i] (-1, 0, 1, 2, 3, 4 or 5) onto the operand stack.
         /// <code>
@@ -71,7 +71,7 @@ namespace Java.Net.Code
         /// ..., [i]
         /// </code>
         /// </summary>
-        public static readonly OpCode ICONST_4 = new OpCode(Names.ICONST_4, "Push int constant");
+        public static readonly OpCode<SingleInstruction> ICONST_4 = new OpCode<SingleInstruction>(Names.ICONST_4, "Push int constant");
         /// <summary>
         /// Push the int constant [i] (-1, 0, 1, 2, 3, 4 or 5) onto the operand stack.
         /// <code>
@@ -79,7 +79,7 @@ namespace Java.Net.Code
         /// ..., [i]
         /// </code>
         /// </summary>
-        public static readonly OpCode ICONST_5 = new OpCode(Names.ICONST_5, "Push int constant");
+        public static readonly OpCode<SingleInstruction> ICONST_5 = new OpCode<SingleInstruction>(Names.ICONST_5, "Push int constant");
         /// <summary>
         /// Push the long constant [l] (0 or 1) onto the operand stack.
         /// <code>
@@ -87,7 +87,7 @@ namespace Java.Net.Code
         /// ..., [l]
         /// </code>
         /// </summary>
-        public static readonly OpCode LCONST_0 = new OpCode(Names.LCONST_0, "Push long constant");
+        public static readonly OpCode<SingleInstruction> LCONST_0 = new OpCode<SingleInstruction>(Names.LCONST_0, "Push long constant");
         /// <summary>
         /// Push the long constant [l] (0 or 1) onto the operand stack.
         /// <code>
@@ -95,7 +95,7 @@ namespace Java.Net.Code
         /// ..., [l]
         /// </code>
         /// </summary>
-        public static readonly OpCode LCONST_1 = new OpCode(Names.LCONST_1, "Push long constant");
+        public static readonly OpCode<SingleInstruction> LCONST_1 = new OpCode<SingleInstruction>(Names.LCONST_1, "Push long constant");
         /// <summary>
         /// Push the float constant [f] (0.0, 1.0, or 2.0) onto the operand stack.
         /// <code>
@@ -103,7 +103,7 @@ namespace Java.Net.Code
         /// ..., [f]
         /// </code>
         /// </summary>
-        public static readonly OpCode FCONST_0 = new OpCode(Names.FCONST_0, "Push float");
+        public static readonly OpCode<SingleInstruction> FCONST_0 = new OpCode<SingleInstruction>(Names.FCONST_0, "Push float");
         /// <summary>
         /// Push the float constant [f] (0.0, 1.0, or 2.0) onto the operand stack.
         /// <code>
@@ -111,7 +111,7 @@ namespace Java.Net.Code
         /// ..., [f]
         /// </code>
         /// </summary>
-        public static readonly OpCode FCONST_1 = new OpCode(Names.FCONST_1, "Push float");
+        public static readonly OpCode<SingleInstruction> FCONST_1 = new OpCode<SingleInstruction>(Names.FCONST_1, "Push float");
         /// <summary>
         /// Push the float constant [f] (0.0, 1.0, or 2.0) onto the operand stack.
         /// <code>
@@ -119,7 +119,7 @@ namespace Java.Net.Code
         /// ..., [f]
         /// </code>
         /// </summary>
-        public static readonly OpCode FCONST_2 = new OpCode(Names.FCONST_2, "Push float");
+        public static readonly OpCode<SingleInstruction> FCONST_2 = new OpCode<SingleInstruction>(Names.FCONST_2, "Push float");
         /// <summary>
         /// Push the double constant [d] (0.0 or 1.0) onto the operand stack.
         /// <code>
@@ -127,7 +127,7 @@ namespace Java.Net.Code
         /// ..., [d]
         /// </code>
         /// </summary>
-        public static readonly OpCode DCONST_0 = new OpCode(Names.DCONST_0, "Push double");
+        public static readonly OpCode<SingleInstruction> DCONST_0 = new OpCode<SingleInstruction>(Names.DCONST_0, "Push double");
         /// <summary>
         /// Push the double constant [d] (0.0 or 1.0) onto the operand stack.
         /// <code>
@@ -135,7 +135,7 @@ namespace Java.Net.Code
         /// ..., [d]
         /// </code>
         /// </summary>
-        public static readonly OpCode DCONST_1 = new OpCode(Names.DCONST_1, "Push double");
+        public static readonly OpCode<SingleInstruction> DCONST_1 = new OpCode<SingleInstruction>(Names.DCONST_1, "Push double");
         /// <summary>
         /// The immediate byte is sign-extended to an int value. That value is pushed onto the operand stack.
         /// <code>
@@ -146,7 +146,7 @@ namespace Java.Net.Code
         /// byte
         /// </code>
         /// </summary>
-        public static readonly OpCode BIPUSH = new OpCode(Names.BIPUSH, "Push byte");
+        public static readonly OpCode<BiPushInstruction> BIPUSH = new OpCode<BiPushInstruction>(Names.BIPUSH, "Push byte");
         /// <summary>
         /// The immediate unsigned byte1 and byte2 values are assembled into an intermediate short where the value of the short is (byte1 [[ 8) | byte2. The intermediate value is then sign-extended to an int value. That value is pushed onto the operand stack.
         /// <code>
@@ -157,7 +157,7 @@ namespace Java.Net.Code
         /// byte1 byte2
         /// </code>
         /// </summary>
-        public static readonly OpCode SIPUSH = new OpCode(Names.SIPUSH, "Push short");
+        public static readonly OpCode<SiPushInstruction> SIPUSH = new OpCode<SiPushInstruction>(Names.SIPUSH, "Push short");
         /// <summary>
         /// The index is an unsigned byte that must be a valid index into the run-time constant pool of the current class (§2.6). The run-time constant pool entry at index either must be a run-time constant of type int or float, or a reference to a string literal, or a symbolic reference to a class, method type, or method handle (§5.1).
         /// If the run-time constant pool entry is a run-time constant of type int or float, the numeric value of that run-time constant is pushed onto the operand stack as an int or float, respectively.
@@ -172,7 +172,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode LDC = new OpCode(Names.LDC, "Push item from run-time constant pool");
+        public static readonly OpCode<ConstantInstruction> LDC = new OpCode<ConstantInstruction>(Names.LDC, "Push item from run-time constant pool");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are assembled into an unsigned 16-bit index into the run-time constant pool of the current class (§2.6), where the value of the index is calculated as (indexbyte1 [[ 8) | indexbyte2. The index must be a valid index into the run-time constant pool of the current class. The run-time constant pool entry at the index either must be a run-time constant of type int or float, or a reference to a string literal, or a symbolic reference to a class, method type, or method handle (§5.1).
         /// If the run-time constant pool entry is a run-time constant of type int or float, the numeric value of that run-time constant is pushed onto the operand stack as an int or float, respectively.
@@ -187,7 +187,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode LDC_W = new OpCode(Names.LDC_W, "Push item from run-time constant pool (wide index)");
+        public static readonly OpCode<ConstantWideInstruction> LDC_W = new OpCode<ConstantWideInstruction>(Names.LDC_W, "Push item from run-time constant pool (wide index)");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are assembled into an unsigned 16-bit index into the run-time constant pool of the current class (§2.6), where the value of the index is calculated as (indexbyte1 [[ 8) | indexbyte2. The index must be a valid index into the run-time constant pool of the current class. The run-time constant pool entry at the index must be a run-time constant of type long or double (§5.1). The numeric value of that run-time constant is pushed onto the operand stack as a long or double, respectively.
         /// <code>
@@ -198,7 +198,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode LDC2_W = new OpCode(Names.LDC2_W, "Push long or double from run-time constant pool (wide index)");
+        public static readonly OpCode<ConstantWideInstruction> LDC2_W = new OpCode<ConstantWideInstruction>(Names.LDC2_W, "Push long or double from run-time constant pool (wide index)");
         /// <summary>
         /// The index is an unsigned byte that must be an index into the local variable array of the current frame (§2.6). The local variable at index must contain an int. The value of the local variable at index is pushed onto the operand stack.
         /// <code>
@@ -209,7 +209,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode ILOAD = new OpCode(Names.ILOAD, "Load int from local variable");
+        public static readonly OpCode<FrameIndexInstruction> ILOAD = new OpCode<FrameIndexInstruction>(Names.ILOAD, "Load int from local variable");
         /// <summary>
         /// The index is an unsigned byte. Both index and index+1 must be indices into the local variable array of the current frame (§2.6). The local variable at index must contain a long. The value of the local variable at index is pushed onto the operand stack.
         /// <code>
@@ -220,7 +220,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode LLOAD = new OpCode(Names.LLOAD, "Load long from local variable");
+        public static readonly OpCode<FrameIndexInstruction> LLOAD = new OpCode<FrameIndexInstruction>(Names.LLOAD, "Load long from local variable");
         /// <summary>
         /// The index is an unsigned byte that must be an index into the local variable array of the current frame (§2.6). The local variable at index must contain a float. The value of the local variable at index is pushed onto the operand stack.
         /// <code>
@@ -231,7 +231,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode FLOAD = new OpCode(Names.FLOAD, "Load float from local variable");
+        public static readonly OpCode<FrameIndexInstruction> FLOAD = new OpCode<FrameIndexInstruction>(Names.FLOAD, "Load float from local variable");
         /// <summary>
         /// The index is an unsigned byte. Both index and index+1 must be indices into the local variable array of the current frame (§2.6). The local variable at index must contain a double. The value of the local variable at index is pushed onto the operand stack.
         /// <code>
@@ -242,7 +242,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode DLOAD = new OpCode(Names.DLOAD, "Load double from local variable");
+        public static readonly OpCode<FrameIndexInstruction> DLOAD = new OpCode<FrameIndexInstruction>(Names.DLOAD, "Load double from local variable");
         /// <summary>
         /// The index is an unsigned byte that must be an index into the local variable array of the current frame (§2.6). The local variable at index must contain a reference. The objectref in the local variable at index is pushed onto the operand stack.
         /// <code>
@@ -253,7 +253,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode ALOAD = new OpCode(Names.ALOAD, "Load reference from local variable");
+        public static readonly OpCode<FrameIndexInstruction> ALOAD = new OpCode<FrameIndexInstruction>(Names.ALOAD, "Load reference from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain an int. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -261,7 +261,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode ILOAD_0 = new OpCode(Names.ILOAD_0, "Load int from local variable");
+        public static readonly OpCode<SingleInstruction> ILOAD_0 = new OpCode<SingleInstruction>(Names.ILOAD_0, "Load int from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain an int. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -269,7 +269,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode ILOAD_1 = new OpCode(Names.ILOAD_1, "Load int from local variable");
+        public static readonly OpCode<SingleInstruction> ILOAD_1 = new OpCode<SingleInstruction>(Names.ILOAD_1, "Load int from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain an int. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -277,7 +277,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode ILOAD_2 = new OpCode(Names.ILOAD_2, "Load int from local variable");
+        public static readonly OpCode<SingleInstruction> ILOAD_2 = new OpCode<SingleInstruction>(Names.ILOAD_2, "Load int from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain an int. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -285,7 +285,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode ILOAD_3 = new OpCode(Names.ILOAD_3, "Load int from local variable");
+        public static readonly OpCode<SingleInstruction> ILOAD_3 = new OpCode<SingleInstruction>(Names.ILOAD_3, "Load int from local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The local variable at [n] must contain a long. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -293,7 +293,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode LLOAD_0 = new OpCode(Names.LLOAD_0, "Load long from local variable");
+        public static readonly OpCode<SingleInstruction> LLOAD_0 = new OpCode<SingleInstruction>(Names.LLOAD_0, "Load long from local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The local variable at [n] must contain a long. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -301,7 +301,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode LLOAD_1 = new OpCode(Names.LLOAD_1, "Load long from local variable");
+        public static readonly OpCode<SingleInstruction> LLOAD_1 = new OpCode<SingleInstruction>(Names.LLOAD_1, "Load long from local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The local variable at [n] must contain a long. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -309,7 +309,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode LLOAD_2 = new OpCode(Names.LLOAD_2, "Load long from local variable");
+        public static readonly OpCode<SingleInstruction> LLOAD_2 = new OpCode<SingleInstruction>(Names.LLOAD_2, "Load long from local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The local variable at [n] must contain a long. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -317,7 +317,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode LLOAD_3 = new OpCode(Names.LLOAD_3, "Load long from local variable");
+        public static readonly OpCode<SingleInstruction> LLOAD_3 = new OpCode<SingleInstruction>(Names.LLOAD_3, "Load long from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain a float. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -325,7 +325,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode FLOAD_0 = new OpCode(Names.FLOAD_0, "Load float from local variable");
+        public static readonly OpCode<SingleInstruction> FLOAD_0 = new OpCode<SingleInstruction>(Names.FLOAD_0, "Load float from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain a float. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -333,7 +333,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode FLOAD_1 = new OpCode(Names.FLOAD_1, "Load float from local variable");
+        public static readonly OpCode<SingleInstruction> FLOAD_1 = new OpCode<SingleInstruction>(Names.FLOAD_1, "Load float from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain a float. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -341,7 +341,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode FLOAD_2 = new OpCode(Names.FLOAD_2, "Load float from local variable");
+        public static readonly OpCode<SingleInstruction> FLOAD_2 = new OpCode<SingleInstruction>(Names.FLOAD_2, "Load float from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain a float. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -349,7 +349,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode FLOAD_3 = new OpCode(Names.FLOAD_3, "Load float from local variable");
+        public static readonly OpCode<SingleInstruction> FLOAD_3 = new OpCode<SingleInstruction>(Names.FLOAD_3, "Load float from local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The local variable at [n] must contain a double. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -357,7 +357,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode DLOAD_0 = new OpCode(Names.DLOAD_0, "Load double from local variable");
+        public static readonly OpCode<SingleInstruction> DLOAD_0 = new OpCode<SingleInstruction>(Names.DLOAD_0, "Load double from local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The local variable at [n] must contain a double. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -365,7 +365,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode DLOAD_1 = new OpCode(Names.DLOAD_1, "Load double from local variable");
+        public static readonly OpCode<SingleInstruction> DLOAD_1 = new OpCode<SingleInstruction>(Names.DLOAD_1, "Load double from local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The local variable at [n] must contain a double. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -373,7 +373,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode DLOAD_2 = new OpCode(Names.DLOAD_2, "Load double from local variable");
+        public static readonly OpCode<SingleInstruction> DLOAD_2 = new OpCode<SingleInstruction>(Names.DLOAD_2, "Load double from local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The local variable at [n] must contain a double. The value of the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -381,7 +381,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode DLOAD_3 = new OpCode(Names.DLOAD_3, "Load double from local variable");
+        public static readonly OpCode<SingleInstruction> DLOAD_3 = new OpCode<SingleInstruction>(Names.DLOAD_3, "Load double from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain a reference. The objectref in the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -389,7 +389,7 @@ namespace Java.Net.Code
         /// ..., objectref
         /// </code>
         /// </summary>
-        public static readonly OpCode ALOAD_0 = new OpCode(Names.ALOAD_0, "Load reference from local variable");
+        public static readonly OpCode<SingleInstruction> ALOAD_0 = new OpCode<SingleInstruction>(Names.ALOAD_0, "Load reference from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain a reference. The objectref in the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -397,7 +397,7 @@ namespace Java.Net.Code
         /// ..., objectref
         /// </code>
         /// </summary>
-        public static readonly OpCode ALOAD_1 = new OpCode(Names.ALOAD_1, "Load reference from local variable");
+        public static readonly OpCode<SingleInstruction> ALOAD_1 = new OpCode<SingleInstruction>(Names.ALOAD_1, "Load reference from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain a reference. The objectref in the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -405,7 +405,7 @@ namespace Java.Net.Code
         /// ..., objectref
         /// </code>
         /// </summary>
-        public static readonly OpCode ALOAD_2 = new OpCode(Names.ALOAD_2, "Load reference from local variable");
+        public static readonly OpCode<SingleInstruction> ALOAD_2 = new OpCode<SingleInstruction>(Names.ALOAD_2, "Load reference from local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The local variable at [n] must contain a reference. The objectref in the local variable at [n] is pushed onto the operand stack.
         /// <code>
@@ -413,7 +413,7 @@ namespace Java.Net.Code
         /// ..., objectref
         /// </code>
         /// </summary>
-        public static readonly OpCode ALOAD_3 = new OpCode(Names.ALOAD_3, "Load reference from local variable");
+        public static readonly OpCode<SingleInstruction> ALOAD_3 = new OpCode<SingleInstruction>(Names.ALOAD_3, "Load reference from local variable");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type int. The index must be of type int. Both arrayref and index are popped from the operand stack. The int value in the component of the array at index is retrieved and pushed onto the operand stack.
         /// <code>
@@ -421,7 +421,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode IALOAD = new OpCode(Names.IALOAD, "Load int from array");
+        public static readonly OpCode<SingleInstruction> IALOAD = new OpCode<SingleInstruction>(Names.IALOAD, "Load int from array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type long. The index must be of type int. Both arrayref and index are popped from the operand stack. The long value in the component of the array at index is retrieved and pushed onto the operand stack.
         /// <code>
@@ -429,7 +429,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode LALOAD = new OpCode(Names.LALOAD, "Load long from array");
+        public static readonly OpCode<SingleInstruction> LALOAD = new OpCode<SingleInstruction>(Names.LALOAD, "Load long from array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type float. The index must be of type int. Both arrayref and index are popped from the operand stack. The float value in the component of the array at index is retrieved and pushed onto the operand stack.
         /// <code>
@@ -437,7 +437,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode FALOAD = new OpCode(Names.FALOAD, "Load float from array");
+        public static readonly OpCode<SingleInstruction> FALOAD = new OpCode<SingleInstruction>(Names.FALOAD, "Load float from array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type double. The index must be of type int. Both arrayref and index are popped from the operand stack. The double value in the component of the array at index is retrieved and pushed onto the operand stack.
         /// <code>
@@ -445,7 +445,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode DALOAD = new OpCode(Names.DALOAD, "Load double from array");
+        public static readonly OpCode<SingleInstruction> DALOAD = new OpCode<SingleInstruction>(Names.DALOAD, "Load double from array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type reference. The index must be of type int. Both arrayref and index are popped from the operand stack. The reference value in the component of the array at index is retrieved and pushed onto the operand stack.
         /// <code>
@@ -453,7 +453,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode AALOAD = new OpCode(Names.AALOAD, "Load reference from array");
+        public static readonly OpCode<SingleInstruction> AALOAD = new OpCode<SingleInstruction>(Names.AALOAD, "Load reference from array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type byte or of type boolean. The index must be of type int. Both arrayref and index are popped from the operand stack. The byte value in the component of the array at index is retrieved, sign-extended to an int value, and pushed onto the top of the operand stack.
         /// <code>
@@ -461,7 +461,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode BALOAD = new OpCode(Names.BALOAD, "Load byte or boolean from array");
+        public static readonly OpCode<SingleInstruction> BALOAD = new OpCode<SingleInstruction>(Names.BALOAD, "Load byte or boolean from array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type char. The index must be of type int. Both arrayref and index are popped from the operand stack. The component of the array at index is retrieved and zero-extended to an int value. That value is pushed onto the operand stack.
         /// <code>
@@ -469,7 +469,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode CALOAD = new OpCode(Names.CALOAD, "Load char from array");
+        public static readonly OpCode<SingleInstruction> CALOAD = new OpCode<SingleInstruction>(Names.CALOAD, "Load char from array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type short. The index must be of type int. Both arrayref and index are popped from the operand stack. The component of the array at index is retrieved and sign-extended to an int value. That value is pushed onto the operand stack.
         /// <code>
@@ -477,7 +477,7 @@ namespace Java.Net.Code
         /// ..., value
         /// </code>
         /// </summary>
-        public static readonly OpCode SALOAD = new OpCode(Names.SALOAD, "Load short from array");
+        public static readonly OpCode<SingleInstruction> SALOAD = new OpCode<SingleInstruction>(Names.SALOAD, "Load short from array");
         /// <summary>
         /// The index is an unsigned byte that must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type int. It is popped from the operand stack, and the value of the local variable at index is set to value.
         /// <code>
@@ -488,7 +488,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode ISTORE = new OpCode(Names.ISTORE, "Store int into local variable");
+        public static readonly OpCode<FrameIndexInstruction> ISTORE = new OpCode<FrameIndexInstruction>(Names.ISTORE, "Store int into local variable");
         /// <summary>
         /// The index is an unsigned byte. Both index and index+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type long. It is popped from the operand stack, and the local variables at index and index+1 are set to value.
         /// <code>
@@ -499,7 +499,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode LSTORE = new OpCode(Names.LSTORE, "Store long into local variable");
+        public static readonly OpCode<FrameIndexInstruction> LSTORE = new OpCode<FrameIndexInstruction>(Names.LSTORE, "Store long into local variable");
         /// <summary>
         /// The index is an unsigned byte that must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type float. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The value of the local variable at index is set to value'.
         /// <code>
@@ -510,7 +510,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode FSTORE = new OpCode(Names.FSTORE, "Store float into local variable");
+        public static readonly OpCode<FrameIndexInstruction> FSTORE = new OpCode<FrameIndexInstruction>(Names.FSTORE, "Store float into local variable");
         /// <summary>
         /// The index is an unsigned byte. Both index and index+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type double. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The local variables at index and index+1 are set to value'.
         /// <code>
@@ -521,7 +521,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode DSTORE = new OpCode(Names.DSTORE, "Store double into local variable");
+        public static readonly OpCode<FrameIndexInstruction> DSTORE = new OpCode<FrameIndexInstruction>(Names.DSTORE, "Store double into local variable");
         /// <summary>
         /// The index is an unsigned byte that must be an index into the local variable array of the current frame (§2.6). The objectref on the top of the operand stack must be of type returnAddress or of type reference. It is popped from the operand stack, and the value of the local variable at index is set to objectref.
         /// <code>
@@ -532,7 +532,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode ASTORE = new OpCode(Names.ASTORE, "Store reference into local variable");
+        public static readonly OpCode<FrameIndexInstruction> ASTORE = new OpCode<FrameIndexInstruction>(Names.ASTORE, "Store reference into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type int. It is popped from the operand stack, and the value of the local variable at [n] is set to value.
         /// <code>
@@ -540,7 +540,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode ISTORE_0 = new OpCode(Names.ISTORE_0, "Store int into local variable");
+        public static readonly OpCode<SingleInstruction> ISTORE_0 = new OpCode<SingleInstruction>(Names.ISTORE_0, "Store int into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type int. It is popped from the operand stack, and the value of the local variable at [n] is set to value.
         /// <code>
@@ -548,7 +548,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode ISTORE_1 = new OpCode(Names.ISTORE_1, "Store int into local variable");
+        public static readonly OpCode<SingleInstruction> ISTORE_1 = new OpCode<SingleInstruction>(Names.ISTORE_1, "Store int into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type int. It is popped from the operand stack, and the value of the local variable at [n] is set to value.
         /// <code>
@@ -556,7 +556,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode ISTORE_2 = new OpCode(Names.ISTORE_2, "Store int into local variable");
+        public static readonly OpCode<SingleInstruction> ISTORE_2 = new OpCode<SingleInstruction>(Names.ISTORE_2, "Store int into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type int. It is popped from the operand stack, and the value of the local variable at [n] is set to value.
         /// <code>
@@ -564,7 +564,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode ISTORE_3 = new OpCode(Names.ISTORE_3, "Store int into local variable");
+        public static readonly OpCode<SingleInstruction> ISTORE_3 = new OpCode<SingleInstruction>(Names.ISTORE_3, "Store int into local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type long. It is popped from the operand stack, and the local variables at [n] and [n]+1 are set to value.
         /// <code>
@@ -572,7 +572,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode LSTORE_0 = new OpCode(Names.LSTORE_0, "Store long into local variable");
+        public static readonly OpCode<SingleInstruction> LSTORE_0 = new OpCode<SingleInstruction>(Names.LSTORE_0, "Store long into local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type long. It is popped from the operand stack, and the local variables at [n] and [n]+1 are set to value.
         /// <code>
@@ -580,7 +580,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode LSTORE_1 = new OpCode(Names.LSTORE_1, "Store long into local variable");
+        public static readonly OpCode<SingleInstruction> LSTORE_1 = new OpCode<SingleInstruction>(Names.LSTORE_1, "Store long into local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type long. It is popped from the operand stack, and the local variables at [n] and [n]+1 are set to value.
         /// <code>
@@ -588,7 +588,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode LSTORE_2 = new OpCode(Names.LSTORE_2, "Store long into local variable");
+        public static readonly OpCode<SingleInstruction> LSTORE_2 = new OpCode<SingleInstruction>(Names.LSTORE_2, "Store long into local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type long. It is popped from the operand stack, and the local variables at [n] and [n]+1 are set to value.
         /// <code>
@@ -596,7 +596,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode LSTORE_3 = new OpCode(Names.LSTORE_3, "Store long into local variable");
+        public static readonly OpCode<SingleInstruction> LSTORE_3 = new OpCode<SingleInstruction>(Names.LSTORE_3, "Store long into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type float. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The value of the local variable at [n] is set to value'.
         /// <code>
@@ -604,7 +604,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode FSTORE_0 = new OpCode(Names.FSTORE_0, "Store float into local variable");
+        public static readonly OpCode<SingleInstruction> FSTORE_0 = new OpCode<SingleInstruction>(Names.FSTORE_0, "Store float into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type float. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The value of the local variable at [n] is set to value'.
         /// <code>
@@ -612,7 +612,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode FSTORE_1 = new OpCode(Names.FSTORE_1, "Store float into local variable");
+        public static readonly OpCode<SingleInstruction> FSTORE_1 = new OpCode<SingleInstruction>(Names.FSTORE_1, "Store float into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type float. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The value of the local variable at [n] is set to value'.
         /// <code>
@@ -620,7 +620,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode FSTORE_2 = new OpCode(Names.FSTORE_2, "Store float into local variable");
+        public static readonly OpCode<SingleInstruction> FSTORE_2 = new OpCode<SingleInstruction>(Names.FSTORE_2, "Store float into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type float. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The value of the local variable at [n] is set to value'.
         /// <code>
@@ -628,7 +628,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode FSTORE_3 = new OpCode(Names.FSTORE_3, "Store float into local variable");
+        public static readonly OpCode<SingleInstruction> FSTORE_3 = new OpCode<SingleInstruction>(Names.FSTORE_3, "Store float into local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type double. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The local variables at [n] and [n]+1 are set to value'.
         /// <code>
@@ -636,7 +636,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode DSTORE_0 = new OpCode(Names.DSTORE_0, "Store double into local variable");
+        public static readonly OpCode<SingleInstruction> DSTORE_0 = new OpCode<SingleInstruction>(Names.DSTORE_0, "Store double into local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type double. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The local variables at [n] and [n]+1 are set to value'.
         /// <code>
@@ -644,7 +644,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode DSTORE_1 = new OpCode(Names.DSTORE_1, "Store double into local variable");
+        public static readonly OpCode<SingleInstruction> DSTORE_1 = new OpCode<SingleInstruction>(Names.DSTORE_1, "Store double into local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type double. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The local variables at [n] and [n]+1 are set to value'.
         /// <code>
@@ -652,7 +652,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode DSTORE_2 = new OpCode(Names.DSTORE_2, "Store double into local variable");
+        public static readonly OpCode<SingleInstruction> DSTORE_2 = new OpCode<SingleInstruction>(Names.DSTORE_2, "Store double into local variable");
         /// <summary>
         /// Both [n] and [n]+1 must be indices into the local variable array of the current frame (§2.6). The value on the top of the operand stack must be of type double. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The local variables at [n] and [n]+1 are set to value'.
         /// <code>
@@ -660,7 +660,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode DSTORE_3 = new OpCode(Names.DSTORE_3, "Store double into local variable");
+        public static readonly OpCode<SingleInstruction> DSTORE_3 = new OpCode<SingleInstruction>(Names.DSTORE_3, "Store double into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The objectref on the top of the operand stack must be of type returnAddress or of type reference. It is popped from the operand stack, and the value of the local variable at [n] is set to objectref.
         /// <code>
@@ -668,7 +668,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode ASTORE_0 = new OpCode(Names.ASTORE_0, "Store reference into local variable");
+        public static readonly OpCode<SingleInstruction> ASTORE_0 = new OpCode<SingleInstruction>(Names.ASTORE_0, "Store reference into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The objectref on the top of the operand stack must be of type returnAddress or of type reference. It is popped from the operand stack, and the value of the local variable at [n] is set to objectref.
         /// <code>
@@ -676,7 +676,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode ASTORE_1 = new OpCode(Names.ASTORE_1, "Store reference into local variable");
+        public static readonly OpCode<SingleInstruction> ASTORE_1 = new OpCode<SingleInstruction>(Names.ASTORE_1, "Store reference into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The objectref on the top of the operand stack must be of type returnAddress or of type reference. It is popped from the operand stack, and the value of the local variable at [n] is set to objectref.
         /// <code>
@@ -684,7 +684,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode ASTORE_2 = new OpCode(Names.ASTORE_2, "Store reference into local variable");
+        public static readonly OpCode<SingleInstruction> ASTORE_2 = new OpCode<SingleInstruction>(Names.ASTORE_2, "Store reference into local variable");
         /// <summary>
         /// The [n] must be an index into the local variable array of the current frame (§2.6). The objectref on the top of the operand stack must be of type returnAddress or of type reference. It is popped from the operand stack, and the value of the local variable at [n] is set to objectref.
         /// <code>
@@ -692,7 +692,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode ASTORE_3 = new OpCode(Names.ASTORE_3, "Store reference into local variable");
+        public static readonly OpCode<SingleInstruction> ASTORE_3 = new OpCode<SingleInstruction>(Names.ASTORE_3, "Store reference into local variable");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type int. Both index and value must be of type int. The arrayref, index, and value are popped from the operand stack. The int value is stored as the component of the array indexed by index.
         /// <code>
@@ -700,7 +700,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode IASTORE = new OpCode(Names.IASTORE, "Store into int array");
+        public static readonly OpCode<SingleInstruction> IASTORE = new OpCode<SingleInstruction>(Names.IASTORE, "Store into int array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type long. The index must be of type int, and value must be of type long. The arrayref, index, and value are popped from the operand stack. The long value is stored as the component of the array indexed by index.
         /// <code>
@@ -708,7 +708,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode LASTORE = new OpCode(Names.LASTORE, "Store into long array");
+        public static readonly OpCode<SingleInstruction> LASTORE = new OpCode<SingleInstruction>(Names.LASTORE, "Store into long array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type float. The index must be of type int, and the value must be of type float. The arrayref, index, and value are popped from the operand stack. The float value undergoes value set conversion (§2.8.3), resulting in value', and value' is stored as the component of the array indexed by index.
         /// <code>
@@ -716,7 +716,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode FASTORE = new OpCode(Names.FASTORE, "Store into float array");
+        public static readonly OpCode<SingleInstruction> FASTORE = new OpCode<SingleInstruction>(Names.FASTORE, "Store into float array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type double. The index must be of type int, and value must be of type double. The arrayref, index, and value are popped from the operand stack. The double value undergoes value set conversion (§2.8.3), resulting in value', which is stored as the component of the array indexed by index.
         /// <code>
@@ -724,7 +724,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode DASTORE = new OpCode(Names.DASTORE, "Store into double array");
+        public static readonly OpCode<SingleInstruction> DASTORE = new OpCode<SingleInstruction>(Names.DASTORE, "Store into double array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type reference. The index must be of type int and value must be of type reference. The arrayref, index, and value are popped from the operand stack. The reference value is stored as the component of the array at index.
         /// At run time, the type of value must be compatible with the type of the components of the array referenced by arrayref. Specifically, assignment of a value of reference type S (source) to an array component of reference type T (target) is allowed only if:
@@ -756,7 +756,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode AASTORE = new OpCode(Names.AASTORE, "Store into reference array");
+        public static readonly OpCode<SingleInstruction> AASTORE = new OpCode<SingleInstruction>(Names.AASTORE, "Store into reference array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type byte or of type boolean. The index and the value must both be of type int. The arrayref, index, and value are popped from the operand stack. The int value is truncated to a byte and stored as the component of the array indexed by index.
         /// <code>
@@ -764,7 +764,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode BASTORE = new OpCode(Names.BASTORE, "Store into byte or boolean array");
+        public static readonly OpCode<SingleInstruction> BASTORE = new OpCode<SingleInstruction>(Names.BASTORE, "Store into byte or boolean array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type char. The index and the value must both be of type int. The arrayref, index, and value are popped from the operand stack. The int value is truncated to a char and stored as the component of the array indexed by index.
         /// <code>
@@ -772,7 +772,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode CASTORE = new OpCode(Names.CASTORE, "Store into char array");
+        public static readonly OpCode<SingleInstruction> CASTORE = new OpCode<SingleInstruction>(Names.CASTORE, "Store into char array");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array whose components are of type short. Both index and value must be of type int. The arrayref, index, and value are popped from the operand stack. The int value is truncated to a short and stored as the component of the array indexed by index.
         /// <code>
@@ -780,7 +780,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode SASTORE = new OpCode(Names.SASTORE, "Store into short array");
+        public static readonly OpCode<SingleInstruction> SASTORE = new OpCode<SingleInstruction>(Names.SASTORE, "Store into short array");
         /// <summary>
         /// Pop the top value from the operand stack.
         /// The pop instruction must not be used unless value is a value of a category 1 computational type (§2.11.1).
@@ -789,7 +789,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode POP = new OpCode(Names.POP, "Pop the top operand stack value");
+        public static readonly OpCode<SingleInstruction> POP = new OpCode<SingleInstruction>(Names.POP, "Pop the top operand stack value");
         /// <summary>
         /// Pop the top one or two values from the operand stack.
         /// <code>
@@ -803,7 +803,7 @@ namespace Java.Net.Code
         /// where value is a value of a category 2 computational type (§2.11.1).
         /// </code>
         /// </summary>
-        public static readonly OpCode POP2 = new OpCode(Names.POP2, "Pop the top one or two operand stack values");
+        public static readonly OpCode<SingleInstruction> POP2 = new OpCode<SingleInstruction>(Names.POP2, "Pop the top one or two operand stack values");
         /// <summary>
         /// Duplicate the top value on the operand stack and push the duplicated value onto the operand stack.
         /// The dup instruction must not be used unless value is a value of a category 1 computational type (§2.11.1).
@@ -812,7 +812,7 @@ namespace Java.Net.Code
         /// ..., value, value
         /// </code>
         /// </summary>
-        public static readonly OpCode DUP = new OpCode(Names.DUP, "Duplicate the top operand stack value");
+        public static readonly OpCode<SingleInstruction> DUP = new OpCode<SingleInstruction>(Names.DUP, "Duplicate the top operand stack value");
         /// <summary>
         /// Duplicate the top value on the operand stack and insert the duplicated value two values down in the operand stack.
         /// The dup_x1 instruction must not be used unless both value1 and value2 are values of a category 1 computational type (§2.11.1).
@@ -821,7 +821,7 @@ namespace Java.Net.Code
         /// ..., value1, value2, value1
         /// </code>
         /// </summary>
-        public static readonly OpCode DUP_X1 = new OpCode(Names.DUP_X1, "Duplicate the top operand stack value and insert two values down");
+        public static readonly OpCode<SingleInstruction> DUP_X1 = new OpCode<SingleInstruction>(Names.DUP_X1, "Duplicate the top operand stack value and insert two values down");
         /// <summary>
         /// Duplicate the top value on the operand stack and insert the duplicated value two or three values down in the operand stack.
         /// <code>
@@ -835,7 +835,7 @@ namespace Java.Net.Code
         /// where value1 is a value of a category 1 computational type and value2 is a value of a category 2 computational type (§2.11.1).
         /// </code>
         /// </summary>
-        public static readonly OpCode DUP_X2 = new OpCode(Names.DUP_X2, "Duplicate the top operand stack value and insert two or three values down");
+        public static readonly OpCode<SingleInstruction> DUP_X2 = new OpCode<SingleInstruction>(Names.DUP_X2, "Duplicate the top operand stack value and insert two or three values down");
         /// <summary>
         /// Duplicate the top one or two values on the operand stack and push the duplicated value or values back onto the operand stack in the original order.
         /// <code>
@@ -849,7 +849,7 @@ namespace Java.Net.Code
         /// where value is a value of a category 2 computational type (§2.11.1).
         /// </code>
         /// </summary>
-        public static readonly OpCode DUP2 = new OpCode(Names.DUP2, "Duplicate the top one or two operand stack values");
+        public static readonly OpCode<SingleInstruction> DUP2 = new OpCode<SingleInstruction>(Names.DUP2, "Duplicate the top one or two operand stack values");
         /// <summary>
         /// Duplicate the top one or two values on the operand stack and insert the duplicated values, in the original order, one value beneath the original value or values in the operand stack.
         /// <code>
@@ -863,7 +863,7 @@ namespace Java.Net.Code
         /// where value1 is a value of a category 2 computational type and value2 is a value of a category 1 computational type (§2.11.1).
         /// </code>
         /// </summary>
-        public static readonly OpCode DUP2_X1 = new OpCode(Names.DUP2_X1, "Duplicate the top one or two operand stack values and insert two or three values down");
+        public static readonly OpCode<SingleInstruction> DUP2_X1 = new OpCode<SingleInstruction>(Names.DUP2_X1, "Duplicate the top one or two operand stack values and insert two or three values down");
         /// <summary>
         /// Duplicate the top one or two values on the operand stack and insert the duplicated values, in the original order, into the operand stack.
         /// <code>
@@ -885,7 +885,7 @@ namespace Java.Net.Code
         /// where value1 and value2 are both values of a category 2 computational type (§2.11.1).
         /// </code>
         /// </summary>
-        public static readonly OpCode DUP2_X2 = new OpCode(Names.DUP2_X2, "Duplicate the top one or two operand stack values and insert two, three, or four values down");
+        public static readonly OpCode<SingleInstruction> DUP2_X2 = new OpCode<SingleInstruction>(Names.DUP2_X2, "Duplicate the top one or two operand stack values and insert two, three, or four values down");
         /// <summary>
         /// Swap the top two values on the operand stack.
         /// The swap instruction must not be used unless value1 and value2 are both values of a category 1 computational type (§2.11.1).
@@ -894,7 +894,7 @@ namespace Java.Net.Code
         /// ..., value1, value2
         /// </code>
         /// </summary>
-        public static readonly OpCode SWAP = new OpCode(Names.SWAP, "Swap the top two operand stack values");
+        public static readonly OpCode<SingleInstruction> SWAP = new OpCode<SingleInstruction>(Names.SWAP, "Swap the top two operand stack values");
         /// <summary>
         /// Both value1 and value2 must be of type int. The values are popped from the operand stack. The int result is value1 + value2. The result is pushed onto the operand stack.
         /// The result is the 32 low-order bits of the true mathematical result in a sufficiently wide two's-complement format, represented as a value of type int. If overflow occurs, then the sign of the result may not be the same as the sign of the mathematical sum of the two values.
@@ -904,7 +904,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode IADD = new OpCode(Names.IADD, "Add int");
+        public static readonly OpCode<SingleInstruction> IADD = new OpCode<SingleInstruction>(Names.IADD, "Add int");
         /// <summary>
         /// Both value1 and value2 must be of type long. The values are popped from the operand stack. The long result is value1 + value2. The result is pushed onto the operand stack.
         /// The result is the 64 low-order bits of the true mathematical result in a sufficiently wide two's-complement format, represented as a value of type long. If overflow occurs, the sign of the result may not be the same as the sign of the mathematical sum of the two values.
@@ -914,7 +914,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LADD = new OpCode(Names.LADD, "Add long");
+        public static readonly OpCode<SingleInstruction> LADD = new OpCode<SingleInstruction>(Names.LADD, "Add long");
         /// <summary>
         /// Both value1 and value2 must be of type float. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The float result is value1' + value2'. The result is pushed onto the operand stack.
         /// The result of an fadd instruction is governed by the rules of IEEE arithmetic:
@@ -941,7 +941,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode FADD = new OpCode(Names.FADD, "Add float");
+        public static readonly OpCode<SingleInstruction> FADD = new OpCode<SingleInstruction>(Names.FADD, "Add float");
         /// <summary>
         /// Both value1 and value2 must be of type double. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The double result is value1' + value2'. The result is pushed onto the operand stack.
         /// The result of a dadd instruction is governed by the rules of IEEE arithmetic:
@@ -968,7 +968,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode DADD = new OpCode(Names.DADD, "Add double");
+        public static readonly OpCode<SingleInstruction> DADD = new OpCode<SingleInstruction>(Names.DADD, "Add double");
         /// <summary>
         /// Both value1 and value2 must be of type int. The values are popped from the operand stack. The int result is value1 - value2. The result is pushed onto the operand stack.
         /// For int subtraction, a-b produces the same result as a+(-b). For int values, subtraction from zero is the same as negation.
@@ -979,7 +979,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode ISUB = new OpCode(Names.ISUB, "Subtract int");
+        public static readonly OpCode<SingleInstruction> ISUB = new OpCode<SingleInstruction>(Names.ISUB, "Subtract int");
         /// <summary>
         /// Both value1 and value2 must be of type long. The values are popped from the operand stack. The long result is value1 - value2. The result is pushed onto the operand stack.
         /// For long subtraction, a-b produces the same result as a+(-b). For long values, subtraction from zero is the same as negation.
@@ -990,7 +990,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LSUB = new OpCode(Names.LSUB, "Subtract long");
+        public static readonly OpCode<SingleInstruction> LSUB = new OpCode<SingleInstruction>(Names.LSUB, "Subtract long");
         /// <summary>
         /// Both value1 and value2 must be of type float. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The float result is value1' - value2'. The result is pushed onto the operand stack.
         /// For float subtraction, it is always the case that a-b produces the same result as a+(-b). However, for the fsub instruction, subtraction from zero is not the same as negation, because if x is +0.0, then 0.0-x equals +0.0, but -x equals -0.0.
@@ -1000,7 +1000,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode FSUB = new OpCode(Names.FSUB, "Subtract float");
+        public static readonly OpCode<SingleInstruction> FSUB = new OpCode<SingleInstruction>(Names.FSUB, "Subtract float");
         /// <summary>
         /// Both value1 and value2 must be of type double. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The double result is value1' - value2'. The result is pushed onto the operand stack.
         /// For double subtraction, it is always the case that a-b produces the same result as a+(-b). However, for the dsub instruction, subtraction from zero is not the same as negation, because if x is +0.0, then 0.0-x equals +0.0, but -x equals -0.0.
@@ -1010,7 +1010,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode DSUB = new OpCode(Names.DSUB, "Subtract double");
+        public static readonly OpCode<SingleInstruction> DSUB = new OpCode<SingleInstruction>(Names.DSUB, "Subtract double");
         /// <summary>
         /// Both value1 and value2 must be of type int. The values are popped from the operand stack. The int result is value1 * value2. The result is pushed onto the operand stack.
         /// The result is the 32 low-order bits of the true mathematical result in a sufficiently wide two's-complement format, represented as a value of type int. If overflow occurs, then the sign of the result may not be the same as the sign of the mathematical sum of the two values.
@@ -1020,7 +1020,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode IMUL = new OpCode(Names.IMUL, "Multiply int");
+        public static readonly OpCode<SingleInstruction> IMUL = new OpCode<SingleInstruction>(Names.IMUL, "Multiply int");
         /// <summary>
         /// Both value1 and value2 must be of type long. The values are popped from the operand stack. The long result is value1 * value2. The result is pushed onto the operand stack.
         /// The result is the 64 low-order bits of the true mathematical result in a sufficiently wide two's-complement format, represented as a value of type long. If overflow occurs, the sign of the result may not be the same as the sign of the mathematical sum of the two values.
@@ -1030,7 +1030,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LMUL = new OpCode(Names.LMUL, "Multiply long");
+        public static readonly OpCode<SingleInstruction> LMUL = new OpCode<SingleInstruction>(Names.LMUL, "Multiply long");
         /// <summary>
         /// Both value1 and value2 must be of type float. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The float result is value1' * value2'. The result is pushed onto the operand stack.
         /// The result of an fmul instruction is governed by the rules of IEEE arithmetic:
@@ -1049,7 +1049,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode FMUL = new OpCode(Names.FMUL, "Multiply float");
+        public static readonly OpCode<SingleInstruction> FMUL = new OpCode<SingleInstruction>(Names.FMUL, "Multiply float");
         /// <summary>
         /// Both value1 and value2 must be of type double. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The double result is value1' * value2'. The result is pushed onto the operand stack.
         /// The result of a dmul instruction is governed by the rules of IEEE arithmetic:
@@ -1068,7 +1068,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode DMUL = new OpCode(Names.DMUL, "Multiply double");
+        public static readonly OpCode<SingleInstruction> DMUL = new OpCode<SingleInstruction>(Names.DMUL, "Multiply double");
         /// <summary>
         /// Both value1 and value2 must be of type int. The values are popped from the operand stack. The int result is the value of the Java programming language expression value1 / value2. The result is pushed onto the operand stack.
         /// An int division rounds towards 0; that is, the quotient produced for int values in n/d is an int value q whose magnitude is as large as possible while satisfying |d · q| ? |n|. Moreover, q is positive when |n| ? |d| and n and d have the same sign, but q is negative when |n| ? |d| and n and d have opposite signs.
@@ -1078,7 +1078,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode IDIV = new OpCode(Names.IDIV, "Divide int");
+        public static readonly OpCode<SingleInstruction> IDIV = new OpCode<SingleInstruction>(Names.IDIV, "Divide int");
         /// <summary>
         /// Both value1 and value2 must be of type long. The values are popped from the operand stack. The long result is the value of the Java programming language expression value1 / value2. The result is pushed onto the operand stack.
         /// A long division rounds towards 0; that is, the quotient produced for long values in n / d is a long value q whose magnitude is as large as possible while satisfying |d · q| ? |n|. Moreover, q is positive when |n| ? |d| and n and d have the same sign, but q is negative when |n| ? |d| and n and d have opposite signs.
@@ -1088,7 +1088,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LDIV = new OpCode(Names.LDIV, "Divide long");
+        public static readonly OpCode<SingleInstruction> LDIV = new OpCode<SingleInstruction>(Names.LDIV, "Divide long");
         /// <summary>
         /// Both value1 and value2 must be of type float. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The float result is value1' / value2'. The result is pushed onto the operand stack.
         /// The result of an fdiv instruction is governed by the rules of IEEE arithmetic:
@@ -1113,7 +1113,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode FDIV = new OpCode(Names.FDIV, "Divide float");
+        public static readonly OpCode<SingleInstruction> FDIV = new OpCode<SingleInstruction>(Names.FDIV, "Divide float");
         /// <summary>
         /// Both value1 and value2 must be of type double. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The double result is value1' / value2'. The result is pushed onto the operand stack.
         /// The result of a ddiv instruction is governed by the rules of IEEE arithmetic:
@@ -1138,7 +1138,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode DDIV = new OpCode(Names.DDIV, "Divide double");
+        public static readonly OpCode<SingleInstruction> DDIV = new OpCode<SingleInstruction>(Names.DDIV, "Divide double");
         /// <summary>
         /// Both value1 and value2 must be of type int. The values are popped from the operand stack. The int result is value1 - (value1 / value2) * value2. The result is pushed onto the operand stack.
         /// The result of the irem instruction is such that (a/b)*b + (a%b) is equal to a. This identity holds even in the special case in which the dividend is the negative int of largest possible magnitude for its type and the divisor is -1 (the remainder is 0). It follows from this rule that the result of the remainder operation can be negative only if the dividend is negative and can be positive only if the dividend is positive. Moreover, the magnitude of the result is always less than the magnitude of the divisor.
@@ -1147,7 +1147,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode IREM = new OpCode(Names.IREM, "Remainder int");
+        public static readonly OpCode<SingleInstruction> IREM = new OpCode<SingleInstruction>(Names.IREM, "Remainder int");
         /// <summary>
         /// Both value1 and value2 must be of type long. The values are popped from the operand stack. The long result is value1 - (value1 / value2) * value2. The result is pushed onto the operand stack.
         /// The result of the lrem instruction is such that (a/b)*b + (a%b) is equal to a. This identity holds even in the special case in which the dividend is the negative long of largest possible magnitude for its type and the divisor is -1 (the remainder is 0). It follows from this rule that the result of the remainder operation can be negative only if the dividend is negative and can be positive only if the dividend is positive; moreover, the magnitude of the result is always less than the magnitude of the divisor.
@@ -1156,7 +1156,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LREM = new OpCode(Names.LREM, "Remainder long");
+        public static readonly OpCode<SingleInstruction> LREM = new OpCode<SingleInstruction>(Names.LREM, "Remainder long");
         /// <summary>
         /// Both value1 and value2 must be of type float. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The result is calculated and pushed onto the operand stack as a float.
         /// The result of an frem instruction is not the same as that of the so-called remainder operation defined by IEEE 754. The IEEE 754 "remainder" operation computes the remainder from a rounding division, not a truncating division, and so its behavior is not analogous to that of the usual integer remainder operator. Instead, the Java Virtual Machine defines frem to behave in a manner analogous to that of the Java Virtual Machine integer remainder instructions (irem and lrem); this may be compared with the C library function fmod.
@@ -1178,7 +1178,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode FREM = new OpCode(Names.FREM, "Remainder float");
+        public static readonly OpCode<SingleInstruction> FREM = new OpCode<SingleInstruction>(Names.FREM, "Remainder float");
         /// <summary>
         /// Both value1 and value2 must be of type double. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. The result is calculated and pushed onto the operand stack as a double.
         /// The result of a drem instruction is not the same as that of the so-called remainder operation defined by IEEE 754. The IEEE 754 "remainder" operation computes the remainder from a rounding division, not a truncating division, and so its behavior is not analogous to that of the usual integer remainder operator. Instead, the Java Virtual Machine defines drem to behave in a manner analogous to that of the Java Virtual Machine integer remainder instructions (irem and lrem); this may be compared with the C library function fmod.
@@ -1200,7 +1200,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode DREM = new OpCode(Names.DREM, "Remainder double");
+        public static readonly OpCode<SingleInstruction> DREM = new OpCode<SingleInstruction>(Names.DREM, "Remainder double");
         /// <summary>
         /// The value must be of type int. It is popped from the operand stack. The int result is the arithmetic negation of value, -value. The result is pushed onto the operand stack.
         /// For int values, negation is the same as subtraction from zero. Because the Java Virtual Machine uses two's-complement representation for integers and the range of two's-complement values is not symmetric, the negation of the maximum negative int results in that same maximum negative number. Despite the fact that overflow has occurred, no exception is thrown.
@@ -1210,7 +1210,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode INEG = new OpCode(Names.INEG, "Negate int");
+        public static readonly OpCode<SingleInstruction> INEG = new OpCode<SingleInstruction>(Names.INEG, "Negate int");
         /// <summary>
         /// The value must be of type long. It is popped from the operand stack. The long result is the arithmetic negation of value, -value. The result is pushed onto the operand stack.
         /// For long values, negation is the same as subtraction from zero. Because the Java Virtual Machine uses two's-complement representation for integers and the range of two's-complement values is not symmetric, the negation of the maximum negative long results in that same maximum negative number. Despite the fact that overflow has occurred, no exception is thrown.
@@ -1220,7 +1220,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LNEG = new OpCode(Names.LNEG, "Negate long");
+        public static readonly OpCode<SingleInstruction> LNEG = new OpCode<SingleInstruction>(Names.LNEG, "Negate long");
         /// <summary>
         /// The value must be of type float. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The float result is the arithmetic negation of value'. This result is pushed onto the operand stack.
         /// For float values, negation is not the same as subtraction from zero. If x is +0.0, then 0.0-x equals +0.0, but -x equals -0.0. Unary minus merely inverts the sign of a float.
@@ -1235,7 +1235,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode FNEG = new OpCode(Names.FNEG, "Negate float");
+        public static readonly OpCode<SingleInstruction> FNEG = new OpCode<SingleInstruction>(Names.FNEG, "Negate float");
         /// <summary>
         /// The value must be of type double. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. The double result is the arithmetic negation of value'. The result is pushed onto the operand stack.
         /// For double values, negation is not the same as subtraction from zero. If x is +0.0, then 0.0-x equals +0.0, but -x equals -0.0. Unary minus merely inverts the sign of a double.
@@ -1250,7 +1250,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode DNEG = new OpCode(Names.DNEG, "Negate double");
+        public static readonly OpCode<SingleInstruction> DNEG = new OpCode<SingleInstruction>(Names.DNEG, "Negate double");
         /// <summary>
         /// Both value1 and value2 must be of type int. The values are popped from the operand stack. An int result is calculated by shifting value1 left by s bit positions, where s is the value of the low 5 bits of value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1258,7 +1258,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode ISHL = new OpCode(Names.ISHL, "Shift left int");
+        public static readonly OpCode<SingleInstruction> ISHL = new OpCode<SingleInstruction>(Names.ISHL, "Shift left int");
         /// <summary>
         /// The value1 must be of type long, and value2 must be of type int. The values are popped from the operand stack. A long result is calculated by shifting value1 left by s bit positions, where s is the low 6 bits of value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1266,7 +1266,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LSHL = new OpCode(Names.LSHL, "Shift left long");
+        public static readonly OpCode<SingleInstruction> LSHL = new OpCode<SingleInstruction>(Names.LSHL, "Shift left long");
         /// <summary>
         /// Both value1 and value2 must be of type int. The values are popped from the operand stack. An int result is calculated by shifting value1 right by s bit positions, with sign extension, where s is the value of the low 5 bits of value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1274,7 +1274,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode ISHR = new OpCode(Names.ISHR, "Arithmetic shift right int");
+        public static readonly OpCode<SingleInstruction> ISHR = new OpCode<SingleInstruction>(Names.ISHR, "Arithmetic shift right int");
         /// <summary>
         /// The value1 must be of type long, and value2 must be of type int. The values are popped from the operand stack. A long result is calculated by shifting value1 right by s bit positions, with sign extension, where s is the value of the low 6 bits of value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1282,7 +1282,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LSHR = new OpCode(Names.LSHR, "Arithmetic shift right long");
+        public static readonly OpCode<SingleInstruction> LSHR = new OpCode<SingleInstruction>(Names.LSHR, "Arithmetic shift right long");
         /// <summary>
         /// Both value1 and value2 must be of type int. The values are popped from the operand stack. An int result is calculated by shifting value1 right by s bit positions, with zero extension, where s is the value of the low 5 bits of value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1290,7 +1290,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode IUSHR = new OpCode(Names.IUSHR, "Logical shift right int");
+        public static readonly OpCode<SingleInstruction> IUSHR = new OpCode<SingleInstruction>(Names.IUSHR, "Logical shift right int");
         /// <summary>
         /// The value1 must be of type long, and value2 must be of type int. The values are popped from the operand stack. A long result is calculated by shifting value1 right logically (with zero extension) by the amount indicated by the low 6 bits of value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1298,7 +1298,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LUSHR = new OpCode(Names.LUSHR, "Logical shift right long");
+        public static readonly OpCode<SingleInstruction> LUSHR = new OpCode<SingleInstruction>(Names.LUSHR, "Logical shift right long");
         /// <summary>
         /// Both value1 and value2 must be of type int. They are popped from the operand stack. An int result is calculated by taking the bitwise AND (conjunction) of value1 and value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1306,7 +1306,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode IAND = new OpCode(Names.IAND, "Boolean AND int");
+        public static readonly OpCode<SingleInstruction> IAND = new OpCode<SingleInstruction>(Names.IAND, "Boolean AND int");
         /// <summary>
         /// Both value1 and value2 must be of type long. They are popped from the operand stack. A long result is calculated by taking the bitwise AND of value1 and value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1314,7 +1314,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LAND = new OpCode(Names.LAND, "Boolean AND long");
+        public static readonly OpCode<SingleInstruction> LAND = new OpCode<SingleInstruction>(Names.LAND, "Boolean AND long");
         /// <summary>
         /// Both value1 and value2 must be of type int. They are popped from the operand stack. An int result is calculated by taking the bitwise inclusive OR of value1 and value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1322,7 +1322,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode IOR = new OpCode(Names.IOR, "Boolean OR int");
+        public static readonly OpCode<SingleInstruction> IOR = new OpCode<SingleInstruction>(Names.IOR, "Boolean OR int");
         /// <summary>
         /// Both value1 and value2 must be of type long. They are popped from the operand stack. A long result is calculated by taking the bitwise inclusive OR of value1 and value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1330,7 +1330,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LOR = new OpCode(Names.LOR, "Boolean OR long");
+        public static readonly OpCode<SingleInstruction> LOR = new OpCode<SingleInstruction>(Names.LOR, "Boolean OR long");
         /// <summary>
         /// Both value1 and value2 must be of type int. They are popped from the operand stack. An int result is calculated by taking the bitwise exclusive OR of value1 and value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1338,7 +1338,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode IXOR = new OpCode(Names.IXOR, "Boolean XOR int");
+        public static readonly OpCode<SingleInstruction> IXOR = new OpCode<SingleInstruction>(Names.IXOR, "Boolean XOR int");
         /// <summary>
         /// Both value1 and value2 must be of type long. They are popped from the operand stack. A long result is calculated by taking the bitwise exclusive OR of value1 and value2. The result is pushed onto the operand stack.
         /// <code>
@@ -1346,7 +1346,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LXOR = new OpCode(Names.LXOR, "Boolean XOR long");
+        public static readonly OpCode<SingleInstruction> LXOR = new OpCode<SingleInstruction>(Names.LXOR, "Boolean XOR long");
         /// <summary>
         /// The index is an unsigned byte that must be an index into the local variable array of the current frame (§2.6). The const is an immediate signed byte. The local variable at index must contain an int. The value const is first sign-extended to an int, and then the local variable at index is incremented by that amount.
         /// <code>
@@ -1356,7 +1356,7 @@ namespace Java.Net.Code
         /// index const
         /// </code>
         /// </summary>
-        public static readonly OpCode IINC = new OpCode(Names.IINC, "Increment local variable by constant");
+        public static readonly OpCode<IIncInstruction> IINC = new OpCode<IIncInstruction>(Names.IINC, "Increment local variable by constant");
         /// <summary>
         /// The value on the top of the operand stack must be of type int. It is popped from the operand stack and sign-extended to a long result. That result is pushed onto the operand stack.
         /// <code>
@@ -1364,7 +1364,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode I2L = new OpCode(Names.I2L, "Convert int to long");
+        public static readonly OpCode<SingleInstruction> I2L = new OpCode<SingleInstruction>(Names.I2L, "Convert int to long");
         /// <summary>
         /// The value on the top of the operand stack must be of type int. It is popped from the operand stack and converted to the float result using IEEE 754 round to nearest mode. The result is pushed onto the operand stack.
         /// <code>
@@ -1372,7 +1372,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode I2F = new OpCode(Names.I2F, "Convert int to float");
+        public static readonly OpCode<SingleInstruction> I2F = new OpCode<SingleInstruction>(Names.I2F, "Convert int to float");
         /// <summary>
         /// The value on the top of the operand stack must be of type int. It is popped from the operand stack and converted to a double result. The result is pushed onto the operand stack.
         /// <code>
@@ -1380,7 +1380,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode I2D = new OpCode(Names.I2D, "Convert int to double");
+        public static readonly OpCode<SingleInstruction> I2D = new OpCode<SingleInstruction>(Names.I2D, "Convert int to double");
         /// <summary>
         /// The value on the top of the operand stack must be of type long. It is popped from the operand stack and converted to an int result by taking the low-order 32 bits of the long value and discarding the high-order 32 bits. The result is pushed onto the operand stack.
         /// <code>
@@ -1388,7 +1388,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode L2I = new OpCode(Names.L2I, "Convert long to int");
+        public static readonly OpCode<SingleInstruction> L2I = new OpCode<SingleInstruction>(Names.L2I, "Convert long to int");
         /// <summary>
         /// The value on the top of the operand stack must be of type long. It is popped from the operand stack and converted to a float result using IEEE 754 round to nearest mode. The result is pushed onto the operand stack.
         /// <code>
@@ -1396,7 +1396,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode L2F = new OpCode(Names.L2F, "Convert long to float");
+        public static readonly OpCode<SingleInstruction> L2F = new OpCode<SingleInstruction>(Names.L2F, "Convert long to float");
         /// <summary>
         /// The value on the top of the operand stack must be of type long. It is popped from the operand stack and converted to a double result using IEEE 754 round to nearest mode. The result is pushed onto the operand stack.
         /// <code>
@@ -1404,7 +1404,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode L2D = new OpCode(Names.L2D, "Convert long to double");
+        public static readonly OpCode<SingleInstruction> L2D = new OpCode<SingleInstruction>(Names.L2D, "Convert long to double");
         /// <summary>
         /// The value on the top of the operand stack must be of type float. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. Then value' is converted to an int result. This result is pushed onto the operand stack:
         /// If the value' is NaN, the result of the conversion is an int 0.
@@ -1417,7 +1417,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode F2I = new OpCode(Names.F2I, "Convert float to int");
+        public static readonly OpCode<SingleInstruction> F2I = new OpCode<SingleInstruction>(Names.F2I, "Convert float to int");
         /// <summary>
         /// The value on the top of the operand stack must be of type float. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. Then value' is converted to a long result. This result is pushed onto the operand stack:
         /// If the value' is NaN, the result of the conversion is a long 0.
@@ -1430,7 +1430,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode F2L = new OpCode(Names.F2L, "Convert float to long");
+        public static readonly OpCode<SingleInstruction> F2L = new OpCode<SingleInstruction>(Names.F2L, "Convert float to long");
         /// <summary>
         /// The value on the top of the operand stack must be of type float. It is popped from the operand stack and undergoes value set conversion (§2.8.3), resulting in value'. Then value' is converted to a double result. This result is pushed onto the operand stack.
         /// <code>
@@ -1438,7 +1438,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode F2D = new OpCode(Names.F2D, "Convert float to double");
+        public static readonly OpCode<SingleInstruction> F2D = new OpCode<SingleInstruction>(Names.F2D, "Convert float to double");
         /// <summary>
         /// The value on the top of the operand stack must be of type double. It is popped from the operand stack and undergoes value set conversion (§2.8.3) resulting in value'. Then value' is converted to an int. The result is pushed onto the operand stack:
         /// If the value' is NaN, the result of the conversion is an int 0.
@@ -1451,7 +1451,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode D2I = new OpCode(Names.D2I, "Convert double to int");
+        public static readonly OpCode<SingleInstruction> D2I = new OpCode<SingleInstruction>(Names.D2I, "Convert double to int");
         /// <summary>
         /// The value on the top of the operand stack must be of type double. It is popped from the operand stack and undergoes value set conversion (§2.8.3) resulting in value'. Then value' is converted to a long. The result is pushed onto the operand stack:
         /// If the value' is NaN, the result of the conversion is a long 0.
@@ -1464,7 +1464,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode D2L = new OpCode(Names.D2L, "Convert double to long");
+        public static readonly OpCode<SingleInstruction> D2L = new OpCode<SingleInstruction>(Names.D2L, "Convert double to long");
         /// <summary>
         /// The value on the top of the operand stack must be of type double. It is popped from the operand stack and undergoes value set conversion (§2.8.3) resulting in value'. Then value' is converted to a float result using IEEE 754 round to nearest mode. The result is pushed onto the operand stack.
         /// Where an d2f instruction is FP-strict (§2.8.2), the result of the conversion is always rounded to the nearest representable value in the float value set (§2.3.2).
@@ -1475,7 +1475,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode D2F = new OpCode(Names.D2F, "Convert double to float");
+        public static readonly OpCode<SingleInstruction> D2F = new OpCode<SingleInstruction>(Names.D2F, "Convert double to float");
         /// <summary>
         /// The value on the top of the operand stack must be of type int. It is popped from the operand stack, truncated to a byte, then sign-extended to an int result. That result is pushed onto the operand stack.
         /// <code>
@@ -1483,7 +1483,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode I2B = new OpCode(Names.I2B, "Convert int to byte");
+        public static readonly OpCode<SingleInstruction> I2B = new OpCode<SingleInstruction>(Names.I2B, "Convert int to byte");
         /// <summary>
         /// The value on the top of the operand stack must be of type int. It is popped from the operand stack, truncated to char, then zero-extended to an int result. That result is pushed onto the operand stack.
         /// <code>
@@ -1491,7 +1491,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode I2C = new OpCode(Names.I2C, "Convert int to char");
+        public static readonly OpCode<SingleInstruction> I2C = new OpCode<SingleInstruction>(Names.I2C, "Convert int to char");
         /// <summary>
         /// The value on the top of the operand stack must be of type int. It is popped from the operand stack, truncated to a short, then sign-extended to an int result. That result is pushed onto the operand stack.
         /// <code>
@@ -1499,7 +1499,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode I2S = new OpCode(Names.I2S, "Convert int to short");
+        public static readonly OpCode<SingleInstruction> I2S = new OpCode<SingleInstruction>(Names.I2S, "Convert int to short");
         /// <summary>
         /// Both value1 and value2 must be of type long. They are both popped from the operand stack, and a signed integer comparison is performed. If value1 is greater than value2, the int value 1 is pushed onto the operand stack. If value1 is equal to value2, the int value 0 is pushed onto the operand stack. If value1 is less than value2, the int value -1 is pushed onto the operand stack.
         /// <code>
@@ -1507,7 +1507,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode LCMP = new OpCode(Names.LCMP, "Compare long");
+        public static readonly OpCode<SingleInstruction> LCMP = new OpCode<SingleInstruction>(Names.LCMP, "Compare long");
         /// <summary>
         /// Both value1 and value2 must be of type float. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. A floating-point comparison is performed:
         /// If value1' is greater than value2', the int value 1 is pushed onto the operand stack.
@@ -1523,7 +1523,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode FCMPL = new OpCode(Names.FCMPL, "Compare float");
+        public static readonly OpCode<SingleInstruction> FCMPL = new OpCode<SingleInstruction>(Names.FCMPL, "Compare float");
         /// <summary>
         /// Both value1 and value2 must be of type float. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. A floating-point comparison is performed:
         /// If value1' is greater than value2', the int value 1 is pushed onto the operand stack.
@@ -1539,7 +1539,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode FCMPG = new OpCode(Names.FCMPG, "Compare float");
+        public static readonly OpCode<SingleInstruction> FCMPG = new OpCode<SingleInstruction>(Names.FCMPG, "Compare float");
         /// <summary>
         /// Both value1 and value2 must be of type double. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. A floating-point comparison is performed:
         /// If value1' is greater than value2', the int value 1 is pushed onto the operand stack.
@@ -1555,7 +1555,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode DCMPL = new OpCode(Names.DCMPL, "Compare double");
+        public static readonly OpCode<SingleInstruction> DCMPL = new OpCode<SingleInstruction>(Names.DCMPL, "Compare double");
         /// <summary>
         /// Both value1 and value2 must be of type double. The values are popped from the operand stack and undergo value set conversion (§2.8.3), resulting in value1' and value2'. A floating-point comparison is performed:
         /// If value1' is greater than value2', the int value 1 is pushed onto the operand stack.
@@ -1571,7 +1571,7 @@ namespace Java.Net.Code
         /// ..., result
         /// </code>
         /// </summary>
-        public static readonly OpCode DCMPG = new OpCode(Names.DCMPG, "Compare double");
+        public static readonly OpCode<SingleInstruction> DCMPG = new OpCode<SingleInstruction>(Names.DCMPG, "Compare double");
         /// <summary>
         /// The value must be of type int. It is popped from the operand stack and compared against zero. All comparisons are signed. The results of the comparisons are as follows:
         /// ifeq succeeds if and only if value = 0
@@ -1595,7 +1595,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IFEQ = new OpCode(Names.IFEQ, "Branch if int comparison with zero succeeds");
+        public static readonly OpCode<OffsetInstruction> IFEQ = new OpCode<OffsetInstruction>(Names.IFEQ, "Branch if int comparison with zero succeeds");
         /// <summary>
         /// The value must be of type int. It is popped from the operand stack and compared against zero. All comparisons are signed. The results of the comparisons are as follows:
         /// ifeq succeeds if and only if value = 0
@@ -1619,7 +1619,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IFNE = new OpCode(Names.IFNE, "Branch if int comparison with zero succeeds");
+        public static readonly OpCode<OffsetInstruction> IFNE = new OpCode<OffsetInstruction>(Names.IFNE, "Branch if int comparison with zero succeeds");
         /// <summary>
         /// The value must be of type int. It is popped from the operand stack and compared against zero. All comparisons are signed. The results of the comparisons are as follows:
         /// ifeq succeeds if and only if value = 0
@@ -1643,7 +1643,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IFLT = new OpCode(Names.IFLT, "Branch if int comparison with zero succeeds");
+        public static readonly OpCode<OffsetInstruction> IFLT = new OpCode<OffsetInstruction>(Names.IFLT, "Branch if int comparison with zero succeeds");
         /// <summary>
         /// The value must be of type int. It is popped from the operand stack and compared against zero. All comparisons are signed. The results of the comparisons are as follows:
         /// ifeq succeeds if and only if value = 0
@@ -1667,7 +1667,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IFGE = new OpCode(Names.IFGE, "Branch if int comparison with zero succeeds");
+        public static readonly OpCode<OffsetInstruction> IFGE = new OpCode<OffsetInstruction>(Names.IFGE, "Branch if int comparison with zero succeeds");
         /// <summary>
         /// The value must be of type int. It is popped from the operand stack and compared against zero. All comparisons are signed. The results of the comparisons are as follows:
         /// ifeq succeeds if and only if value = 0
@@ -1691,7 +1691,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IFGT = new OpCode(Names.IFGT, "Branch if int comparison with zero succeeds");
+        public static readonly OpCode<OffsetInstruction> IFGT = new OpCode<OffsetInstruction>(Names.IFGT, "Branch if int comparison with zero succeeds");
         /// <summary>
         /// The value must be of type int. It is popped from the operand stack and compared against zero. All comparisons are signed. The results of the comparisons are as follows:
         /// ifeq succeeds if and only if value = 0
@@ -1715,7 +1715,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IFLE = new OpCode(Names.IFLE, "Branch if int comparison with zero succeeds");
+        public static readonly OpCode<OffsetInstruction> IFLE = new OpCode<OffsetInstruction>(Names.IFLE, "Branch if int comparison with zero succeeds");
         /// <summary>
         /// Both value1 and value2 must be of type int. They are both popped from the operand stack and compared. All comparisons are signed. The results of the comparison are as follows:
         /// if_icmpeq succeeds if and only if value1 = value2
@@ -1739,7 +1739,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IF_ICMPEQ = new OpCode(Names.IF_ICMPEQ, "Branch if int comparison succeeds");
+        public static readonly OpCode<OffsetInstruction> IF_ICMPEQ = new OpCode<OffsetInstruction>(Names.IF_ICMPEQ, "Branch if int comparison succeeds");
         /// <summary>
         /// Both value1 and value2 must be of type int. They are both popped from the operand stack and compared. All comparisons are signed. The results of the comparison are as follows:
         /// if_icmpeq succeeds if and only if value1 = value2
@@ -1763,7 +1763,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IF_ICMPNE = new OpCode(Names.IF_ICMPNE, "Branch if int comparison succeeds");
+        public static readonly OpCode<OffsetInstruction> IF_ICMPNE = new OpCode<OffsetInstruction>(Names.IF_ICMPNE, "Branch if int comparison succeeds");
         /// <summary>
         /// Both value1 and value2 must be of type int. They are both popped from the operand stack and compared. All comparisons are signed. The results of the comparison are as follows:
         /// if_icmpeq succeeds if and only if value1 = value2
@@ -1787,7 +1787,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IF_ICMPLT = new OpCode(Names.IF_ICMPLT, "Branch if int comparison succeeds");
+        public static readonly OpCode<OffsetInstruction> IF_ICMPLT = new OpCode<OffsetInstruction>(Names.IF_ICMPLT, "Branch if int comparison succeeds");
         /// <summary>
         /// Both value1 and value2 must be of type int. They are both popped from the operand stack and compared. All comparisons are signed. The results of the comparison are as follows:
         /// if_icmpeq succeeds if and only if value1 = value2
@@ -1811,7 +1811,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IF_ICMPGE = new OpCode(Names.IF_ICMPGE, "Branch if int comparison succeeds");
+        public static readonly OpCode<OffsetInstruction> IF_ICMPGE = new OpCode<OffsetInstruction>(Names.IF_ICMPGE, "Branch if int comparison succeeds");
         /// <summary>
         /// Both value1 and value2 must be of type int. They are both popped from the operand stack and compared. All comparisons are signed. The results of the comparison are as follows:
         /// if_icmpeq succeeds if and only if value1 = value2
@@ -1835,7 +1835,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IF_ICMPGT = new OpCode(Names.IF_ICMPGT, "Branch if int comparison succeeds");
+        public static readonly OpCode<OffsetInstruction> IF_ICMPGT = new OpCode<OffsetInstruction>(Names.IF_ICMPGT, "Branch if int comparison succeeds");
         /// <summary>
         /// Both value1 and value2 must be of type int. They are both popped from the operand stack and compared. All comparisons are signed. The results of the comparison are as follows:
         /// if_icmpeq succeeds if and only if value1 = value2
@@ -1859,7 +1859,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IF_ICMPLE = new OpCode(Names.IF_ICMPLE, "Branch if int comparison succeeds");
+        public static readonly OpCode<OffsetInstruction> IF_ICMPLE = new OpCode<OffsetInstruction>(Names.IF_ICMPLE, "Branch if int comparison succeeds");
         /// <summary>
         /// Both value1 and value2 must be of type reference. They are both popped from the operand stack and compared. The results of the comparison are as follows:
         /// if_acmpeq succeeds if and only if value1 = value2
@@ -1875,7 +1875,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IF_ACMPEQ = new OpCode(Names.IF_ACMPEQ, "Branch if reference comparison succeeds");
+        public static readonly OpCode<OffsetInstruction> IF_ACMPEQ = new OpCode<OffsetInstruction>(Names.IF_ACMPEQ, "Branch if reference comparison succeeds");
         /// <summary>
         /// Both value1 and value2 must be of type reference. They are both popped from the operand stack and compared. The results of the comparison are as follows:
         /// if_acmpeq succeeds if and only if value1 = value2
@@ -1891,7 +1891,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IF_ACMPNE = new OpCode(Names.IF_ACMPNE, "Branch if reference comparison succeeds");
+        public static readonly OpCode<OffsetInstruction> IF_ACMPNE = new OpCode<OffsetInstruction>(Names.IF_ACMPNE, "Branch if reference comparison succeeds");
         /// <summary>
         /// The unsigned bytes branchbyte1 and branchbyte2 are used to construct a signed 16-bit branchoffset, where branchoffset is (branchbyte1 [[ 8) | branchbyte2. Execution proceeds at that offset from the address of the opcode of this goto instruction. The target address must be that of an opcode of an instruction within the method that contains this goto instruction.
         /// <code>
@@ -1901,7 +1901,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode GOTO = new OpCode(Names.GOTO, "Branch always");
+        public static readonly OpCode<OffsetInstruction> GOTO = new OpCode<OffsetInstruction>(Names.GOTO, "Branch always");
         /// <summary>
         /// The address of the opcode of the instruction immediately following this jsr instruction is pushed onto the operand stack as a value of type returnAddress. The unsigned branchbyte1 and branchbyte2 are used to construct a signed 16-bit offset, where the offset is (branchbyte1 [[ 8) | branchbyte2. Execution proceeds at that offset from the address of this jsr instruction. The target address must be that of an opcode of an instruction within the method that contains this jsr instruction.
         /// <code>
@@ -1912,7 +1912,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode JSR = new OpCode(Names.JSR, "Jump subroutine");
+        public static readonly OpCode<OffsetInstruction> JSR = new OpCode<OffsetInstruction>(Names.JSR, "Jump subroutine");
         /// <summary>
         /// The index is an unsigned byte between 0 and 255, inclusive. The local variable at index in the current frame (§2.6) must contain a value of type returnAddress. The contents of the local variable are written into the Java Virtual Machine's pc register, and execution continues there.
         /// <code>
@@ -1922,7 +1922,7 @@ namespace Java.Net.Code
         /// index
         /// </code>
         /// </summary>
-        public static readonly OpCode RET = new OpCode(Names.RET, "Return from subroutine");
+        public static readonly OpCode<FrameIndexInstruction> RET = new OpCode<FrameIndexInstruction>(Names.RET, "Return from subroutine");
         /// <summary>
         /// A tableswitch is a variable-length instruction. Immediately after the tableswitch opcode, between zero and three bytes must act as padding, such that defaultbyte1 begins at an address that is a multiple of four bytes from the start of the current method (the opcode of its first instruction). Immediately after the padding are bytes constituting three signed 32-bit values: default, low, and high. Immediately following are bytes constituting a series of high - low + 1 signed 32-bit offsets. The value low must be less than or equal to high. The high - low + 1 signed 32-bit offsets are treated as a 0-based jump table. Each of these signed 32-bit values is constructed as (byte1 [[ 24) | (byte2 [[ 16) | (byte3 [[ 8) | byte4.
         /// The index must be of type int and is popped from the operand stack. If index is less than low or index is greater than high, then a target address is calculated by adding default to the address of the opcode of this tableswitch instruction. Otherwise, the offset at position index - low of the jump table is extracted. The target address is calculated by adding that offset to the address of the opcode of this tableswitch instruction. Execution then continues at the target address.
@@ -1935,7 +1935,7 @@ namespace Java.Net.Code
         /// [0-3 byte pad] defaultbyte1 defaultbyte2 defaultbyte3 defaultbyte4 lowbyte1 lowbyte2 lowbyte3 lowbyte4 highbyte1 highbyte2 highbyte3 highbyte4 jump offsets...
         /// </code>
         /// </summary>
-        public static readonly OpCode TABLESWITCH = new OpCode(Names.TABLESWITCH, "Access jump table by index and jump");
+        public static readonly OpCode<TableSwitchInstruction> TABLESWITCH = new OpCode<TableSwitchInstruction>(Names.TABLESWITCH, "Access jump table by index and jump");
         /// <summary>
         /// A lookupswitch is a variable-length instruction. Immediately after the lookupswitch opcode, between zero and three bytes must act as padding, such that defaultbyte1 begins at an address that is a multiple of four bytes from the start of the current method (the opcode of its first instruction). Immediately after the padding follow a series of signed 32-bit values: default, npairs, and then npairs pairs of signed 32-bit values. The npairs must be greater than or equal to 0. Each of the npairs pairs consists of an int match and a signed 32-bit offset. Each of these signed 32-bit values is constructed from four unsigned bytes as (byte1 [[ 24) | (byte2 [[ 16) | (byte3 [[ 8) | byte4.
         /// The table match-offset pairs of the lookupswitch instruction must be sorted in increasing numerical order by match.
@@ -1949,7 +1949,7 @@ namespace Java.Net.Code
         /// [0-3 byte pad] defaultbyte1 defaultbyte2 defaultbyte3 defaultbyte4 npairs1 npairs2 npairs3 npairs4 match-offset pairs...
         /// </code>
         /// </summary>
-        public static readonly OpCode LOOKUPSWITCH = new OpCode(Names.LOOKUPSWITCH, "Access jump table by key match and jump");
+        public static readonly OpCode<LookupSwitchInstruction> LOOKUPSWITCH = new OpCode<LookupSwitchInstruction>(Names.LOOKUPSWITCH, "Access jump table by key match and jump");
         /// <summary>
         /// The current method must have return type boolean, byte, short, char, or int. The value must be of type int. If the current method is a synchronized method, the monitor entered or reentered on invocation of the method is updated and possibly exited as if by execution of a monitorexit instruction (§monitorexit) in the current thread. If no exception is thrown, value is popped from the operand stack of the current frame (§2.6) and pushed onto the operand stack of the frame of the invoker. Any other values on the operand stack of the current method are discarded.
         /// The interpreter then returns control to the invoker of the method, reinstating the frame of the invoker.
@@ -1958,7 +1958,7 @@ namespace Java.Net.Code
         /// [empty]
         /// </code>
         /// </summary>
-        public static readonly OpCode IRETURN = new OpCode(Names.IRETURN, "Return int from method");
+        public static readonly OpCode<SingleInstruction> IRETURN = new OpCode<SingleInstruction>(Names.IRETURN, "Return int from method");
         /// <summary>
         /// The current method must have return type long. The value must be of type long. If the current method is a synchronized method, the monitor entered or reentered on invocation of the method is updated and possibly exited as if by execution of a monitorexit instruction (§monitorexit) in the current thread. If no exception is thrown, value is popped from the operand stack of the current frame (§2.6) and pushed onto the operand stack of the frame of the invoker. Any other values on the operand stack of the current method are discarded.
         /// The interpreter then returns control to the invoker of the method, reinstating the frame of the invoker.
@@ -1967,7 +1967,7 @@ namespace Java.Net.Code
         /// [empty]
         /// </code>
         /// </summary>
-        public static readonly OpCode LRETURN = new OpCode(Names.LRETURN, "Return long from method");
+        public static readonly OpCode<SingleInstruction> LRETURN = new OpCode<SingleInstruction>(Names.LRETURN, "Return long from method");
         /// <summary>
         /// The current method must have return type float. The value must be of type float. If the current method is a synchronized method, the monitor entered or reentered on invocation of the method is updated and possibly exited as if by execution of a monitorexit instruction (§monitorexit) in the current thread. If no exception is thrown, value is popped from the operand stack of the current frame (§2.6) and undergoes value set conversion (§2.8.3), resulting in value'. The value' is pushed onto the operand stack of the frame of the invoker. Any other values on the operand stack of the current method are discarded.
         /// The interpreter then returns control to the invoker of the method, reinstating the frame of the invoker.
@@ -1976,7 +1976,7 @@ namespace Java.Net.Code
         /// [empty]
         /// </code>
         /// </summary>
-        public static readonly OpCode FRETURN = new OpCode(Names.FRETURN, "Return float from method");
+        public static readonly OpCode<SingleInstruction> FRETURN = new OpCode<SingleInstruction>(Names.FRETURN, "Return float from method");
         /// <summary>
         /// The current method must have return type double. The value must be of type double. If the current method is a synchronized method, the monitor entered or reentered on invocation of the method is updated and possibly exited as if by execution of a monitorexit instruction (§monitorexit) in the current thread. If no exception is thrown, value is popped from the operand stack of the current frame (§2.6) and undergoes value set conversion (§2.8.3), resulting in value'. The value' is pushed onto the operand stack of the frame of the invoker. Any other values on the operand stack of the current method are discarded.
         /// The interpreter then returns control to the invoker of the method, reinstating the frame of the invoker.
@@ -1985,7 +1985,7 @@ namespace Java.Net.Code
         /// [empty]
         /// </code>
         /// </summary>
-        public static readonly OpCode DRETURN = new OpCode(Names.DRETURN, "Return double from method");
+        public static readonly OpCode<SingleInstruction> DRETURN = new OpCode<SingleInstruction>(Names.DRETURN, "Return double from method");
         /// <summary>
         /// The objectref must be of type reference and must refer to an object of a type that is assignment compatible (JLS §5.2) with the type represented by the return descriptor (§4.3.3) of the current method. If the current method is a synchronized method, the monitor entered or reentered on invocation of the method is updated and possibly exited as if by execution of a monitorexit instruction (§monitorexit) in the current thread. If no exception is thrown, objectref is popped from the operand stack of the current frame (§2.6) and pushed onto the operand stack of the frame of the invoker. Any other values on the operand stack of the current method are discarded.
         /// The interpreter then reinstates the frame of the invoker and returns control to the invoker.
@@ -1994,7 +1994,7 @@ namespace Java.Net.Code
         /// [empty]
         /// </code>
         /// </summary>
-        public static readonly OpCode ARETURN = new OpCode(Names.ARETURN, "Return reference from method");
+        public static readonly OpCode<SingleInstruction> ARETURN = new OpCode<SingleInstruction>(Names.ARETURN, "Return reference from method");
         /// <summary>
         /// The current method must have return type void. If the current method is a synchronized method, the monitor entered or reentered on invocation of the method is updated and possibly exited as if by execution of a monitorexit instruction (§monitorexit) in the current thread. If no exception is thrown, any values on the operand stack of the current frame (§2.6) are discarded.
         /// The interpreter then returns control to the invoker of the method, reinstating the frame of the invoker.
@@ -2003,7 +2003,7 @@ namespace Java.Net.Code
         /// [empty]
         /// </code>
         /// </summary>
-        public static readonly OpCode RETURN = new OpCode(Names.RETURN, "Return void from method");
+        public static readonly OpCode<SingleInstruction> RETURN = new OpCode<SingleInstruction>(Names.RETURN, "Return void from method");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to a field (§5.1), which gives the name and descriptor of the field as well as a symbolic reference to the class or interface in which the field is to be found. The referenced field is resolved (§5.4.3.2).
         /// On successful resolution of the field, the class or interface that declared the resolved field is initialized (§5.5) if that class or interface has not already been initialized.
@@ -2016,7 +2016,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode GETSTATIC = new OpCode(Names.GETSTATIC, "Get static field from class");
+        public static readonly OpCode<ConstantWideInstruction> GETSTATIC = new OpCode<ConstantWideInstruction>(Names.GETSTATIC, "Get static field from class");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to a field (§5.1), which gives the name and descriptor of the field as well as a symbolic reference to the class or interface in which the field is to be found. The referenced field is resolved (§5.4.3.2).
         /// On successful resolution of the field, the class or interface that declared the resolved field is initialized (§5.5) if that class or interface has not already been initialized.
@@ -2030,7 +2030,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode PUTSTATIC = new OpCode(Names.PUTSTATIC, "Set static field in class");
+        public static readonly OpCode<ConstantWideInstruction> PUTSTATIC = new OpCode<ConstantWideInstruction>(Names.PUTSTATIC, "Set static field in class");
         /// <summary>
         /// The objectref, which must be of type reference, is popped from the operand stack. The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to a field (§5.1), which gives the name and descriptor of the field as well as a symbolic reference to the class in which the field is to be found. The referenced field is resolved (§5.4.3.2). The value of the referenced field in objectref is fetched and pushed onto the operand stack.
         /// The type of objectref must not be an array type. If the field is protected (§4.6), and it is a member of a superclass of the current class, and the field is not declared in the same run-time package (§5.3) as the current class, then the class of objectref must be either the current class or a subclass of the current class.
@@ -2042,7 +2042,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode GETFIELD = new OpCode(Names.GETFIELD, "Fetch field from object");
+        public static readonly OpCode<ConstantWideInstruction> GETFIELD = new OpCode<ConstantWideInstruction>(Names.GETFIELD, "Fetch field from object");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to a field (§5.1), which gives the name and descriptor of the field as well as a symbolic reference to the class in which the field is to be found. The class of objectref must not be an array. If the field is protected (§4.6), and it is a member of a superclass of the current class, and the field is not declared in the same run-time package (§5.3) as the current class, then the class of objectref must be either the current class or a subclass of the current class.
         /// The referenced field is resolved (§5.4.3.2). The type of a value stored by a putfield instruction must be compatible with the descriptor of the referenced field (§4.3.2). If the field descriptor type is boolean, byte, char, short, or int, then the value must be an int. If the field descriptor type is float, long, or double, then the value must be a float, long, or double, respectively. If the field descriptor type is a reference type, then the value must be of a type that is assignment compatible (JLS §5.2) with the field descriptor type. If the field is final, it must be declared in the current class, and the instruction must occur in an instance initialization method ([init]) of the current class (§2.9).
@@ -2055,7 +2055,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode PUTFIELD = new OpCode(Names.PUTFIELD, "Set field in object");
+        public static readonly OpCode<ConstantWideInstruction> PUTFIELD = new OpCode<ConstantWideInstruction>(Names.PUTFIELD, "Set field in object");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to a method (§5.1), which gives the name and descriptor (§4.3.3) of the method as well as a symbolic reference to the class in which the method is to be found. The named method is resolved (§5.4.3.3). The resolved method must not be an instance initialization method (§2.9) or the class or interface initialization method (§2.9). Finally, if the resolved method is protected (§4.6), and it is a member of a superclass of the current class, and the method is not declared in the same run-time package (§5.3) as the current class, then the class of objectref must be either the current class or a subclass of the current class.
         /// If the resolved method is not signature polymorphic (§2.9), then the invokevirtual instruction proceeds as follows.
@@ -2091,7 +2091,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode INVOKEVIRTUAL = new OpCode(Names.INVOKEVIRTUAL, "Invoke instance method; dispatch based on class");
+        public static readonly OpCode<ConstantWideInstruction> INVOKEVIRTUAL = new OpCode<ConstantWideInstruction>(Names.INVOKEVIRTUAL, "Invoke instance method; dispatch based on class");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to a method (§5.1), which gives the name and descriptor (§4.3.3) of the method as well as a symbolic reference to the class in which the method is to be found. The named method is resolved (§5.4.3.3). Finally, if the resolved method is protected (§4.6), and it is a member of a superclass of the current class, and the method is not declared in the same run-time package (§5.3) as the current class, then the class of objectref must be either the current class or a subclass of the current class.
         /// Next, the resolved method is selected for invocation unless all of the following conditions are true:
@@ -2121,7 +2121,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode INVOKESPECIAL = new OpCode(Names.INVOKESPECIAL, "Invoke instance method; special handling for superclass, private, and instance initialization method invocations");
+        public static readonly OpCode<ConstantWideInstruction> INVOKESPECIAL = new OpCode<ConstantWideInstruction>(Names.INVOKESPECIAL, "Invoke instance method; special handling for superclass, private, and instance initialization method invocations");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to a method (§5.1), which gives the name and descriptor (§4.3.3) of the method as well as a symbolic reference to the class in which the method is to be found. The named method is resolved (§5.4.3.3). The resolved method must not be an instance initialization method (§2.9) or the class or interface initialization method (§2.9). It must be static, and therefore cannot be abstract.
         /// On successful resolution of the method, the class that declared the resolved method is initialized (§5.5) if that class has not already been initialized.
@@ -2140,7 +2140,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode INVOKESTATIC = new OpCode(Names.INVOKESTATIC, "Invoke a class (static) method");
+        public static readonly OpCode<ConstantWideInstruction> INVOKESTATIC = new OpCode<ConstantWideInstruction>(Names.INVOKESTATIC, "Invoke a class (static) method");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to an interface method (§5.1), which gives the name and descriptor (§4.3.3) of the interface method as well as a symbolic reference to the interface in which the interface method is to be found. The named interface method is resolved (§5.4.3.4). The resolved interface method must not be an instance initialization method (§2.9) or the class or interface initialization method (§2.9).
         /// The count operand is an unsigned byte that must not be zero. The objectref must be of type reference and must be followed on the operand stack by nargs argument values, where the number, type, and order of the values must be consistent with the descriptor of the resolved interface method. The value of the fourth operand byte must always be zero.
@@ -2164,7 +2164,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2 count 0
         /// </code>
         /// </summary>
-        public static readonly OpCode INVOKEINTERFACE = new OpCode(Names.INVOKEINTERFACE, "Invoke interface method");
+        public static readonly OpCode<InvokeInterfaceInstruction> INVOKEINTERFACE = new OpCode<InvokeInterfaceInstruction>(Names.INVOKEINTERFACE, "Invoke interface method");
         /// <summary>
         /// Each specific lexical occurrence of an invokedynamic instruction is called a dynamic call site.
         /// First, the unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to a call site specifier (§5.1). The values of the third and fourth operand bytes must always be zero.
@@ -2213,7 +2213,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2 0 0
         /// </code>
         /// </summary>
-        public static readonly OpCode INVOKEDYNAMIC = new OpCode(Names.INVOKEDYNAMIC, "Invoke dynamic method");
+        public static readonly OpCode<InvokeDynamicInstruction> INVOKEDYNAMIC = new OpCode<InvokeDynamicInstruction>(Names.INVOKEDYNAMIC, "Invoke dynamic method");
         /// <summary>
         /// The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at the index must be a symbolic reference to a class or interface type. The named class or interface type is resolved (§5.4.3.1) and should result in a class type. Memory for a new instance of that class is allocated from the garbage-collected heap, and the instance variables of the new object are initialized to their default initial values (§2.3, §2.4). The objectref, a reference to the instance, is pushed onto the operand stack.
         /// On successful resolution of the class, it is initialized (§5.5) if it has not already been initialized.
@@ -2225,7 +2225,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode NEW = new OpCode(Names.NEW, "Create new object");
+        public static readonly OpCode<ConstantWideInstruction> NEW = new OpCode<ConstantWideInstruction>(Names.NEW, "Create new object");
         /// <summary>
         /// The count must be of type int. It is popped off the operand stack. The count represents the number of elements in the array to be created.
         /// The atype is a code that indicates the type of array to create. It must take one of the following values:
@@ -2249,7 +2249,7 @@ namespace Java.Net.Code
         /// atype
         /// </code>
         /// </summary>
-        public static readonly OpCode NEWARRAY = new OpCode(Names.NEWARRAY, "Create new array");
+        public static readonly OpCode<NewArrayInstruction> NEWARRAY = new OpCode<NewArrayInstruction>(Names.NEWARRAY, "Create new array");
         /// <summary>
         /// The count must be of type int. It is popped off the operand stack. The count represents the number of components of the array to be created. The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at that index must be a symbolic reference to a class, array, or interface type. The named class, array, or interface type is resolved (§5.4.3.1). A new array with components of that type, of length count, is allocated from the garbage-collected heap, and a reference arrayref to this new array object is pushed onto the operand stack. All components of the new array are initialized to null, the default value for reference types (§2.4).
         /// <code>
@@ -2260,7 +2260,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode ANEWARRAY = new OpCode(Names.ANEWARRAY, "Create new array of reference");
+        public static readonly OpCode<ConstantWideInstruction> ANEWARRAY = new OpCode<ConstantWideInstruction>(Names.ANEWARRAY, "Create new array of reference");
         /// <summary>
         /// The arrayref must be of type reference and must refer to an array. It is popped from the operand stack. The length of the array it references is determined. That length is pushed onto the operand stack as an int.
         /// <code>
@@ -2268,7 +2268,7 @@ namespace Java.Net.Code
         /// ..., length
         /// </code>
         /// </summary>
-        public static readonly OpCode ARRAYLENGTH = new OpCode(Names.ARRAYLENGTH, "Get length of array");
+        public static readonly OpCode<SingleInstruction> ARRAYLENGTH = new OpCode<SingleInstruction>(Names.ARRAYLENGTH, "Get length of array");
         /// <summary>
         /// The objectref must be of type reference and must refer to an object that is an instance of class Throwable or of a subclass of Throwable. It is popped from the operand stack. The objectref is then thrown by searching the current method (§2.6) for the first exception handler that matches the class of objectref, as given by the algorithm in §2.10.
         /// If an exception handler that matches objectref is found, it contains the location of the code intended to handle this exception. The pc register is reset to that location, the operand stack of the current frame is cleared, objectref is pushed back onto the operand stack, and execution continues.
@@ -2278,7 +2278,7 @@ namespace Java.Net.Code
         /// objectref
         /// </code>
         /// </summary>
-        public static readonly OpCode ATHROW = new OpCode(Names.ATHROW, "Throw exception or error");
+        public static readonly OpCode<SingleInstruction> ATHROW = new OpCode<SingleInstruction>(Names.ATHROW, "Throw exception or error");
         /// <summary>
         /// The objectref must be of type reference. The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at the index must be a symbolic reference to a class, array, or interface type.
         /// If objectref is null, then the operand stack is unchanged.
@@ -2315,7 +2315,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode CHECKCAST = new OpCode(Names.CHECKCAST, "Check whether object is of given type");
+        public static readonly OpCode<ConstantWideInstruction> CHECKCAST = new OpCode<ConstantWideInstruction>(Names.CHECKCAST, "Check whether object is of given type");
         /// <summary>
         /// The objectref, which must be of type reference, is popped from the operand stack. The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at the index must be a symbolic reference to a class, array, or interface type.
         /// If objectref is null, the instanceof instruction pushes an int result of 0 as an int on the operand stack.
@@ -2352,7 +2352,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode INSTANCEOF = new OpCode(Names.INSTANCEOF, "Determine if object is of given type");
+        public static readonly OpCode<ConstantWideInstruction> INSTANCEOF = new OpCode<ConstantWideInstruction>(Names.INSTANCEOF, "Determine if object is of given type");
         /// <summary>
         /// The objectref must be of type reference.
         /// Each object is associated with a monitor. A monitor is locked if and only if it has an owner. The thread that executes monitorenter attempts to gain ownership of the monitor associated with objectref, as follows:
@@ -2366,7 +2366,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode MONITORENTER = new OpCode(Names.MONITORENTER, "Enter monitor for object");
+        public static readonly OpCode<SingleInstruction> MONITORENTER = new OpCode<SingleInstruction>(Names.MONITORENTER, "Enter monitor for object");
         /// <summary>
         /// The objectref must be of type reference.
         /// The thread that executes monitorexit must be the owner of the monitor associated with the instance referenced by objectref.
@@ -2376,7 +2376,7 @@ namespace Java.Net.Code
         /// ...
         /// </code>
         /// </summary>
-        public static readonly OpCode MONITOREXIT = new OpCode(Names.MONITOREXIT, "Exit monitor for object");
+        public static readonly OpCode<SingleInstruction> MONITOREXIT = new OpCode<SingleInstruction>(Names.MONITOREXIT, "Exit monitor for object");
         /// <summary>
         /// The wide instruction modifies the behavior of another instruction. It takes one of two formats, depending on the instruction being modified. The first form of the wide instruction modifies one of the instructions iload, fload, aload, lload, dload, istore, fstore, astore, lstore, dstore, or ret (§iload, §fload, §aload, §lload, §dload, §istore, §fstore, §astore, §lstore, §dstore, §ret). The second form applies only to the iinc instruction (§iinc).
         /// In either case, the wide opcode itself is followed in the compiled code by the opcode of the instruction wide modifies. In either form, two unsigned bytes indexbyte1 and indexbyte2 follow the modified opcode and are assembled into a 16-bit unsigned index to a local variable in the current frame (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The calculated index must be an index into the local variable array of the current frame. Where the wide instruction modifies an lload, dload, lstore, or dstore instruction, the index following the calculated index (index + 1) must also be an index into the local variable array. In the second form, two immediate unsigned bytes constbyte1 and constbyte2 follow indexbyte1 and indexbyte2 in the code stream. Those bytes are also assembled into a signed 16-bit constant, where the constant is (constbyte1 [[ 8) | constbyte2.
@@ -2389,7 +2389,7 @@ namespace Java.Net.Code
         /// iinc indexbyte1 indexbyte2 constbyte1 constbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode WIDE = new OpCode(Names.WIDE, "Extend local variable index by additional bytes");
+        public static readonly OpCode<WideInstruction> WIDE = new OpCode<WideInstruction>(Names.WIDE, "Extend local variable index by additional bytes");
         /// <summary>
         /// The dimensions operand is an unsigned byte that must be greater than or equal to 1. It represents the number of dimensions of the array to be created. The operand stack must contain dimensions values. Each such value represents the number of components in a dimension of the array to be created, must be of type int, and must be non-negative. The count1 is the desired length in the first dimension, count2 in the second, etc.
         /// All of the count values are popped off the operand stack. The unsigned indexbyte1 and indexbyte2 are used to construct an index into the run-time constant pool of the current class (§2.6), where the value of the index is (indexbyte1 [[ 8) | indexbyte2. The run-time constant pool item at the index must be a symbolic reference to a class, array, or interface type. The named class, array, or interface type is resolved (§5.4.3.1). The resulting entry must be an array class type of dimensionality greater than or equal to dimensions.
@@ -2402,7 +2402,7 @@ namespace Java.Net.Code
         /// indexbyte1 indexbyte2 dimensions
         /// </code>
         /// </summary>
-        public static readonly OpCode MULTIANEWARRAY = new OpCode(Names.MULTIANEWARRAY, "Create new multidimensional array");
+        public static readonly OpCode<MultiANewArrayInstruction> MULTIANEWARRAY = new OpCode<MultiANewArrayInstruction>(Names.MULTIANEWARRAY, "Create new multidimensional array");
         /// <summary>
         /// The value must of type reference. It is popped from the operand stack. If value is null, the unsigned branchbyte1 and branchbyte2 are used to construct a signed 16-bit offset, where the offset is calculated to be (branchbyte1 [[ 8) | branchbyte2. Execution then proceeds at that offset from the address of the opcode of this ifnull instruction. The target address must be that of an opcode of an instruction within the method that contains this ifnull instruction.
         /// Otherwise, execution proceeds at the address of the instruction following this ifnull instruction.
@@ -2414,7 +2414,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IFNULL = new OpCode(Names.IFNULL, "Branch if reference is null");
+        public static readonly OpCode<OffsetInstruction> IFNULL = new OpCode<OffsetInstruction>(Names.IFNULL, "Branch if reference is null");
         /// <summary>
         /// The value must be of type reference. It is popped from the operand stack. If value is not null, the unsigned branchbyte1 and branchbyte2 are used to construct a signed 16-bit offset, where the offset is calculated to be (branchbyte1 [[ 8) | branchbyte2. Execution then proceeds at that offset from the address of the opcode of this ifnonnull instruction. The target address must be that of an opcode of an instruction within the method that contains this ifnonnull instruction.
         /// Otherwise, execution proceeds at the address of the instruction following this ifnonnull instruction.
@@ -2426,7 +2426,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2
         /// </code>
         /// </summary>
-        public static readonly OpCode IFNONNULL = new OpCode(Names.IFNONNULL, "Branch if reference not null");
+        public static readonly OpCode<OffsetInstruction> IFNONNULL = new OpCode<OffsetInstruction>(Names.IFNONNULL, "Branch if reference not null");
         /// <summary>
         /// The unsigned bytes branchbyte1, branchbyte2, branchbyte3, and branchbyte4 are used to construct a signed 32-bit branchoffset, where branchoffset is (branchbyte1 [[ 24) | (branchbyte2 [[ 16) | (branchbyte3 [[ 8) | branchbyte4. Execution proceeds at that offset from the address of the opcode of this goto_w instruction. The target address must be that of an opcode of an instruction within the method that contains this goto_w instruction.
         /// <code>
@@ -2436,7 +2436,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2 branchbyte3 branchbyte4
         /// </code>
         /// </summary>
-        public static readonly OpCode GOTO_W = new OpCode(Names.GOTO_W, "Branch always (wide index)");
+        public static readonly OpCode<OffsetWideInstruction> GOTO_W = new OpCode<OffsetWideInstruction>(Names.GOTO_W, "Branch always (wide index)");
         /// <summary>
         /// The address of the opcode of the instruction immediately following this jsr_w instruction is pushed onto the operand stack as a value of type returnAddress. The unsigned branchbyte1, branchbyte2, branchbyte3, and branchbyte4 are used to construct a signed 32-bit offset, where the offset is (branchbyte1 [[ 24) | (branchbyte2 [[ 16) | (branchbyte3 [[ 8) | branchbyte4. Execution proceeds at that offset from the address of this jsr_w instruction. The target address must be that of an opcode of an instruction within the method that contains this jsr_w instruction.
         /// <code>
@@ -2447,7 +2447,7 @@ namespace Java.Net.Code
         /// branchbyte1 branchbyte2 branchbyte3 branchbyte4
         /// </code>
         /// </summary>
-        public static readonly OpCode JSR_W = new OpCode(Names.JSR_W, "Jump subroutine (wide index)");
+        public static readonly OpCode<OffsetWideInstruction> JSR_W = new OpCode<OffsetWideInstruction>(Names.JSR_W, "Jump subroutine (wide index)");
         public static OpCode[] OpCodeList => new OpCode[]
         {
             NOP,
@@ -2860,11 +2860,9 @@ namespace Java.Net.Code
         }
         #endregion
 
+        public static OpCode ByName(Names name) => OpCodeList[(byte)name];
+
         public static OpCode ReadOpCode(this JavaByteCodeReader reader) => OpCodeList[reader.ReadByte()];
-        public static Instruction ReadInstrustion(this JavaByteCodeReader reader, IHandle handle)
-        {
-            OpCode opCode = reader.ReadOpCode();
-            return new Instruction(opCode, opCode.ReadOperand(reader, handle));
-        }
+        public static IInstruction ReadInstrustion(this JavaByteCodeReader reader, IJava handle) => IJava.Read<IInstruction>(handle, reader);
     }
 }

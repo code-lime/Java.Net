@@ -121,7 +121,7 @@ namespace Java.Net.Model
             where IGenericDefinition : IGenericParameterProvider, IMemberDefinition
             => Parse(ref descriptor, generic, assembly).func.Invoke();
 
-        public static string ToJavaText(ref string descriptor)
+        public static string ToJavaText(ref string descriptor, Func<string, string> clazz_converter)
         {
             char ch = descriptor[0];
             descriptor = descriptor[1..];
@@ -141,13 +141,13 @@ namespace Java.Net.Model
                         if (gen < 0 || gen > end) gen = null;
                         int next = Math.Min(end, gen ?? int.MaxValue);
 
-                        string full_java = descriptor[..next];
+                        string full_java = clazz_converter.Invoke(descriptor[..next]);
                         descriptor = descriptor[(next + 1)..];
 
                         if (gen != null)
                         {
                             full_java += "<";
-                            while (descriptor[0] != '>') ToJavaText(ref descriptor);
+                            while (descriptor[0] != '>') ToJavaText(ref descriptor, clazz_converter);
                             full_java += ">";
                             descriptor = descriptor[2..];
                         }
@@ -164,8 +164,8 @@ namespace Java.Net.Model
                 case 'S': return "short";
                 case 'Z': return "boolean";
                 case 'V': return "void";
-                case ':': return ToJavaText(ref descriptor);
-                case '[': return ToJavaText(ref descriptor) + "[]";
+                case ':': return ToJavaText(ref descriptor, clazz_converter);
+                case '[': return ToJavaText(ref descriptor, clazz_converter) + "[]";
             }
             throw new ArgumentException($"Error parse: '{ch}{descriptor}'", "descriptor");
         }
@@ -215,7 +215,7 @@ namespace Java.Net.Model
             return method;
         }
     
-        public static string ToJavaText(string name, ref string descriptor)
+        public static string ToJavaText(string name, ref string descriptor, Func<string, string> clazz_converter)
         {
             char ch = descriptor[0];
             descriptor = descriptor[1..];
@@ -224,10 +224,10 @@ namespace Java.Net.Model
                 case '(':
                     {
                         List<string> args = new List<string>();
-                        while (descriptor[0] != ')') args.Add(TypeDescriptor.ToJavaText(ref descriptor));
+                        while (descriptor[0] != ')') args.Add(TypeDescriptor.ToJavaText(ref descriptor, clazz_converter));
                         int next = descriptor.IndexOf(')');
                         descriptor = descriptor[(next + 1)..];
-                        string ret = TypeDescriptor.ToJavaText(ref descriptor);
+                        string ret = TypeDescriptor.ToJavaText(ref descriptor, clazz_converter);
                         return $"{ret} {name}({string.Join(",", args)})";
                     }
             }

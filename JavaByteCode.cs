@@ -71,6 +71,7 @@ namespace Java.Net
         public JavaByteCodeWriter WriteUShort(ushort value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
         public JavaByteCodeWriter WriteUInt(uint value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
 
+        public JavaByteCodeWriter WriteShort(short value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
         public JavaByteCodeWriter WriteInt(int value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
         public JavaByteCodeWriter WriteLong(long value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
 
