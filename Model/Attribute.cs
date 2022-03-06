@@ -13,7 +13,7 @@ namespace Java.Net.Model
         string Name { get; set; }
         AttributeType Type { get; }
 
-        [InstanceOfTag] public static JavaAttribute InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader, [TagType(TagTypeAttribute.Tag.Handle)] JavaClass handle, [TagType(TagTypeAttribute.Tag.LastOfArray)] IJava lastOfArray)
+        [InstanceOfTag] public static JavaAttribute InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader, [TagType(TagTypeAttribute.Tag.Handle)] JavaClass handle)
         {
             ushort name_index = reader.ReadUShort();
             string name = (handle.Constants[name_index] as Utf8Constant).Value;
@@ -101,7 +101,7 @@ namespace Java.Net.Model
             BootstrapMethods
         }
 
-        public abstract class BytesAttribute<I> : JavaAttribute<I> where I : JavaAttribute<I>
+        public abstract class BytesAttribute<I> : JavaAttribute<I> where I : BytesAttribute<I>
         {
             public BytesAttribute(byte[] info) => Info = info;
             [IJava(Index: 1, IsReaded: false)] public byte[] Info { get; set; }
