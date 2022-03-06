@@ -110,6 +110,7 @@ namespace Java.Net.Model
                 IJavaType.Byte => reader.ReadByte(),
                 IJavaType.UShort => reader.ReadUShort(),
                 IJavaType.UInt => reader.ReadUInt(),
+                IJavaType.Short => reader.ReadShort(),
                 IJavaType.Int => reader.ReadInt(),
                 IJavaType.Long => reader.ReadLong(),
                 _ => throw new TypeAccessException($"Type of length '{type}' not supported!"),
@@ -119,6 +120,7 @@ namespace Java.Net.Model
                 IJavaType.Byte => reader.WriteByte((byte)value),
                 IJavaType.UShort => reader.WriteUShort((ushort)value),
                 IJavaType.UInt => reader.WriteUInt((uint)value),
+                IJavaType.Short => reader.WriteShort((short)value),
                 IJavaType.Int => reader.WriteInt((int)value),
                 IJavaType.Long => reader.WriteLong((long)value),
                 _ => throw new TypeAccessException($"Type of length '{type}' not supported!"),
@@ -294,6 +296,7 @@ namespace Java.Net.Model
                         IJavaType.Byte => reader.ReadByte(),
                         IJavaType.UShort => reader.ReadUShort(),
                         IJavaType.UInt => reader.ReadUInt(),
+                        IJavaType.Short => reader.ReadShort(),
                         IJavaType.Int => reader.ReadInt(),
                         IJavaType.Long => reader.ReadLong(),
                         IJavaType.Float => reader.ReadFloat(),
@@ -331,6 +334,7 @@ namespace Java.Net.Model
                 {
                     IJavaType.Byte => writer.WriteByte(CastType<byte>(value)),
                     IJavaType.UShort => writer.WriteUShort(CastType<ushort>(value)),
+                    IJavaType.Short => writer.WriteShort(CastType<short>(value)),
                     IJavaType.UInt => writer.WriteUInt(CastType<uint>(value)),
                     IJavaType.Int => writer.WriteInt(CastType<int>(value)),
                     IJavaType.Long => writer.WriteLong(CastType<long>(value)),
@@ -376,6 +380,9 @@ namespace Java.Net.Model
                     LastOfArray = LastOfArray,
                     Reader = Reader
                 };
+
+                public static InstanceOfTagData.Data NULL = null;
+                public static Data Create(IJava handle) => new Data { Parent = handle };
             }
 
             public MethodInfo Method { get; }
@@ -513,6 +520,7 @@ namespace Java.Net.Model
         private static readonly Dictionary<Type, IJavaType> typeFormats = new Dictionary<Type, IJavaType>()
         {
             [typeof(byte)] = IJavaType.Byte,
+            [typeof(short)] = IJavaType.Short,
             [typeof(ushort)] = IJavaType.UShort,
             [typeof(uint)] = IJavaType.UInt,
             [typeof(int)] = IJavaType.Int,
@@ -540,11 +548,15 @@ namespace Java.Net.Model
 
         private static IJava Read(Type type, InstanceOfTagData.Data data, JavaByteCodeReader reader, IJava def = null) => IJavaData.ReadOfType(type, data, reader, def);
         public static I Read<I>(InstanceOfTagData.Data data, JavaByteCodeReader reader, I def = null) where I : class, IJava => (I)Read(typeof(I), data, reader, def);
+        public static I Read<I>(JavaByteCodeReader reader, I def = null) where I : class, IJava => (I)Read(typeof(I), null, reader, def);
+        public static I Read<I>(IJava handle, JavaByteCodeReader reader, I def = null) where I : class, IJava => Read(InstanceOfTagData.Data.Create(handle), reader, def);
         public static I ReadArray<I>(InstanceOfTagData.Data data, byte[] bytes, I def = null) where I : class, IJava
         {
             using MemoryStream stream = new MemoryStream(bytes);
             return Read(data, new JavaByteCodeReader(stream), def);
         }
+        public static I ReadArray<I>(byte[] bytes, I def = null) where I : class, IJava => ReadArray(InstanceOfTagData.Data.NULL, bytes, def);
+        public static I ReadArray<I>(IJava handle, byte[] bytes, I def = null) where I : class, IJava => ReadArray(InstanceOfTagData.Data.Create(handle), bytes, def);
         public static IJava ReadArray(Type type, InstanceOfTagData.Data data, byte[] bytes, IJava def = null)
         {
             using MemoryStream stream = new MemoryStream(bytes);
@@ -568,6 +580,7 @@ namespace Java.Net.Model
         Byte,
         UShort,
         UInt,
+        Short,
         Int,
         Long,
         Float,
