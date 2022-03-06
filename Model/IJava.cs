@@ -42,7 +42,7 @@ namespace Java.Net.Model
         {
             I dat = Activator.CreateInstance<I>();
             dat.SetHandle(handle);
-            apply.Invoke(dat);
+            apply?.Invoke(dat);
             dat.SetHandle(handle);
             return dat;
         }
@@ -85,7 +85,7 @@ namespace Java.Net.Model
         public virtual IJava Load(JavaClass handle, Action<IJava> action)
         {
             SetHandle(handle);
-            action.Invoke(this);
+            action?.Invoke(this);
             return this;
         }
     }
@@ -381,8 +381,8 @@ namespace Java.Net.Model
                     Reader = Reader
                 };
 
-                public static InstanceOfTagData.Data NULL = null;
-                public static Data Create(IJava handle) => new Data { Parent = handle };
+                public static Data NULL = null;
+                public static Data Create(JavaByteCodeReader reader, IJava handle) => new Data { Reader = reader, Parent = handle };
             }
 
             public MethodInfo Method { get; }
@@ -549,14 +549,14 @@ namespace Java.Net.Model
         private static IJava Read(Type type, InstanceOfTagData.Data data, JavaByteCodeReader reader, IJava def = null) => IJavaData.ReadOfType(type, data, reader, def);
         public static I Read<I>(InstanceOfTagData.Data data, JavaByteCodeReader reader, I def = null) where I : class, IJava => (I)Read(typeof(I), data, reader, def);
         public static I Read<I>(JavaByteCodeReader reader, I def = null) where I : class, IJava => (I)Read(typeof(I), null, reader, def);
-        public static I Read<I>(IJava handle, JavaByteCodeReader reader, I def = null) where I : class, IJava => Read(InstanceOfTagData.Data.Create(handle), reader, def);
+        public static I Read<I>(IJava handle, JavaByteCodeReader reader, I def = null) where I : class, IJava => Read(InstanceOfTagData.Data.Create(reader, handle), reader, def);
         public static I ReadArray<I>(InstanceOfTagData.Data data, byte[] bytes, I def = null) where I : class, IJava
         {
             using MemoryStream stream = new MemoryStream(bytes);
             return Read(data, new JavaByteCodeReader(stream), def);
         }
         public static I ReadArray<I>(byte[] bytes, I def = null) where I : class, IJava => ReadArray(InstanceOfTagData.Data.NULL, bytes, def);
-        public static I ReadArray<I>(IJava handle, byte[] bytes, I def = null) where I : class, IJava => ReadArray(InstanceOfTagData.Data.Create(handle), bytes, def);
+        public static I ReadArray<I>(IJava handle, byte[] bytes, I def = null) where I : class, IJava => ReadArray(InstanceOfTagData.Data.Create(null, handle), bytes, def);
         public static IJava ReadArray(Type type, InstanceOfTagData.Data data, byte[] bytes, IJava def = null)
         {
             using MemoryStream stream = new MemoryStream(bytes);

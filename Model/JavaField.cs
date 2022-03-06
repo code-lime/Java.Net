@@ -17,7 +17,7 @@ namespace Java.Net.Model
                 Descriptor = descriptor,
                 Attributes = new List<JavaAttribute>()
             };
-            apply.Invoke(dat);
+            apply?.Invoke(dat);
             return dat;
         }
 

@@ -25,7 +25,7 @@ namespace Java.Net.Model
             };
             dat.ThisClassIndex = dat.OfConstant(ClassConstant.Create(dat, v => v.Name = new_clazz));
             dat.SuperClassIndex = dat.OfConstant(ClassConstant.Create(dat, v => v.Name = super_clazz));
-            apply.Invoke(dat);
+            apply?.Invoke(dat);
             return dat;
         }
         public JavaClass() => Handle = this;
