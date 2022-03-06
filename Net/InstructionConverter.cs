@@ -6,7 +6,7 @@ using System.Text;
 
 using JOpCode = Java.Net.Code.OpCode;
 using JOpCodes = Java.Net.Code.OpCodes;
-using JInstruction = Java.Net.Code.Instruction;
+using JInstruction = Java.Net.Code.IInstruction;
 using NOpCode = Mono.Cecil.Cil.OpCode;
 using NOpCodes = Mono.Cecil.Cil.OpCodes;
 using NInstruction = Mono.Cecil.Cil.Instruction;

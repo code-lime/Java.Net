@@ -1,5 +1,4 @@
 ﻿using Java.Net.Flags;
-using Java.Net.Net;
 using Mono.Cecil;
 using System;
 using System.Collections.Generic;
