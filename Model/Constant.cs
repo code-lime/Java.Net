@@ -31,6 +31,8 @@ namespace Java.Net.Model
         }
 
         ConstantTag Tag { get; }
+
+        IConstant DeepClone(JavaClass handle);
     }
     public abstract class IConstant<I> : IJava<I>, IConstant, IEquatable<I> where I : IConstant<I>
     {
@@ -41,6 +43,9 @@ namespace Java.Net.Model
         public abstract bool Equals(I other);
         public override bool Equals(object obj) => obj is I _obj && _obj.Tag == Tag && Equals(_obj);
         public override int GetHashCode() => (int)Tag;
+
+        public abstract I DeepClone(JavaClass handle);
+        IConstant IConstant.DeepClone(JavaClass handle) => DeepClone(handle);
     }
     /*
     public abstract class IConstant<I> : IConstant, IEquatable<I> where I : IConstant<I>
@@ -66,6 +71,8 @@ namespace Java.Net.Model
         [IJava] public string Value { get; set; }
         public override bool Equals(Utf8Constant other) => other?.Value == Value;
         public override string ToString() => $"{base.ToString()} {Value}";
+        
+        public override Utf8Constant DeepClone(JavaClass handle) => Create(handle, v => v.Value = Value);
     }
     public sealed class IntegerConstant : IConstant<IntegerConstant>
     {
@@ -73,6 +80,8 @@ namespace Java.Net.Model
         [IJava] public int Value { get; set; }
         public override bool Equals(IntegerConstant other) => other?.Value == Value;
         public override string ToString() => $"{base.ToString()} {Value}";
+
+        public override IntegerConstant DeepClone(JavaClass handle) => Create(handle, v => v.Value = Value);
     }
     public sealed class FloatConstant : IConstant<FloatConstant>
     {
@@ -80,6 +89,8 @@ namespace Java.Net.Model
         [IJava] public float Value { get; set; }
         public override bool Equals(FloatConstant other) => other?.Value == Value;
         public override string ToString() => $"{base.ToString()} {Value}";
+
+        public override FloatConstant DeepClone(JavaClass handle) => Create(handle, v => v.Value = Value);
     }
     public sealed class LongConstant : IConstant<LongConstant>
     {
@@ -87,6 +98,8 @@ namespace Java.Net.Model
         [IJava] public long Value { get; set; }
         public override bool Equals(LongConstant other) => other?.Value == Value;
         public override string ToString() => $"{base.ToString()} {Value}";
+
+        public override LongConstant DeepClone(JavaClass handle) => Create(handle, v => v.Value = Value);
     }
     public sealed class DoubleConstant : IConstant<DoubleConstant>
     {
@@ -94,6 +107,8 @@ namespace Java.Net.Model
         [IJava] public double Value { get; set; }
         public override bool Equals(DoubleConstant other) => other?.Value == Value;
         public override string ToString() => $"{base.ToString()} {Value}";
+
+        public override DoubleConstant DeepClone(JavaClass handle) => Create(handle, v => v.Value = Value);
     }
     public sealed class ClassConstant : IConstant<ClassConstant>
     {
@@ -106,6 +121,8 @@ namespace Java.Net.Model
         }
         public override bool Equals(ClassConstant other) => other?.Index == Index;
         public override string ToString() => $"{base.ToString()} [{Index}] {Name}";
+
+        public override ClassConstant DeepClone(JavaClass handle) => Create(handle, v => v.Name = Name);
     }
     public sealed class StringConstant : IConstant<StringConstant>
     {
@@ -118,6 +135,8 @@ namespace Java.Net.Model
         }
         public override bool Equals(StringConstant other) => other?.StringIndex == StringIndex;
         public override string ToString() => $"{base.ToString()} {String}";
+
+        public override StringConstant DeepClone(JavaClass handle) => Create(handle, v => v.String = String);
     }
 
     public sealed class FieldrefConstant : IRefConstant<FieldrefConstant>
@@ -127,10 +146,12 @@ namespace Java.Net.Model
     public sealed class MethodrefConstant : IRefConstant<MethodrefConstant>, IMethodRefConstant
     {
         public override ConstantTag Tag => ConstantTag.Methodref;
+        IRefConstant IMethodRefConstant.DeepClone(JavaClass handle) => DeepClone(handle);
     }
     public sealed class InterfaceMethodrefConstant : IRefConstant<InterfaceMethodrefConstant>, IMethodRefConstant
     {
         public override ConstantTag Tag => ConstantTag.InterfaceMethodref;
+        IRefConstant IMethodRefConstant.DeepClone(JavaClass handle) => DeepClone(handle);
     }
     public interface IRefConstant : IConstant
     {
@@ -138,8 +159,13 @@ namespace Java.Net.Model
         ushort NameAndTypeIndex { get; set; }
         ClassConstant Class { get; set; }
         NameAndTypeConstant NameAndType { get; set; }
+
+        new IRefConstant DeepClone(JavaClass handle);
     }
-    public interface IMethodRefConstant : IRefConstant { }
+    public interface IMethodRefConstant : IRefConstant
+    {
+        new IRefConstant DeepClone(JavaClass handle);
+    }
     public abstract class IRefConstant<I> : IConstant<I>, IRefConstant where I : IRefConstant<I>
     {
         [IJava] public ushort ClassIndex { get; set; }
@@ -156,6 +182,13 @@ namespace Java.Net.Model
         }
         public override bool Equals(I other) => other?.ClassIndex == ClassIndex && other?.NameAndTypeIndex == NameAndTypeIndex;
         public override string ToString() => $"{base.ToString()} ({Class}, {NameAndType})";
+
+        public override I DeepClone(JavaClass handle) => Create(handle, v =>
+        {
+            v.Class = Class.DeepClone(handle);
+            v.NameAndType = NameAndType.DeepClone(handle);
+        });
+        IRefConstant IRefConstant.DeepClone(JavaClass handle) => DeepClone(handle);
     }
 
     public sealed class NameAndTypeConstant : IConstant<NameAndTypeConstant>
@@ -175,6 +208,12 @@ namespace Java.Net.Model
         }
         public override bool Equals(NameAndTypeConstant other) => other?.NameIndex == NameIndex && other?.DescriptorIndex == DescriptorIndex;
         public override string ToString() => $"{base.ToString()} {Name} {Descriptor}";
+
+        public override NameAndTypeConstant DeepClone(JavaClass handle) => Create(handle, v =>
+        {
+            v.Name = Name;
+            v.Descriptor = Descriptor;
+        });
     }
     public sealed class MethodHandleConstant : IConstant<MethodHandleConstant>
     {
@@ -188,6 +227,12 @@ namespace Java.Net.Model
         }
         public override bool Equals(MethodHandleConstant other) => other?.ReferenceKind == ReferenceKind && other?.ReferenceIndex == ReferenceIndex;
         public override string ToString() => $"{base.ToString()} {ReferenceKind} {Reference}";
+
+        public override MethodHandleConstant DeepClone(JavaClass handle) => Create(handle, v =>
+        {
+            v.ReferenceKind = ReferenceKind;
+            v.Reference = Reference.DeepClone(handle);
+        });
     }
     public sealed class MethodTypeConstant : IConstant<MethodTypeConstant>
     {
@@ -200,6 +245,8 @@ namespace Java.Net.Model
         }
         public override bool Equals(MethodTypeConstant other) => other?.DescriptorIndex == DescriptorIndex;
         public override string ToString() => $"{base.ToString()} {Descriptor}";
+
+        public override MethodTypeConstant DeepClone(JavaClass handle) => Create(handle, v => v.Descriptor = Descriptor);
     }
     public sealed class InvokeDynamicConstant : IConstant<InvokeDynamicConstant>
     {
@@ -218,6 +265,12 @@ namespace Java.Net.Model
         }
         public override bool Equals(InvokeDynamicConstant other) => other?.BootstrapMethodAttributeIndex == BootstrapMethodAttributeIndex && other?.NameAndTypeIndex == NameAndTypeIndex;
         public override string ToString() => $"{base.ToString()} {NameAndType} {BootstrapMethod}";
+
+        public override InvokeDynamicConstant DeepClone(JavaClass handle) => Create(handle, v =>
+        {
+            v.BootstrapMethod = BootstrapMethod.DeepClone(handle);
+            v.NameAndType = NameAndType.DeepClone(handle);
+        });
     }
 
     public enum ConstantTag : byte

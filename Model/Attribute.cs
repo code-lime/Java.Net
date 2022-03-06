@@ -627,6 +627,12 @@ namespace Java.Net.Model
                     get => ArgumentsIndexes.Select(v => Handle.Constants[v]).ToArray();
                     set => ArgumentsIndexes = value.Select(v => Handle.OfConstant(v)).ToList();
                 }
+
+                public Bootstrap DeepClone(JavaClass handle) => Create(handle, v =>
+                {
+                    v.MethodRef = MethodRef.DeepClone(handle);
+                    v.Arguments = Arguments.Select(j => j.DeepClone(handle)).ToArray();
+                });
             }
             public override AttributeType Type => AttributeType.BootstrapMethods;
             [IJava] [IJavaArray(IJavaType.UShort)] public List<Bootstrap> Methods { get; set; }
