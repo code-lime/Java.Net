@@ -97,7 +97,7 @@ namespace Java.Net.Model
 #endif
                         {
                             stream.Position = 0;
-                            JavaClass _class = IJava.Read<JavaClass>(null, new JavaByteCodeReader(stream));
+                            JavaClass _class = IJava.Read<JavaClass>(new JavaByteCodeReader(stream));
                             lock (classes)
                             {
                                 classes[s] = _class;
@@ -160,7 +160,7 @@ namespace Java.Net.Model
         {
             using MemoryStream stream = ParallelZipArchive.From(file).Extract(path);
             stream.Position = 0;
-            return IJava.Read<JavaClass>(null, new JavaByteCodeReader(stream));
+            return IJava.Read<JavaClass>(new JavaByteCodeReader(stream));
         }
         public static JavaModule ReadFrom(string file, Action<ProgressEventArgs> progress = null)
         {
@@ -181,12 +181,17 @@ namespace Java.Net.Model
             ParallelZipArchive.SetToZip(stream, new Dictionary<string, Stream>() { [@class.ThisClassPath] = _stream });
         }
 
-        public void Join(JavaModule other)
+        public JavaModule Join(JavaModule other)
         {
             foreach (var kv in other.Classes) Classes[kv.Key] = kv.Value;
             foreach (var kv in other.Files) Files[kv.Key] = kv.Value;
+            return this;
         }
-        public void Append(JavaClass clazz) => Classes[clazz.ThisClass.Name] = clazz;
+        public JavaModule Append(JavaClass clazz)
+        {
+            Classes[clazz.ThisClass.Name] = clazz;
+            return this;
+        }
 
         public IEnumerable<Mono.Cecil.AssemblyDefinition> ToNet()
         {
