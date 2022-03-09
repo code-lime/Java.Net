@@ -12,6 +12,7 @@ namespace Java.Net.Code
         ushort Position { get; set; }
 
         OpCode OpCode { get; }
+        object[] IndexOperand { get; }
         object[] Operand { get; }
 
         [InstanceOfTag] public static IInstruction InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader, [TagType(TagTypeAttribute.Tag.Handle)] JavaClass handle)
@@ -23,15 +24,16 @@ namespace Java.Net.Code
         OpCode IInstruction.OpCode => OpCode;
 
         public abstract object[] Operand { get; }
+        public abstract object[] IndexOperand { get; }
         public ushort Position { get; set; }
 
         public override JavaByteCodeWriter WriteProperty(JavaByteCodeWriter writer, IJava.PropertyData data, object value)
             => data.Index == 0 ? writer.WriteByte(OpCode.Index) : base.WriteProperty(writer, data, value);
         
         public override bool Equals(object obj) => obj is IInstruction op && Equals(op);
-        public virtual bool Equals(I obj) => OpCode == obj.OpCode && Enumerable.SequenceEqual(Operand, obj.Operand);
+        public virtual bool Equals(I obj) => OpCode == obj.OpCode && Enumerable.SequenceEqual(IndexOperand, obj.IndexOperand);
         public virtual bool Equals(IInstruction obj) => obj is I t && Equals(t);
-        public override int GetHashCode() => HashCode.Combine(OpCode, Operand);
+        public override int GetHashCode() => HashCode.Combine(OpCode, IndexOperand);
         public static bool operator ==(IInstruction<I> a, IInstruction b) => a is IInstruction op && op.Equals(b);
         public static bool operator !=(IInstruction<I> a, IInstruction b) => !(a == b);
         private string InstructionType
@@ -57,22 +59,26 @@ namespace Java.Net.Code
     }
     public sealed class SingleInstruction : IInstruction<SingleInstruction>
     {
+        public override object[] IndexOperand => new object[0];
         public override object[] Operand => new object[0];
     }
     public sealed class BiPushInstruction : IInstruction<BiPushInstruction>
     {
         [IJava] public byte Value { get; set; }
+        public override object[] IndexOperand => new object[] { Value };
         public override object[] Operand => new object[] { Value };
     }
     public sealed class SiPushInstruction : IInstruction<SiPushInstruction>
     {
         [IJava] public ushort Value { get; set; }
+        public override object[] IndexOperand => new object[] { Value };
         public override object[] Operand => new object[] { Value };
     }
     public sealed class IIncInstruction : IInstruction<IIncInstruction>
     {
         [IJava] public byte FrameIndex { get; set; }
         [IJava] public byte Value { get; set; }
+        public override object[] IndexOperand => new object[] { FrameIndex, Value };
         public override object[] Operand => new object[] { FrameIndex, Value };
     }
     public interface IInvokeInterfaceInstruction : IInstruction
@@ -86,14 +92,16 @@ namespace Java.Net.Code
         public IRefConstant Method { get => Handle.Constants[MethodIndex] as IRefConstant; set => MethodIndex = Handle.OfConstant(value); }
         [IJava] public ushort MethodIndex { get; set; }
         [IJava] public byte Count { get; set; }
-        public override object[] Operand => new object[] { MethodIndex, Count, 0 };
+        public override object[] IndexOperand => new object[] { MethodIndex, Count, 0 };
+        public override object[] Operand => new object[] { Method, Count, 0 };
     }
     public sealed class InvokeDynamicInstruction : IInstruction<InvokeDynamicInstruction>, IInvokeInterfaceInstruction
     {
         public IRefConstant Method { get => Handle.Constants[MethodIndex] as IRefConstant; set => MethodIndex = Handle.OfConstant(value); }
         [IJava] public ushort MethodIndex { get; set; }
         public byte Count { get => 0; set { } }
-        public override object[] Operand => new object[] { MethodIndex, Count, 0 };
+        public override object[] IndexOperand => new object[] { MethodIndex, Count, 0 };
+        public override object[] Operand => new object[] { Method, Count, 0 };
     }
     public sealed class LookupSwitchInstruction : IInstruction<LookupSwitchInstruction>
     {
@@ -104,6 +112,7 @@ namespace Java.Net.Code
         }
         [IJava] public int Default { get; set; }
         [IJava] [IJavaArray(IJavaType.Int)] public List<Pair> Pairs { get; set; }
+        public override object[] IndexOperand => new object[] { Default, Pairs.Count, Pairs.ToArray() };
         public override object[] Operand => new object[] { Default, Pairs.Count, Pairs.ToArray() };
     }
     public sealed class TableSwitchInstruction : IInstruction<TableSwitchInstruction>
@@ -117,6 +126,7 @@ namespace Java.Net.Code
             if (data.Index == 2) value = Offsets = new int[High - Low + 1].ToList();
             base.ReadProperty(reader, data, value);
         }
+        public override object[] IndexOperand => new object[] { Default, Low, High, Offsets.ToArray() };
         public override object[] Operand => new object[] { Default, Low, High, Offsets.ToArray() };
     }
     public sealed class MultiANewArrayInstruction : IInstruction<MultiANewArrayInstruction>
@@ -124,8 +134,9 @@ namespace Java.Net.Code
         public ClassConstant Class { get => Handle.Constants[ClassIndex] as ClassConstant; set => ClassIndex = Handle.OfConstant(value); }
         [IJava] public ushort ClassIndex { get; set; }
         [IJava] public byte Dimensions { get; set; }
-
-        public override object[] Operand => new object[] { ClassIndex, Dimensions }; 
+        
+        public override object[] IndexOperand => new object[] { ClassIndex, Dimensions };
+        public override object[] Operand => new object[] { Class, Dimensions };
     }
     public sealed class NewArrayInstruction : IInstruction<NewArrayInstruction>
     {
@@ -141,21 +152,25 @@ namespace Java.Net.Code
             LONG = 11
         }
         [IJava(IJavaType.Byte)] public Type ArrayType { get; set; }
+        public override object[] IndexOperand => new object[] { ArrayType };
         public override object[] Operand => new object[] { ArrayType };
     }
     public sealed class OffsetWideInstruction : IInstruction<OffsetWideInstruction>
     {
         [IJava] public int Offset { get; set; }
+        public override object[] IndexOperand => new object[] { Offset };
         public override object[] Operand => new object[] { Offset };
     }
     public sealed class OffsetInstruction : IInstruction<OffsetInstruction>
     {
         [IJava] public short Offset { get; set; }
+        public override object[] IndexOperand => new object[] { Offset };
         public override object[] Operand => new object[] { Offset };
     }
     public sealed class FrameIndexInstruction : IInstruction<FrameIndexInstruction>
     {
         [IJava] public byte FrameIndex { get; set; }
+        public override object[] IndexOperand => new object[] { FrameIndex };
         public override object[] Operand => new object[] { FrameIndex };
     }
     public interface IConstantInstruction : IInstruction
@@ -166,13 +181,16 @@ namespace Java.Net.Code
     {
         public IConstant Constant { get => Handle.Constants[ConstantIndex]; set => ConstantIndex = (byte)Handle.OfConstant(value); }
         [IJava] public byte ConstantIndex { get; set; }
-        public override object[] Operand => new object[] { ConstantIndex };
+        public override object[] IndexOperand => new object[] { ConstantIndex };
+        public override object[] Operand => new object[] { Constant };
     }
     public sealed class ConstantWideInstruction : IInstruction<ConstantWideInstruction>, IConstantInstruction
     {
         public IConstant Constant { get => Handle.Constants[ConstantIndex]; set => ConstantIndex = Handle.OfConstant(value); }
         [IJava] public ushort ConstantIndex { get; set; }
-        public override object[] Operand => new object[] { ConstantIndex };
+
+        public override object[] IndexOperand => new object[] { ConstantIndex };
+        public override object[] Operand => new object[] { Constant };
     }
     public sealed class WideInstruction : IInstruction<WideInstruction>
     {
@@ -202,6 +220,7 @@ namespace Java.Net.Code
             base.ReadProperty(reader, data, value);
         }
 
+        public override object[] IndexOperand => new object[] { OpCodeValue, Index, Value };
         public override object[] Operand => new object[] { OpCodeValue, Index, Value };
     }
 }
