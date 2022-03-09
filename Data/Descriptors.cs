@@ -234,32 +234,24 @@ namespace Java.Net.Descriptor
             }
         }
 
-        public static bool TryParse<T>(string text, out T? descriptor) where T : IDescriptor
+        public static T TryParse<T>(string text, bool full = true) where T : IDescriptor => TryParse(text, out T? value, full) && value != null ? value : throw new ArgumentException($"Error parse {text} to class '{typeof(T)}'");
+        public static bool TryParse<T>(string text, out T? descriptor, bool full = true) where T : IDescriptor
         {
             descriptor = default;
             Type type = typeof(T);
             foreach ((Type ctype, ClassObject cobject) in classes)
             {
                 if (!type.IsAssignableFrom(ctype)) continue;
-                if (!cobject.TryRegexCreator(ref text, out object? value)) continue;
+                string part_text = text;
+                if (!cobject.TryRegexCreator(ref part_text, out object? value)) continue;
+                if (full && part_text.Length > 0) continue;
                 descriptor = (T?)value;
                 return true;
             }
             return false;
         }
-        public static bool TryParseAny(string text, bool full, out IDescriptor? descriptor)
-        {
-            descriptor = default;
-            foreach ((Type ctype, ClassObject cobject) in classes)
-            {
-                string part_text = text;
-                if (!cobject.TryRegexCreator(ref part_text, out object? value)) continue;
-                if (full && part_text.Length > 0) continue;
-                descriptor = (IDescriptor?)value;
-                return true;
-            }
-            return false;
-        }
+        public static IDescriptor TryParseAny(string text, bool full = true) => TryParse<IDescriptor>(text, full);
+        public static bool TryParseAny(string text, out IDescriptor? descriptor, bool full = true) => TryParse(text, out descriptor, full);
 
         internal const string PROP = "\u0000#VALUE";
         internal const string ZERO_ARRAY_PROP = "\u0000#ARRAY#0";
@@ -275,10 +267,9 @@ namespace Java.Net.Descriptor
     }
     public abstract class IDescriptor<T> : IDescriptor where T : IDescriptor<T>
     {
-        [IDescriptor.IgnoreProperty] public abstract string DescriptorFormat { get; }
+        [IDescriptor.IgnoreProperty] public string DescriptorFormat => this.ToString()??"";
         [IDescriptor.IgnoreProperty] public string Display => ToDisplay();
-        public virtual string ToDisplay() => GetType().Name + ": " + ToString();
-        public override string ToString() => DescriptorFormat;
+        public virtual string ToDisplay() => GetType().Name + ": " + DescriptorFormat;
     }
     public static class IDescriptorExt
     {
@@ -296,10 +287,9 @@ namespace Java.Net.Descriptor
         public interface IReturnType : IDescriptor { }
         public interface ITypeSignature : IDescriptor, IReturnType { }
         public interface IFieldType : IFieldDescriptor, IReturnDescriptor, IComponentType, IParameterDescriptor { }
-        public abstract class IFieldType<T> : IFieldType, IDescriptor where T : IFieldType<T>
+        public abstract class IFieldType<T> : IDescriptor<T>, IFieldType where T : IFieldType<T>
         {
             [IDescriptor.IgnoreProperty] public ArrayType Array => new ArrayType() { Type = this };
-            [IDescriptor.IgnoreProperty] public abstract string DescriptorFormat { get; }
         }
         [IDescriptor.RegexStruct("(?=(B|C|D|F|I|J|S|Z))", IDescriptor.PROP)]
         public sealed class BaseType : IFieldType<BaseType>, ITypeSignature
@@ -332,7 +322,7 @@ namespace Java.Net.Descriptor
             private BaseType() : this('\0') { }
             private BaseType(char key) => this.Key = key;
 
-            public override string DescriptorFormat => $"{Key}";
+            public override string ToString() => $"{Key}";
         }
         [IDescriptor.RegexStruct("L", IDescriptor.PROP, ";")]
         public sealed class ObjectType : IFieldType<ObjectType>
@@ -340,14 +330,14 @@ namespace Java.Net.Descriptor
             public static ObjectType Create(string class_name) => new ObjectType() { ClassName = class_name };
             public string ClassName { get; set; } = "type";
 
-            public override string DescriptorFormat => $"L{ClassName};";
+            public override string ToString() => $"L{ClassName};";
         }
         [IDescriptor.RegexStruct("\\[", IDescriptor.PROP)]
         public sealed class ArrayType : IFieldType<ArrayType>
         {
             public IComponentType Type { get; set; } = BaseType.Byte;
 
-            public override string DescriptorFormat => $"[{Type}";
+            public override string ToString() => $"[{Type}";
         }
     }
     namespace Method
@@ -359,7 +349,7 @@ namespace Java.Net.Descriptor
         {
             public static VoidDescriptor Instance { get; } = new VoidDescriptor();
 
-            public override string DescriptorFormat => $"V";
+            public override string ToString() => $"V";
         }
         [IDescriptor.RegexStruct("\\(", IDescriptor.ZERO_ARRAY_PROP, "\\)", IDescriptor.PROP)]
         public sealed class MethodDescriptor : IDescriptor<MethodDescriptor>, IDescriptor
@@ -367,7 +357,7 @@ namespace Java.Net.Descriptor
             public IParameterDescriptor[] Parameters { get; set; } = new IParameterDescriptor[0];
             public IReturnDescriptor ReturnDescriptor { get; set; } = BaseType.Byte;
 
-            public override string DescriptorFormat => $"({string.Join("", Parameters.Select(v => v.ToString()))}){ReturnDescriptor}";
+            public override string ToString() => $"({string.Join("", Parameters.Select(v => v.ToString()))}){ReturnDescriptor}";
         }
     }
     namespace Class
@@ -378,7 +368,7 @@ namespace Java.Net.Descriptor
         {
             public IFieldTypeSignature Value { get; set; } = new ClassTypeSignature();
 
-            public override string DescriptorFormat => $"{Value}";
+            public override string ToString() => $"{Value}";
         }
         [IDescriptor.RegexStruct(IDescriptor.PROP, @"(?=\.|;|\[|\/|<|>|:|$)")]
         public sealed class Identifier : IDescriptor<Identifier>, IDescriptor
@@ -387,7 +377,7 @@ namespace Java.Net.Descriptor
 
             public string Value { get; set; } = "identifier";
 
-            public override string DescriptorFormat => $"{Value}";
+            public override string ToString() => $"{Value}";
         }
         [IDescriptor.RegexStruct(IDescriptor.PROP, IDescriptor.PROP, IDescriptor.ZERO_ARRAY_PROP)]
         public sealed class ClassSignature : IDescriptor<ClassSignature>, IDescriptor
@@ -396,14 +386,14 @@ namespace Java.Net.Descriptor
             public SuperclassSignature SuperclassSignature { get; set; } = new SuperclassSignature();
             public SuperinterfaceSignature[] SuperinterfaceSignature { get; set; } = new SuperinterfaceSignature[0];
 
-            public override string DescriptorFormat => $"{FormalTypeParameters?.ToString() ?? ""}{SuperclassSignature}{string.Join("", SuperinterfaceSignature.Select(v => v.ToString()))}";
+            public override string ToString() => $"{FormalTypeParameters?.ToString() ?? ""}{SuperclassSignature}{string.Join("", SuperinterfaceSignature.Select(v => v.ToString()))}";
         }
         [IDescriptor.RegexStruct("\\<", IDescriptor.ONE_ARRAY_PROP, "\\>")]
         public sealed class FormalTypeParameters : IDescriptor<FormalTypeParameters>, IDescriptor
         {
             public FormalTypeParameter[] FormalTypeParameter { get; set; } = new FormalTypeParameter[] { new FormalTypeParameter() };
 
-            public override string DescriptorFormat => $"<{string.Join("", FormalTypeParameter.Select(v => v.ToString()))}>";
+            public override string ToString() => $"<{string.Join("", FormalTypeParameter.Select(v => v.ToString()))}>";
         }
         [IDescriptor.RegexStruct(IDescriptor.PROP, IDescriptor.PROP, IDescriptor.ZERO_ARRAY_PROP)]
         public sealed class FormalTypeParameter : IDescriptor<FormalTypeParameter>, IDescriptor
@@ -412,35 +402,35 @@ namespace Java.Net.Descriptor
             public ClassBound ClassBound { get; set; } = new ClassBound();
             public InterfaceBound[] InterfaceBound { get; set; } = new InterfaceBound[0];
 
-            public override string DescriptorFormat => $"{Identifier}{ClassBound}{string.Join("", InterfaceBound.Select(v => v.ToString()))}";
+            public override string ToString() => $"{Identifier}{ClassBound}{string.Join("", InterfaceBound.Select(v => v.ToString()))}";
         }
         [IDescriptor.RegexStruct("\\:", IDescriptor.PROP)]
         public sealed class ClassBound : IDescriptor<ClassBound>, IDescriptor
         {
             public FieldTypeSignature? FieldTypeSignature { get; set; } = null;
 
-            public override string DescriptorFormat => $":{FieldTypeSignature?.ToString() ?? ""}";
+            public override string ToString() => $":{FieldTypeSignature?.ToString() ?? ""}";
         }
         [IDescriptor.RegexStruct("\\:", IDescriptor.PROP)]
         public sealed class InterfaceBound : IDescriptor<InterfaceBound>, IDescriptor
         {
             public FieldTypeSignature FieldTypeSignature { get; set; } = new FieldTypeSignature();
 
-            public override string DescriptorFormat => $":{FieldTypeSignature}";
+            public override string ToString() => $":{FieldTypeSignature}";
         }
         [IDescriptor.RegexStruct(IDescriptor.PROP)]
         public sealed class SuperclassSignature : IDescriptor<SuperclassSignature>, IDescriptor
         {
             public ClassTypeSignature ClassTypeSignature { get; set; } = new ClassTypeSignature();
 
-            public override string DescriptorFormat => $"{ClassTypeSignature}";
+            public override string ToString() => $"{ClassTypeSignature}";
         }
         [IDescriptor.RegexStruct(IDescriptor.PROP)]
         public sealed class SuperinterfaceSignature : IDescriptor<SuperinterfaceSignature>, IDescriptor
         {
             public ClassTypeSignature ClassTypeSignature { get; set; } = new ClassTypeSignature();
 
-            public override string DescriptorFormat => $"{ClassTypeSignature}";
+            public override string ToString() => $"{ClassTypeSignature}";
         }
         [IDescriptor.RegexStruct("L", IDescriptor.PROP, IDescriptor.PROP, IDescriptor.ZERO_ARRAY_PROP, ";")]
         public sealed class ClassTypeSignature : IDescriptor<ClassTypeSignature>, IFieldTypeSignature
@@ -449,7 +439,7 @@ namespace Java.Net.Descriptor
             public SimpleClassTypeSignature SimpleClassTypeSignature { get; set; } = new SimpleClassTypeSignature();
             public ClassTypeSignatureSuffix[] ClassTypeSignatureSuffix { get; set; } = new ClassTypeSignatureSuffix[0];
 
-            public override string DescriptorFormat => $"L{PackageSpecifier?.ToString() ?? ""}{SimpleClassTypeSignature}{string.Join("", ClassTypeSignatureSuffix.Select(v => v.ToString()))};";
+            public override string ToString() => $"L{PackageSpecifier?.ToString() ?? ""}{SimpleClassTypeSignature}{string.Join("", ClassTypeSignatureSuffix.Select(v => v.ToString()))};";
         }
         [IDescriptor.RegexStruct(IDescriptor.PROP, @"\/", IDescriptor.PROP)]
         public sealed class PackageSpecifier : IDescriptor<PackageSpecifier>, IDescriptor
@@ -457,7 +447,7 @@ namespace Java.Net.Descriptor
             public Identifier Identifier { get; set; } = new Identifier();
             public PackageSpecifier[] PackageSpecifiers { get; set; } = new PackageSpecifier[0];
 
-            public override string DescriptorFormat => $"{Identifier}/{string.Join("", PackageSpecifiers.Select(v => v.ToString()))}";
+            public override string ToString() => $"{Identifier}/{string.Join("", PackageSpecifiers.Select(v => v.ToString()))}";
         }
         [IDescriptor.RegexStruct(IDescriptor.PROP, IDescriptor.PROP)]
         public sealed class SimpleClassTypeSignature : IDescriptor<SimpleClassTypeSignature>, IDescriptor
@@ -465,28 +455,28 @@ namespace Java.Net.Descriptor
             public Identifier Identifier { get; set; } = new Identifier();
             public TypeArguments? TypeArguments { get; set; } = null;
 
-            public override string DescriptorFormat => $"{Identifier}{TypeArguments?.ToString() ?? ""}";
+            public override string ToString() => $"{Identifier}{TypeArguments?.ToString() ?? ""}";
         }
         [IDescriptor.RegexStruct(@"(\.)", IDescriptor.PROP)]
         public sealed class ClassTypeSignatureSuffix : IDescriptor<ClassTypeSignatureSuffix>, IDescriptor
         {
             public SimpleClassTypeSignature SimpleClassTypeSignature { get; set; } = new SimpleClassTypeSignature();
 
-            public override string DescriptorFormat => $".{SimpleClassTypeSignature}";
+            public override string ToString() => $".{SimpleClassTypeSignature}";
         }
         [IDescriptor.RegexStruct("T", IDescriptor.PROP, ";")]
         public sealed class TypeVariableSignature : IDescriptor<TypeVariableSignature>, IFieldTypeSignature
         {
             public Identifier Identifier { get; set; } = new Identifier();
 
-            public override string DescriptorFormat => $"T{Identifier};";
+            public override string ToString() => $"T{Identifier};";
         }
         [IDescriptor.RegexStruct("<", IDescriptor.ONE_ARRAY_PROP, ">")]
         public sealed class TypeArguments : IDescriptor<TypeArguments>, IDescriptor
         {
             public ITypeArgument[] TypeArgument { get; set; } = new ITypeArgument[1] { new AnyTypeArgument() };
 
-            public override string DescriptorFormat => $"<{TypeArgument.Select(v => v.ToString())}>";
+            public override string ToString() => $"<{TypeArgument.Select(v => v.ToString())}>";
         }
         public interface ITypeArgument : IDescriptor { }
         [IDescriptor.RegexStruct(IDescriptor.PROP, IDescriptor.PROP)]
@@ -495,28 +485,28 @@ namespace Java.Net.Descriptor
             public WildcardIndicator? WildcardIndicator { get; set; } = null;
             public FieldTypeSignature FieldTypeSignature { get; set; } = new FieldTypeSignature();
 
-            public override string DescriptorFormat => $"{WildcardIndicator?.ToString() ?? ""}{FieldTypeSignature}";
+            public override string ToString() => $"{WildcardIndicator?.ToString() ?? ""}{FieldTypeSignature}";
         }
         [IDescriptor.RegexStruct(@"(\*)")]
         public sealed class AnyTypeArgument : IDescriptor<AnyTypeArgument>, ITypeArgument
         {
             public static AnyTypeArgument Instance { get; } = new AnyTypeArgument();
 
-            public override string DescriptorFormat => $"*";
+            public override string ToString() => $"*";
         }
         [IDescriptor.RegexStruct(@"(?=(\+|\-))", IDescriptor.PROP)]
         public sealed class WildcardIndicator : IDescriptor<WildcardIndicator>, IDescriptor
         {
             public char Indicator { get; set; } = '+';
 
-            public override string DescriptorFormat => $"{Indicator}";
+            public override string ToString() => $"{Indicator}";
         }
         [IDescriptor.RegexStruct("\\[", IDescriptor.PROP)]
         public sealed class ArrayTypeSignature : IDescriptor<ArrayTypeSignature>, IFieldTypeSignature
         {
             public ITypeSignature TypeSignature { get; set; } = BaseType.Byte;
 
-            public override string DescriptorFormat => $"[{TypeSignature}";
+            public override string ToString() => $"[{TypeSignature}";
         }
         [IDescriptor.RegexStruct(IDescriptor.PROP, @"\(", IDescriptor.ZERO_ARRAY_PROP, @"\)", IDescriptor.PROP, IDescriptor.ZERO_ARRAY_PROP)]
         public sealed class MethodTypeSignature : IDescriptor<MethodTypeSignature>, IDescriptor
@@ -526,7 +516,7 @@ namespace Java.Net.Descriptor
             public IReturnType ReturnType { get; set; } = BaseType.Byte;
             public IThrowsSignature[] ThrowsSignature { get; set; } = new IThrowsSignature[0];
 
-            public override string DescriptorFormat => $"{FormalTypeParameters?.ToString() ?? ""}({TypeSignature.Select(v => v.ToString())}){ReturnType}{ThrowsSignature.Select(v => v.ToString())}";
+            public override string ToString() => $"{FormalTypeParameters?.ToString() ?? ""}({TypeSignature.Select(v => v.ToString())}){ReturnType}{ThrowsSignature.Select(v => v.ToString())}";
         }
         public interface IThrowsSignature : IDescriptor { }
         [IDescriptor.RegexStruct(@"\^", IDescriptor.PROP)]
@@ -534,14 +524,14 @@ namespace Java.Net.Descriptor
         {
             public ClassTypeSignature ClassTypeSignature { get; set; } = new ClassTypeSignature();
 
-            public override string DescriptorFormat => $"^{ClassTypeSignature}";
+            public override string ToString() => $"^{ClassTypeSignature}";
         }
         [IDescriptor.RegexStruct(@"\^", IDescriptor.PROP)]
         public sealed class VariableThrowsSignature : IDescriptor<VariableThrowsSignature>, IThrowsSignature
         {
             public TypeVariableSignature TypeVariableSignature { get; set; } = new TypeVariableSignature();
 
-            public override string DescriptorFormat => $"^{TypeVariableSignature}";
+            public override string ToString() => $"^{TypeVariableSignature}";
         }
     }
 }
