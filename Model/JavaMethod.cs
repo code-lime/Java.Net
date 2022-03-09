@@ -1,4 +1,5 @@
-﻿using Java.Net.Flags;
+﻿using Java.Net.Code;
+using Java.Net.Flags;
 using Mono.Cecil;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,9 @@ namespace Java.Net.Model
             set => DescriptorIndex = Handle.OfConstant(new Utf8Constant() { Value = value });
         }
         [IJava] [IJavaArray] public List<JavaAttribute> Attributes { get; set; }
+
+        private JavaMethodBody body = null;
+        public JavaMethodBody Body => body ??= new JavaMethodBody(this);
 
         public IEnumerable<MethodDefinition> ToNet(TypeDefinition parent)
         {
