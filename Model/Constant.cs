@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Java.Net.Descriptor;
+using Java.Net.Descriptor.Field;
+using Java.Net.Descriptor.Method;
 
 namespace Java.Net.Model
 {
@@ -122,6 +125,8 @@ namespace Java.Net.Model
         public override bool Equals(ClassConstant other) => other?.Index == Index;
         public override string ToString() => $"{base.ToString()} [{Index}] {Name}";
 
+        public IFieldType FieldType { get => IDescriptor.TryParse<IFieldType>(Name); set => Name = value.ToString(); }
+
         public override ClassConstant DeepClone(JavaClass handle) => Create(handle, v => v.Name = Name);
     }
     public sealed class StringConstant : IConstant<StringConstant>
@@ -209,6 +214,9 @@ namespace Java.Net.Model
         public override bool Equals(NameAndTypeConstant other) => other?.NameIndex == NameIndex && other?.DescriptorIndex == DescriptorIndex;
         public override string ToString() => $"{base.ToString()} {Name} {Descriptor}";
 
+        public IFieldDescriptor FieldDescriptor { get => IDescriptor.TryParse<IFieldDescriptor>(Descriptor); set => Descriptor = value.ToString(); }
+        public MethodDescriptor MethodDescriptor { get => IDescriptor.TryParse<MethodDescriptor>(Descriptor); set => Descriptor = value.ToString(); }
+
         public override NameAndTypeConstant DeepClone(JavaClass handle) => Create(handle, v =>
         {
             v.Name = Name;
@@ -245,6 +253,8 @@ namespace Java.Net.Model
         }
         public override bool Equals(MethodTypeConstant other) => other?.DescriptorIndex == DescriptorIndex;
         public override string ToString() => $"{base.ToString()} {Descriptor}";
+
+        public MethodDescriptor MethodDescriptor { get => IDescriptor.TryParse<MethodDescriptor>(Descriptor); set => Descriptor = value.ToString(); }
 
         public override MethodTypeConstant DeepClone(JavaClass handle) => Create(handle, v => v.Descriptor = Descriptor);
     }
@@ -295,7 +305,7 @@ namespace Java.Net.Model
 
         InvokeDynamic = 18,
     }
-    public enum ReferenceKind
+    public enum ReferenceKind : byte
     {
         GetField = 1,
         GetStaticField = 2,
