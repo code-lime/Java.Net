@@ -38,7 +38,8 @@ namespace Java.Net.Model
 
         public IEnumerable<FieldDefinition> ToNet(TypeDefinition parent)
         {
-            FieldAttributes fieldAttributes = 0;
+            throw new NotSupportedException();
+            /*FieldAttributes fieldAttributes = 0;
             if (Flags.HasFlag(AccessField.FINAL)) fieldAttributes |= FieldAttributes.InitOnly;
             if (Flags.HasFlag(AccessField.PRIVATE)) fieldAttributes |= FieldAttributes.Private;
             if (Flags.HasFlag(AccessField.PROTECTED)) fieldAttributes |= FieldAttributes.Family;
@@ -47,7 +48,7 @@ namespace Java.Net.Model
             string desc = Descriptor;
             FieldDefinition field = new FieldDefinition(Name, fieldAttributes, TypeDescriptor.Read(ref desc, parent, parent.Module.Assembly));
             parent.Fields.Add(field);
-            yield return field;
+            yield return field;*/
         }
 
         public override string ToString() => Name + Descriptor;

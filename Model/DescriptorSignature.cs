@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Java.Net.Model
 {
+    /*
     public static class TypeDescriptor
     {
         internal static GenericParameter FindGeneric<IGenericDefinition>(IGenericDefinition generic, string name)
@@ -49,8 +50,6 @@ namespace Java.Net.Model
 
                         string _namespace = string.Join('.', full_name[..^1]);
                         string name = full_name[^1].Replace('$', '/');
-                        if (name.Contains('.'))
-                            ;
                         string full_cs = _namespace + "." + name;
                         builder = builder.Append(full_name);
 
@@ -299,4 +298,5 @@ namespace Java.Net.Model
                     generic.CustomAttributes.Add(new CustomAttribute(MethodDescriptor.Parse(annotation.Type.Value, ".ctor", "()V", generic, assembly)));
         }
     }
+    */
 }

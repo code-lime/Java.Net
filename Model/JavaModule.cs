@@ -195,6 +195,8 @@ namespace Java.Net.Model
 
         public IEnumerable<Mono.Cecil.AssemblyDefinition> ToNet()
         {
+            throw new NotSupportedException();
+            /*
             Mono.Cecil.AssemblyNameDefinition assemblyName = new Mono.Cecil.AssemblyNameDefinition(ImplementationTitle, Version);
             Mono.Cecil.AssemblyDefinition assembly = Mono.Cecil.AssemblyDefinition.CreateAssembly(assemblyName, "jar", MainClass == null ? Mono.Cecil.ModuleKind.Dll : Mono.Cecil.ModuleKind.Console);
             INetStep<Mono.Cecil.TypeDefinition> types = INetExt.Create(Classes.Values, assembly);
@@ -208,6 +210,7 @@ namespace Java.Net.Model
             Console.WriteLine("OK!");
 
             Console.WriteLine(string.Join("\n", assembly.MainModule.GetAllTypes().Select(v => v.FullName)));
+            */
         }
     }
 }

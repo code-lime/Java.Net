@@ -44,7 +44,8 @@ namespace Java.Net.Model
 
         public IEnumerable<MethodDefinition> ToNet(TypeDefinition parent)
         {
-            string descriptor = Descriptor;
+            throw new NotSupportedException();
+            /*string descriptor = Descriptor;
             MethodAttributes methodAttributes = MethodAttributes.HideBySig;
             if (Flags.HasFlag(AccessMethod.ABSTRACT)) methodAttributes |= MethodAttributes.Abstract;
             if (Flags.HasFlag(AccessMethod.FINAL)) methodAttributes |= MethodAttributes.Final;
@@ -104,22 +105,7 @@ namespace Java.Net.Model
 
             yield return method;
             Annotation.Apply(Attributes, method, parent.Module.Assembly);
-            yield return method;
-            //if (code != null) method.Body = new JavaMethodBody(code).ConvertToNet(method);
-            /*JavaMethodBody body = new JavaMethodBody(code);
-            foreach (var instruction in body.GetInstructions())
-            {
-                switch (instruction.OpCode.Key)
-                {
-                    case Code.OpCodes.Names.INVOKEDYNAMIC:
-                    case Code.OpCodes.Names.INVOKEINTERFACE:
-                    case Code.OpCodes.Names.INVOKESPECIAL:
-                    case Code.OpCodes.Names.INVOKESTATIC:
-                    case Code.OpCodes.Names.INVOKEVIRTUAL:
-                        break;
-                }
-            }*/
-            //Attribute.CodeAttribute codeAttribute = (Attribute.CodeAttribute)Attributes.First(v => v is Attribute.CodeAttribute);
+            yield return method;*/
         }
 
         public override string ToString() => Name + Descriptor;

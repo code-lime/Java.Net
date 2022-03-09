@@ -141,7 +141,8 @@ namespace Java.Net.Model
 
         public IEnumerable<TypeDefinition> ToNet(AssemblyDefinition parent)
         {
-            string[] path = ThisClass.Name.Split('/');
+            throw new NotSupportedException();
+            /*string[] path = ThisClass.Name.Split('/');
             TypeAttributes typeAttributes = TypeAttributes.AnsiClass | TypeAttributes.BeforeFieldInit;
             
             if (Flags.HasFlag(AccessClass.INTERFACE)) typeAttributes |= TypeAttributes.Abstract;
@@ -190,7 +191,7 @@ namespace Java.Net.Model
 
             INetStep<MethodDefinition> methods = INetExt.Create(Methods, type);
             while (methods.MoveNext()) ;
-            yield return type;
+            yield return type;*/
         }
         //if (Flags.HasFlag(AccessClass.ANNOTATION))
     }
