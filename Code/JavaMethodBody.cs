@@ -12,25 +12,45 @@ namespace Java.Net.Code
 {
     public class JavaMethodBody : IHandle
     {
-        public CodeAttribute code;
-        public JavaClass Handle => code.Handle;
+        public JavaMethod Method { get; }
+        public JavaClass Handle => Method.Handle;
+        public bool HasCode => Method.Attributes.Any(v => v is CodeAttribute);
 
-        private IEnumerable<IInstruction> instructions = null;
-        public IEnumerable<IInstruction> Instructions
+        private byte[] Code
         {
-            get => new List<IInstruction>(instructions ??= ReadInstructions().ToList());
+            get => GetCodeAttribute(false)?.Code;
             set
             {
-                using MemoryStream stream = new MemoryStream();
-                JavaByteCodeWriter writer = new JavaByteCodeWriter(stream);
-                foreach (var inst in value)
-                    inst.Write(writer);
-                code.Code = stream.ToArray();
+                if (value == null)
+                {
+                    Method.Attributes.RemoveAll(v => v is CodeAttribute);
+                    return;
+                }
+                GetCodeAttribute(true).Code = value;
             }
         }
-        private IEnumerable<IInstruction> ReadInstructions()
+        public IEnumerable<IInstruction> Instructions
         {
-            using MemoryStream stream = new MemoryStream(code.Code);
+            get => ReadInstructions();
+            set
+            {
+                if (value == null)
+                {
+                    Code = null;
+                    return;
+                }
+                using MemoryStream stream = new MemoryStream();
+                JavaByteCodeWriter writer = new JavaByteCodeWriter(stream);
+                foreach (var inst in value) inst.Write(writer);
+                Code = stream.ToArray();
+            }
+        }
+        private List<IInstruction> ReadInstructions()
+        {
+            byte[] code = Code;
+            if (code == null) return null;
+            List<IInstruction> list = new List<IInstruction>();
+            using MemoryStream stream = new MemoryStream(code);
             JavaByteCodeReader reader = new JavaByteCodeReader(stream);
             long start_index = reader.Position;
             while (reader.CanReadNext)
@@ -38,14 +58,26 @@ namespace Java.Net.Code
                 long offset = reader.Position - start_index;
                 IInstruction instruction = reader.ReadInstrustion(Handle);
                 instruction.Position = (ushort)offset;
-                yield return instruction;
+                list.Add(instruction);
             }
+            return list;
+        }
+        private CodeAttribute GetCodeAttribute(bool create)
+        {
+            CodeAttribute attribute = (CodeAttribute)Method.Attributes.FirstOrDefault(v => v is CodeAttribute);
+            if (attribute == null && create) Method.Attributes.Add(attribute = CodeAttribute.Create(Handle, dat =>
+            {
+                dat.MaxStack = ushort.MaxValue;
+                dat.MaxLocals = ushort.MaxValue;
+                dat.ExceptionTable = new List<CodeAttribute.Exception>();
+                dat.Attributes = new List<JavaAttribute>();
+            }));
+            return attribute;
         }
 
-        public JavaMethodBody(CodeAttribute code)
+        public JavaMethodBody(JavaMethod method)
         {
-            this.code = code;
-            //Console.WriteLine(string.Join(", ", code.Code.Select(v => "0x" + v.ToString("X2"))));
+            this.Method = method;
         }
     }
 }
