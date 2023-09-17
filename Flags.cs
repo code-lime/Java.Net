@@ -9,6 +9,9 @@ namespace Java.Net.Flags
     {
         NONE = 0x0000,
         PUBLIC = 0x0001, //Declared public; may be accessed from outside its package.
+        PRIVATE = 0x0002,
+        PROTECTED = 0x0004,
+        STATIC = 0x0008,
         FINAL = 0x0010, //Declared final; no subclasses allowed.
         SUPER = 0x0020, //Treat superclass methods specially when invoked by the invokespecial instruction.
         INTERFACE = 0x0200, //Is an interface, not a class.

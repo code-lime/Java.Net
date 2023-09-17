@@ -48,7 +48,7 @@ namespace Java.Net.Code
         public static bool operator !=(OpCode<I> a, OpCode b) => !(a == b);
         public override string ToString() => $"{Name} (0x{Index.ToString("X2")})";
 
-        IInstruction OpCode.Instruction(JavaClass handle, Action<IInstruction> apply) => Instruction(handle, apply);
+        IInstruction OpCode.Instruction(JavaClass handle, Action<IInstruction> apply) => Instruction(handle, apply == null ? null : v => apply(v));
         public I Instruction(JavaClass handle, Action<I> apply = null) => IInstruction<I>.Create(handle, this, apply);
 
         public static implicit operator OpCodes.Names(OpCode<I> code) => code.key;

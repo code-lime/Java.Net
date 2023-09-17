@@ -2,6 +2,7 @@
 using Mono.Cecil;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -194,5 +195,17 @@ namespace Java.Net.Model
             yield return type;*/
         }
         //if (Flags.HasFlag(AccessClass.ANNOTATION))
+
+        public static JavaClass ReadFrom(string class_file)
+        {
+            using MemoryStream stream = new MemoryStream(System.IO.File.ReadAllBytes(class_file));
+            return IJava.Read<JavaClass>(new Java.Net.JavaByteCodeReader(stream));
+        }
+        public void WriteTo(string file)
+        {
+            using Stream stream = File.Open(file, FileMode.Create, FileAccess.Write, FileShare.Write);
+            IJava.Write(this, new JavaByteCodeWriter(stream));
+        }
+        public static void WriteTo(string file, JavaClass @class) => @class.WriteTo(file);
     }
 }

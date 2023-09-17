@@ -36,12 +36,8 @@ namespace Java.Net.Model
         }
 
         public static JavaModule Empty() => new JavaModule();
-        private void Read(ParallelZipArchive zip, Action<ProgressEventArgs> progress = null)
+        private void Read(Dictionary<string, MemoryStream> zipEntries, Action<ProgressEventArgs> progress = null)
         {
-            //Console.Write($"Unzipping...");
-            Dictionary<string, MemoryStream> zipEntries = zip.Extract();// ParallelZipArchive.ReadAll(stream);
-            //Console.WriteLine("OK!");
-
             Version version = new Version(0, 0, 1);
             string implementation_title = "JavaAssembly";
             string implementation_version = null;
@@ -90,6 +86,7 @@ namespace Java.Net.Model
                 }
                 if (!string.IsNullOrWhiteSpace(name))
                 {
+                    int _index;
                     if (name.EndsWith(".class") && !fullName.StartsWith("META-INF/"))
                     {
 #if !DEBUGGING
@@ -107,8 +104,9 @@ namespace Java.Net.Model
                                     Console.WriteLine($"[{s}/{count}] Read class '{fullName}'...OK!");
                                 }*/
                                 index++;
-                                progress?.Invoke(new ProgressEventArgs(fullName, index, count));
+                                _index = index;
                             }
+                            progress?.Invoke(new ProgressEventArgs(fullName, _index, count));
                             return;
                         }
 #if !DEBUGGING
@@ -124,9 +122,10 @@ namespace Java.Net.Model
                     lock (files)
                     {
                         index++;
+                        _index = index;
                         files[fullName] = stream.ToArray();
-                        progress?.Invoke(new ProgressEventArgs(fullName, index, count));
                     }
+                    progress?.Invoke(new ProgressEventArgs(fullName, _index, count));
                     //if (s % 100 == 0) Console.WriteLine($"[{s}/{count}] Read file '{fullName}'...OK!");
                 }
             });
@@ -162,10 +161,38 @@ namespace Java.Net.Model
             stream.Position = 0;
             return IJava.Read<JavaClass>(new JavaByteCodeReader(stream));
         }
+        public static IEnumerable<JavaClass> ReadFrom(string file, params string[] paths) => ReadFrom(file, (IEnumerable<string>)paths);
+        public static IEnumerable<JavaClass> ReadFrom(string file, IEnumerable<string> paths)
+        {
+            ParallelZipArchive archive = ParallelZipArchive.From(file);
+            foreach (string path in paths)
+            {
+                using MemoryStream stream = archive.Extract(path);
+                stream.Position = 0;
+                yield return IJava.Read<JavaClass>(new JavaByteCodeReader(stream));
+            }
+        }
+        public static IEnumerable<JavaClass> ReadFrom(string file, Func<string, bool> filter)
+        {
+            foreach ((string _, MemoryStream _stream) in ParallelZipArchive.From(file).Extract(filter))
+            {
+                using MemoryStream stream = _stream;
+                stream.Position = 0;
+                yield return IJava.Read<JavaClass>(new JavaByteCodeReader(stream));
+            }
+        }
         public static JavaModule ReadFrom(string file, Action<ProgressEventArgs> progress = null)
         {
             JavaModule module = new JavaModule();
-            module.Read(ParallelZipArchive.From(file, progress), progress);
+            bool zip = true;
+            if (progress != null)
+            {
+                Action<ProgressEventArgs> _progress = progress;
+                progress = (e) => _progress?.Invoke(new ProgressEventArgs(e.Name, e.Received, e.TotalToReceive, e.ProgressPercentage / 2 + (zip ? 0 : 50)));
+            }
+            Dictionary<string, MemoryStream> zipEntries = ParallelZipArchive.From(file, progress).Extract();
+            zip = false;
+            module.Read(zipEntries, progress);
             return module;
         }
         public void WriteTo(string file)
@@ -190,6 +217,11 @@ namespace Java.Net.Model
         public JavaModule Append(JavaClass clazz)
         {
             Classes[clazz.ThisClass.Name] = clazz;
+            return this;
+        }
+        public JavaModule Append(IEnumerable<JavaClass> clazzes)
+        {
+            foreach (var clazz in clazzes) Classes[clazz.ThisClass.Name] = clazz;
             return this;
         }
 

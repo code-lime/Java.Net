@@ -1,4 +1,5 @@
 ﻿using Java.Net.Code;
+using Java.Net.Data.Descriptor;
 using Java.Net.Flags;
 using Mono.Cecil;
 using System;
@@ -36,6 +37,11 @@ namespace Java.Net.Model
         {
             get => (Handle.Constants[DescriptorIndex] as Utf8Constant).Value;
             set => DescriptorIndex = Handle.OfConstant(new Utf8Constant() { Value = value });
+        }
+        public MethodDescriptor MethodDescriptor
+        {
+            get => MethodDescriptor.TryParse(Descriptor);
+            set => Descriptor = value.DescriptorFormat;
         }
         [IJava] [IJavaArray] public List<JavaAttribute> Attributes { get; set; }
 

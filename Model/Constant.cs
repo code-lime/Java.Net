@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Java.Net.Data.Signature;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Java.Net.Descriptor;
-using Java.Net.Descriptor.Field;
-using Java.Net.Descriptor.Method;
 
 namespace Java.Net.Model
 {
@@ -125,7 +123,7 @@ namespace Java.Net.Model
         public override bool Equals(ClassConstant other) => other?.Index == Index;
         public override string ToString() => $"{base.ToString()} [{Index}] {Name}";
 
-        public IFieldType FieldType { get => IDescriptor.TryParse<IFieldType>(Name); set => Name = value.ToString(); }
+        public ITypeSignature FieldType { get => ISignature.TryParse<ITypeSignature>(Name); set => Name = value.ToString(); }
 
         public override ClassConstant DeepClone(JavaClass handle) => Create(handle, v => v.Name = Name);
     }
@@ -214,8 +212,8 @@ namespace Java.Net.Model
         public override bool Equals(NameAndTypeConstant other) => other?.NameIndex == NameIndex && other?.DescriptorIndex == DescriptorIndex;
         public override string ToString() => $"{base.ToString()} {Name} {Descriptor}";
 
-        public IFieldDescriptor FieldDescriptor { get => IDescriptor.TryParse<IFieldDescriptor>(Descriptor); set => Descriptor = value.ToString(); }
-        public MethodDescriptor MethodDescriptor { get => IDescriptor.TryParse<MethodDescriptor>(Descriptor); set => Descriptor = value.ToString(); }
+        public ITypeSignature FieldSignature { get => ISignature.TryParse<ITypeSignature>(Descriptor); set => Descriptor = value.ToString(); }
+        public MethodTypeSignature MethodSignature { get => ISignature.TryParse<MethodTypeSignature>(Descriptor); set => Descriptor = value.ToString(); }
 
         public override NameAndTypeConstant DeepClone(JavaClass handle) => Create(handle, v =>
         {
@@ -254,7 +252,7 @@ namespace Java.Net.Model
         public override bool Equals(MethodTypeConstant other) => other?.DescriptorIndex == DescriptorIndex;
         public override string ToString() => $"{base.ToString()} {Descriptor}";
 
-        public MethodDescriptor MethodDescriptor { get => IDescriptor.TryParse<MethodDescriptor>(Descriptor); set => Descriptor = value.ToString(); }
+        public MethodTypeSignature MethodDescriptor { get => ISignature.TryParse<MethodTypeSignature>(Descriptor); set => Descriptor = value.ToString(); }
 
         public override MethodTypeConstant DeepClone(JavaClass handle) => Create(handle, v => v.Descriptor = Descriptor);
     }

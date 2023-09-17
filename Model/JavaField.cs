@@ -3,6 +3,7 @@ using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Java.Net.Data.Descriptor;
 
 namespace Java.Net.Model
 {
@@ -33,6 +34,11 @@ namespace Java.Net.Model
         {
             get => (Handle.Constants[DescriptorIndex] as Utf8Constant).Value;
             set => DescriptorIndex = Handle.OfConstant(new Utf8Constant() { Value = value });
+        }
+        public IFieldDescriptor FieldDescriptor
+        {
+            get => IDescriptor.TryParse<IFieldDescriptor>(Descriptor);
+            set => Descriptor = value.DescriptorFormat;
         }
         [IJava][IJavaArray] public List<JavaAttribute> Attributes { get; set; }
 
