@@ -1,4 +1,6 @@
 ﻿using Java.Net.Code;
+using Java.Net.Descriptor;
+using Java.Net.Descriptor.Method;
 using Java.Net.Flags;
 using Mono.Cecil;
 using System;
@@ -41,6 +43,11 @@ namespace Java.Net.Model
 
         private JavaMethodBody body = null;
         public JavaMethodBody Body => body ??= new JavaMethodBody(this);
+        public MethodDescriptor MethodDescriptor
+        {
+            get => IDescriptor.TryParse<MethodDescriptor>(this.Descriptor, true);
+            set => this.Descriptor = value.DescriptorFormat;
+        }
 
         public IEnumerable<MethodDefinition> ToNet(TypeDefinition parent)
         {

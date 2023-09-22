@@ -302,19 +302,23 @@ namespace Java.Net.Descriptor
             public static readonly BaseType Long = new BaseType('J');
             public static readonly BaseType Short = new BaseType('S');
             public static readonly BaseType Boolean = new BaseType('Z');
-            public static IEnumerable<BaseType> Types
+
+            public static IEnumerable<BaseType> Types => NamedTypes.Values;
+            public static IReadOnlyDictionary<string, BaseType> NamedTypes { get; }
+            static BaseType()
             {
-                get
+                Dictionary<string, BaseType> dict = new Dictionary<string, BaseType>()
                 {
-                    yield return Byte;
-                    yield return Char;
-                    yield return Double;
-                    yield return Float;
-                    yield return Int;
-                    yield return Long;
-                    yield return Short;
-                    yield return Boolean;
-                }
+                    ["byte"] = Byte,
+                    ["char"] = Char,
+                    ["double"] = Double,
+                    ["float"] = Float,
+                    ["int"] = Int,
+                    ["long"] = Long,
+                    ["short"] = Short,
+                    ["boolean"] = Boolean,
+                };
+                NamedTypes = dict;
             }
 
             public char Key { get; set; }
