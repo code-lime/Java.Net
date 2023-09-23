@@ -1,4 +1,6 @@
-﻿using Java.Net.Model;
+﻿using Java.Net.Binary;
+using Java.Net.Code.Instruction;
+using Java.Net.Data;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -2448,7 +2450,7 @@ namespace Java.Net.Code
         /// </code>
         /// </summary>
         public static readonly OpCode<OffsetWideInstruction> JSR_W = new OpCode<OffsetWideInstruction>(Names.JSR_W, "Jump subroutine (wide index)");
-        public static OpCode[] OpCodeList => new OpCode[]
+        public static IOpCode[] OpCodeList => new IOpCode[]
         {
             NOP,
             ACONST_NULL,
@@ -2860,9 +2862,9 @@ namespace Java.Net.Code
         }
         #endregion
 
-        public static OpCode ByName(Names name) => OpCodeList[(byte)name];
+        public static IOpCode ByName(Names name) => OpCodeList[(byte)name];
 
-        public static OpCode ReadOpCode(this JavaByteCodeReader reader) => OpCodeList[reader.ReadByte()];
-        public static IInstruction ReadInstrustion(this JavaByteCodeReader reader, IJava handle) => IJava.Read<IInstruction>(handle, reader);
+        public static IOpCode ReadOpCode(this JavaByteCodeReader reader) => OpCodeList[reader.ReadByte()];
+        public static IInstruction ReadInstrustion(this JavaByteCodeReader reader, IRaw handle) => IRaw.Read<IInstruction>(handle, reader);
     }
 }

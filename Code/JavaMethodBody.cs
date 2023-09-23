@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Java.Net.Code;
+using Java.Net.Binary;
+using Java.Net.Code.Instruction;
 using Java.Net.Model;
-using Java.Net.Model.Attribute;
+using Java.Net.Model.Raw.Annotation;
+using Java.Net.Model.Raw.Base;
 using Mono.Cecil;
 
 namespace Java.Net.Code
@@ -14,7 +16,7 @@ namespace Java.Net.Code
     {
         public JavaMethod Method { get; }
         public JavaClass Handle => Method.Handle;
-        public bool HasCode => Method.Attributes.Any(v => v is CodeAttribute);
+        public bool HasCode => Method.Annotations.Any(v => v is CodeAnnotation);
 
         private byte[] Code
         {
@@ -23,7 +25,7 @@ namespace Java.Net.Code
             {
                 if (value == null)
                 {
-                    Method.Attributes.RemoveAll(v => v is CodeAttribute);
+                    Method.Annotations.RemoveAll(v => v is CodeAnnotation);
                     return;
                 }
                 GetCodeAttribute(true).Code = value;
@@ -62,15 +64,15 @@ namespace Java.Net.Code
             }
             return list;
         }
-        private CodeAttribute GetCodeAttribute(bool create)
+        private CodeAnnotation GetCodeAttribute(bool create)
         {
-            CodeAttribute attribute = (CodeAttribute)Method.Attributes.FirstOrDefault(v => v is CodeAttribute);
-            if (attribute == null && create) Method.Attributes.Add(attribute = CodeAttribute.Create(Handle, dat =>
+            CodeAnnotation attribute = (CodeAnnotation)Method.Annotations.FirstOrDefault(v => v is CodeAnnotation);
+            if (attribute == null && create) Method.Annotations.Add(attribute = CodeAnnotation.Create(Handle, dat =>
             {
                 dat.MaxStack = ushort.MaxValue;
                 dat.MaxLocals = ushort.MaxValue;
-                dat.ExceptionTable = new List<CodeAttribute.Exception>();
-                dat.Attributes = new List<JavaAttribute>();
+                dat.ExceptionTable = new List<CodeAnnotation.Exception>();
+                dat.Attributes = new List<IAnnotation>();
             }));
             return attribute;
         }
