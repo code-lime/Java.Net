@@ -2,13 +2,13 @@
 #undef DEBUGGING
 using Java.Net.Binary;
 using Java.Net.Data;
-using Java.Net.Flags;
 using Java.Net.Model.Net;
 using Java.Net.Progress;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Java.Net.Model.Raw.Base;
@@ -28,21 +28,19 @@ public class JavaModule : INet
 
     public override string ToString() => $"JavaModule: {ImplementationTitle} v{Version}";
 
-    public static void SyncForEach<TSource>(IEnumerable<TSource> source, Action<TSource, ParallelLoopState?, long> body)
+#if DEBUGGING
+    public static async ValueTask SyncForEachAsync<TSource>(IEnumerable<TSource> source, CancellationToken cancellationToken, Func<TSource, CancellationToken, ValueTask> body)
     {
-        long v = 0;
         foreach (var item in source)
-        {
-            body.Invoke(item, null, v);
-            v++;
-        }
+            await body.Invoke(item, cancellationToken);
     }
-
+#endif
+    
     public static JavaModule Empty() => new JavaModule();
-    private void Read(ParallelZipArchive zip, Action<ProgressEventArgs>? progress = null)
+    private async ValueTask ReadAsync(ParallelZipArchive zip, Action<ProgressEventArgs>? progress = null, CancellationToken cancellationToken = default)
     {
         //Console.Write($"Unzipping...");
-        Dictionary<string, MemoryStream> zipEntries = zip.Extract();// ParallelZipArchive.ReadAll(stream);
+        Dictionary<string, MemoryStream> zipEntries = await zip.ExtractAsync(cancellationToken);// ParallelZipArchive.ReadAll(stream);
         //Console.WriteLine("OK!");
 
         Version version = new Version(0, 0, 1);
@@ -55,11 +53,11 @@ public class JavaModule : INet
         JavaClass[] classes = new JavaClass[count];
         Dictionary<string, byte[]> files = new Dictionary<string, byte[]>();
 #if DEBUGGING
-        SyncForEach
+        await SyncForEachAsync
 #else
-        Parallel.ForEach
+        await Parallel.ForEachAsync
 #endif
-        (zipEntries, (kv, i, s) =>
+        (zipEntries, cancellationToken, async (kv, token) =>
         {
             using MemoryStream stream = kv.Value;
             stream.Position = 0;
@@ -70,7 +68,7 @@ public class JavaModule : INet
                 try
                 {
                     StreamReader reader = new StreamReader(stream);
-                    foreach (var line in reader.ReadToEnd().Replace("\r", "").Split('\n'))
+                    foreach (var line in (await reader.ReadToEndAsync(token)).Replace("\r", "").Split('\n'))
                     {
                         if (string.IsNullOrWhiteSpace(line)) continue;
                         int index = line.IndexOf(':');
@@ -100,10 +98,10 @@ public class JavaModule : INet
 #endif
                     {
                         stream.Position = 0;
-                        JavaClass _class = IRaw.Read<JavaClass>(new JavaByteCodeReader(stream));
+                        JavaClass _class = await IRaw.ReadAsync<JavaClass>(new JavaByteCodeReader(stream), cancellationToken: token);
                         lock (classes)
                         {
-                            classes[s] = _class;
+                            classes[index] = _class;
                             /*Console.Title = $"[{s}/{count}] Read class '{fullName}'...OK!";
                             if (s % 100 == 0)
                             {
@@ -141,13 +139,13 @@ public class JavaModule : INet
         Files = files;
         MainClass = main;
     }
-    private void Write(Stream stream)
+    public async ValueTask WriteToAsync(Stream stream, CancellationToken cancellationToken)
     {
         Dictionary<string, Stream> files = new Dictionary<string, Stream>();
         foreach (var _class in Classes.Values)
         {
             MemoryStream _new = new MemoryStream();
-            _class.Write(new JavaByteCodeWriter(_new));
+            await _class.WriteAsync(new JavaByteCodeWriter(_new), cancellationToken);
             _new.Position = 0;
             files[_class.ThisClassPath] = _new;
         }
@@ -156,32 +154,44 @@ public class JavaModule : INet
             MemoryStream _new = new MemoryStream(file.Value);
             files[file.Key] = _new;
         }
-        ParallelZipArchive.ToZip(stream, files);
+        await ParallelZipArchive.ToZipAsync(stream, files, cancellationToken);
         foreach (var _s in files.Values) _s.Dispose();
     }
-    public static JavaClass ReadFrom(string file, string path)
+    public static async ValueTask<JavaClass> ReadFromAsync(string file, string path, CancellationToken cancellationToken)
     {
-        using MemoryStream stream = ParallelZipArchive.From(file).Extract(path);
+        using MemoryStream stream = await ParallelZipArchive.From(file).ExtractAsync(path, cancellationToken);
         stream.Position = 0;
-        return IRaw.Read<JavaClass>(new JavaByteCodeReader(stream));
+        return await IRaw.ReadAsync<JavaClass>(new JavaByteCodeReader(stream), cancellationToken: cancellationToken);
     }
-    public static JavaModule ReadFrom(string file, Action<ProgressEventArgs>? progress = null)
+    public static async ValueTask<JavaModule> ReadFromAsync(string file, Action<ProgressEventArgs>? progress = null, CancellationToken cancellationToken = default)
     {
         JavaModule module = new JavaModule();
-        module.Read(ParallelZipArchive.From(file, progress), progress);
+        await module.ReadAsync(ParallelZipArchive.From(file, progress), progress, cancellationToken);
         return module;
     }
-    public void WriteTo(string file)
+    public static async ValueTask<JavaClass> ReadFromAsync(byte[] bytes, string path, CancellationToken cancellationToken)
+    {
+        using MemoryStream stream = await ParallelZipArchive.From(bytes).ExtractAsync(path, cancellationToken);
+        stream.Position = 0;
+        return await IRaw.ReadAsync<JavaClass>(new JavaByteCodeReader(stream), cancellationToken: cancellationToken);
+    }
+    public static async ValueTask<JavaModule> ReadFromAsync(byte[] bytes, Action<ProgressEventArgs>? progress = null, CancellationToken cancellationToken = default)
+    {
+        JavaModule module = new JavaModule();
+        await module.ReadAsync(ParallelZipArchive.From(bytes, progress), progress, cancellationToken);
+        return module;
+    }
+    public async ValueTask WriteToAsync(string file, CancellationToken cancellationToken)
     {
         using Stream stream = File.Open(file, FileMode.Create, FileAccess.Write, FileShare.Write);
-        Write(stream);
+        await WriteToAsync(stream, cancellationToken);
     }
-    public static void WriteTo(string file, JavaClass @class)
+    public static async ValueTask WriteTo(string file, JavaClass javaClass, CancellationToken cancellationToken)
     {
         using Stream stream = File.Open(file, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
         using MemoryStream _stream = new MemoryStream();
-        @class.Write(new JavaByteCodeWriter(_stream));
-        ParallelZipArchive.SetToZip(stream, new Dictionary<string, Stream>() { [@class.ThisClassPath] = _stream });
+        await javaClass.WriteAsync(new JavaByteCodeWriter(_stream), cancellationToken);
+        await ParallelZipArchive.SetToZipAsync(stream, new Dictionary<string, Stream>() { [javaClass.ThisClassPath] = _stream }, cancellationToken);
     }
 
     public JavaModule Join(JavaModule other)
@@ -190,9 +200,9 @@ public class JavaModule : INet
         foreach (var kv in other.Files) Files[kv.Key] = kv.Value;
         return this;
     }
-    public JavaModule Append(JavaClass clazz)
+    public JavaModule Append(JavaClass javaClass)
     {
-        Classes[clazz.ThisClass.Name] = clazz;
+        Classes[javaClass.ThisClass.Name] = javaClass;
         return this;
     }
 

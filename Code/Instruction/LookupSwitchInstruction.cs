@@ -12,7 +12,7 @@ public sealed class LookupSwitchInstruction : IInstruction<LookupSwitchInstructi
         [JavaRaw] public int Offset { get; set; }
     }
     [JavaRaw] public int Default { get; set; }
-    [JavaRaw][JavaArray(JavaType.Int)] public List<Pair> Pairs { get; set; }
+    [JavaRaw][JavaArray(JavaType.Int)] public List<Pair> Pairs { get; set; } = null!;
     public override object[] IndexOperand => new object[] { Default, Pairs.Count, Pairs.ToArray() };
     public override object[] Operand => new object[] { Default, Pairs.Count, Pairs.ToArray() };
 }

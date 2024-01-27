@@ -14,6 +14,6 @@ public enum JavaType
     Double,
     UTF8,
 
-    IJava,
+    Raw,
     Custom
 }

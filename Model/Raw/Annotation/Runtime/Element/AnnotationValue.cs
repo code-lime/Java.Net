@@ -4,5 +4,5 @@ namespace Java.Net.Model.Raw.Annotation.Runtime.Element;
 
 public sealed class AnnotationValue : ElementValue<AnnotationValue>
 {
-    [JavaRaw] public Annotation Annotation { get; set; }
+    [JavaRaw] public Annotation Annotation { get; set; } = null!;
 }

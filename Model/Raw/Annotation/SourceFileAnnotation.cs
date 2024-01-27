@@ -9,7 +9,7 @@ public sealed class SourceFileAnnotation : IAnnotation<SourceFileAnnotation>
     [JavaRaw] public ushort SourceFileIndex { get; set; }
     public Utf8Constant SourceFile
     {
-        get => Handle.Constants[SourceFileIndex] as Utf8Constant;
+        get => (Utf8Constant)Handle.Constants[SourceFileIndex];
         set => SourceFileIndex = Handle.OfConstant(value);
     }
 }

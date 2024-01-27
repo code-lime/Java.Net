@@ -9,8 +9,8 @@ public sealed class ElementValuePair : BaseRaw<ElementValuePair>
     [JavaRaw] public ushort NameIndex { get; set; }
     public Utf8Constant Name
     {
-        get => Handle.Constants[NameIndex] as Utf8Constant;
+        get => (Utf8Constant)Handle.Constants[NameIndex];
         set => NameIndex = Handle.OfConstant(value);
     }
-    [JavaRaw] public IElementValue ElementValue { get; set; }
+    [JavaRaw] public IElementValue ElementValue { get; set; } = null!;
 }

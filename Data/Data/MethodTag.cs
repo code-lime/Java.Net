@@ -8,7 +8,7 @@ public class MethodTag
 {
     public IRaw? Parent { get; set; }
     public IRaw? LastOfArray { get; set; }
-    public JavaByteCodeReader Reader { get; set; }
+    public JavaByteCodeReader? Reader { get; set; }
     public int IndexOfArray { get; set; }
 
     public MethodTag Edit(Action<MethodTag> func)
@@ -24,6 +24,6 @@ public class MethodTag
         Reader = Reader
     };
 
-    public static MethodTag? NULL = null;
-    public static MethodTag Create(JavaByteCodeReader reader, IRaw handle) => new MethodTag { Reader = reader, Parent = handle };
+    public static readonly MethodTag NULL = null!;
+    public static MethodTag Create(JavaByteCodeReader? reader, IRaw handle) => new MethodTag { Reader = reader, Parent = handle };
 }

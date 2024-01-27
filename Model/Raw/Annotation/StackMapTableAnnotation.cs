@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Java.Net.Binary;
 using Java.Net.Data;
 using Java.Net.Data.Attribute;
@@ -26,17 +28,16 @@ public sealed class StackMapTableAnnotation : IAnnotation<StackMapTableAnnotatio
         Object = 7,
         Uninitialized = 8
     }
-    public interface VerificationTypeInfo : IRaw
+    public interface IVerificationTypeInfo : IRaw
     {
         VerificationType Tag { get; }
         [InstanceOfTag]
-        public static VerificationTypeInfo InstanceOfTag(
+        public static async ValueTask<IVerificationTypeInfo> InstanceOfTag(
             [TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader,
-            [TagType(TagTypeAttribute.Tag.LastOfArray)] IRaw lastOfArray,
-            [TagType(TagTypeAttribute.Tag.IndexOfArray)] ref int indexOfArray)
+            CancellationToken cancellationToken)
         {
             VerificationType type;
-            return (type = (VerificationType)reader.ReadByte()) switch
+            return (type = (VerificationType)await reader.ReadByteAsync(cancellationToken)) switch
             {
                 VerificationType.Top => new TopVariableInfo(),
                 VerificationType.Integer => new IntegerVariableInfo(),
@@ -53,7 +54,7 @@ public sealed class StackMapTableAnnotation : IAnnotation<StackMapTableAnnotatio
             };
         }
     }
-    public abstract class VerificationTypeInfo<I> : BaseRaw<I>, VerificationTypeInfo where I : VerificationTypeInfo<I>
+    public abstract class VerificationTypeInfo<I> : BaseRaw<I>, IVerificationTypeInfo where I : VerificationTypeInfo<I>
     {
         [JavaRaw(JavaType.Byte, IsReaded: false)] public abstract VerificationType Tag { get; }
     }
@@ -91,7 +92,7 @@ public sealed class StackMapTableAnnotation : IAnnotation<StackMapTableAnnotatio
         [JavaRaw] public ushort CPoolIndex { get; set; }
         public ClassConstant CPool
         {
-            get => Handle.Constants[CPoolIndex] as ClassConstant;
+            get => (ClassConstant)Handle.Constants[CPoolIndex];
             set => CPoolIndex = Handle.OfConstant(value);
         }
     }
@@ -104,9 +105,9 @@ public sealed class StackMapTableAnnotation : IAnnotation<StackMapTableAnnotatio
     {
         byte FrameType { get; set; }
         [InstanceOfTag]
-        public static IFrame InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader)
+        public static async ValueTask<IFrame> InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader, CancellationToken cancellationToken)
         {
-            byte frame_type = reader.ReadByte();
+            byte frame_type = await reader.ReadByteAsync(cancellationToken);
             IFrame frame =
                 IsRange(frame_type, 0, 63) ? new SameFrame() :
                 IsRange(frame_type, 64, 127) ? new SameLocals1StackItemFrame() :
@@ -128,12 +129,12 @@ public sealed class StackMapTableAnnotation : IAnnotation<StackMapTableAnnotatio
     public class SameFrame : IFrame<SameFrame> { }
     public class SameLocals1StackItemFrame : IFrame<SameLocals1StackItemFrame>
     {
-        [JavaRaw] public VerificationTypeInfo Stack { get; set; }
+        [JavaRaw] public IVerificationTypeInfo Stack { get; set; } = null!;
     }
     public class SameLocals1StackItemFrameExtended : IFrame<SameLocals1StackItemFrameExtended>
     {
         [JavaRaw] public ushort OffsetDelta { get; set; }
-        [JavaRaw] public VerificationTypeInfo Stack { get; set; }
+        [JavaRaw] public IVerificationTypeInfo Stack { get; set; } = null!;
     }
     public class ChopFrame : IFrame<ChopFrame>
     {
@@ -146,20 +147,20 @@ public sealed class StackMapTableAnnotation : IAnnotation<StackMapTableAnnotatio
     public class AppendFrame : IFrame<AppendFrame>
     {
         [JavaRaw] public ushort OffsetDelta { get; set; }
-        [JavaRaw(Index: 2)] public List<VerificationTypeInfo> Locals { get; set; }
-        public override void ReadProperty(JavaByteCodeReader reader, PropertyData data, object value)
+        [JavaRaw(Index: 2)] public List<IVerificationTypeInfo> Locals { get; set; } = null!;
+        public override ValueTask ReadPropertyAsync(JavaByteCodeReader reader, PropertyData data, object? value, CancellationToken cancellationToken)
         {
-            if (data.Index == 2) value = Locals = new VerificationTypeInfo[FrameType - 251].ToList();
-            base.ReadProperty(reader, data, value);
+            if (data.Index == 2) value = Locals = new IVerificationTypeInfo[FrameType - 251].ToList();
+            return base.ReadPropertyAsync(reader, data, value, cancellationToken);
         }
     }
     public class FullFrame : IFrame<FullFrame>
     {
         [JavaRaw] public ushort OffsetDelta { get; set; }
-        [JavaRaw][JavaArray(JavaType.UShort)] public List<VerificationTypeInfo> Locals { get; set; }
-        [JavaRaw][JavaArray(JavaType.UShort)] public List<VerificationTypeInfo> Stack { get; set; }
+        [JavaRaw][JavaArray(JavaType.UShort)] public List<IVerificationTypeInfo> Locals { get; set; } = null!;
+        [JavaRaw][JavaArray(JavaType.UShort)] public List<IVerificationTypeInfo> Stack { get; set; } = null!;
     }
 
     public override AnnotationType Type => AnnotationType.StackMapTable;
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<IFrame> Entries { get; set; }
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<IFrame> Entries { get; set; } = null!;
 }

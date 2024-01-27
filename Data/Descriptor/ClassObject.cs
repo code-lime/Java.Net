@@ -132,7 +132,6 @@ public class ClassObject
                             if (DEBUG) Console.WriteLine(Prefix + "IGNORED#A: " + Type.FullName);
                             return false;
                         }
-                        PropertyInfo property = Properties[field_index];
                         if (type == null) throw new Exception("Type is 'null'");
                         Array array = Array.CreateInstance(type, _length);
                         for (int _i = 0; _i < _length; _i++) array.SetValue(list[_i], _i);
@@ -153,9 +152,9 @@ public class ClassObject
                             if (DEBUG) Console.WriteLine(Prefix + "IGNORED: Regex match empty");
                             return false;
                         }
-                        foreach (Match? match in regex.Matches(part_text))
+                        foreach (Match? match in regex.Matches(part_text).Cast<Match?>())
                         {
-                            foreach (Group? group in match?.Groups ?? (IEnumerable<Group>)new Group[0])
+                            foreach (Group? group in match?.Groups ?? (IEnumerable<Group>)Array.Empty<Group>())
                             {
                                 if (group.Name == "end")
                                 {

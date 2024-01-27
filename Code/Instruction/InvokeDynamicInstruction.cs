@@ -6,7 +6,7 @@ namespace Java.Net.Code.Instruction;
 
 public sealed class InvokeDynamicInstruction : IInstruction<InvokeDynamicInstruction>, IInvokeInterfaceInstruction
 {
-    public IRefConstant Method { get => Handle.Constants[MethodIndex] as IRefConstant; set => MethodIndex = Handle.OfConstant(value); }
+    public IRefConstant Method { get => (IRefConstant)Handle.Constants[MethodIndex]; set => MethodIndex = Handle.OfConstant(value); }
     [JavaRaw] public ushort MethodIndex { get; set; }
     public byte Count { get => 0; set { } }
     public override object[] IndexOperand => new object[] { MethodIndex, Count, 0 };

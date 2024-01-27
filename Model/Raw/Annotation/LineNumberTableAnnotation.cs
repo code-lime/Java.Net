@@ -12,5 +12,5 @@ public sealed class LineNumberTableAnnotation : IAnnotation<LineNumberTableAnnot
         [JavaRaw] public ushort LineNumber { get; set; }
     }
     public override AnnotationType Type => AnnotationType.LineNumberTable;
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<Line> LineNumberTable { get; set; }
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<Line> LineNumberTable { get; set; } = null!;
 }

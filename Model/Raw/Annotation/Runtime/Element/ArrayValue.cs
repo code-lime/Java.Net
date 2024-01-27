@@ -6,5 +6,5 @@ namespace Java.Net.Model.Raw.Annotation.Runtime.Element;
 
 public sealed class ArrayValue : ElementValue<ArrayValue>
 {
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<IElementValue> Values { get; set; }
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<IElementValue> Values { get; set; } = null!;
 }

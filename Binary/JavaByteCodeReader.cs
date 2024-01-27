@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Java.Net.Binary;
 
@@ -21,51 +23,57 @@ public class JavaByteCodeReader : JavaByteCode
         return bytes;
     }
 
-    public byte[] ReadCount(int count)
+    public async ValueTask<byte[]> ReadCountAsync(int count, CancellationToken cancellationToken)
     {
         byte[] arr = new byte[count];
-        stream.Read(arr, 0, count);
+        await stream.ReadAsync(arr, cancellationToken);
         return arr;
     }
-    public byte[] ReadCount(long count)
+    public async ValueTask<byte[]> ReadCountAsync(long count, CancellationToken cancellationToken)
     {
         List<byte[]> arrays = new List<byte[]>();
         while (true)
         {
             if (count <= int.MaxValue)
             {
-                arrays.Add(ReadCount((int)count));
+                arrays.Add(await ReadCountAsync((int)count, cancellationToken));
                 break;
             }
-            arrays.Add(ReadCount(int.MaxValue));
+            arrays.Add(await ReadCountAsync(int.MaxValue, cancellationToken));
             count -= int.MaxValue;
         }
         return Combine(arrays);
     }
-    private byte[] ReadCountReverse(int count)
+    private async ValueTask<byte[]> ReadCountReverseAsync(int count, CancellationToken cancellationToken)
     {
-        byte[] arr = ReadCount(count);
+        byte[] arr = await ReadCountAsync(count, cancellationToken);
         Array.Reverse(arr);
         return arr;
     }
 
-    public byte ReadByte() => (byte)stream.ReadByte();
-    public ushort ReadUShort() => BitConverter.ToUInt16(ReadCountReverse(2));
-    public uint ReadUInt() => BitConverter.ToUInt32(ReadCountReverse(4));
+    public async ValueTask<byte> ReadByteAsync(CancellationToken cancellationToken)
+    {
+        byte[] bytes = new byte[1];
+        await stream.ReadAsync(bytes, cancellationToken);
+        return bytes[0];
+    }
 
-    public short ReadShort() => BitConverter.ToInt16(ReadCountReverse(2));
-    public int ReadInt() => BitConverter.ToInt32(ReadCountReverse(4));
-    public long ReadLong() => BitConverter.ToInt64(ReadCountReverse(8));
+    public async ValueTask<ushort> ReadUShortAsync(CancellationToken cancellationToken) => BitConverter.ToUInt16(await ReadCountReverseAsync(2, cancellationToken));
+    public async ValueTask<uint> ReadUIntAsync(CancellationToken cancellationToken) => BitConverter.ToUInt32(await ReadCountReverseAsync(4, cancellationToken));
 
-    public float ReadFloat() => BitConverter.ToSingle(ReadCountReverse(4));
-    public double ReadDouble() => BitConverter.ToDouble(ReadCountReverse(8));
+    public async ValueTask<short> ReadShortAsync(CancellationToken cancellationToken) => BitConverter.ToInt16(await ReadCountReverseAsync(2, cancellationToken));
+    public async ValueTask<int> ReadIntAsync(CancellationToken cancellationToken) => BitConverter.ToInt32(await ReadCountReverseAsync(4, cancellationToken));
+    public async ValueTask<long> ReadLongAsync(CancellationToken cancellationToken) => BitConverter.ToInt64(await ReadCountReverseAsync(8, cancellationToken));
 
-    public string ReadUTF8(int count) => Encoding.UTF8.GetString(ReadCount(count));
+    public async ValueTask<float> ReadFloatAsync(CancellationToken cancellationToken) => BitConverter.ToSingle(await ReadCountReverseAsync(4, cancellationToken));
+    public async ValueTask<double> ReadDoubleAsync(CancellationToken cancellationToken) => BitConverter.ToDouble(await ReadCountReverseAsync(8, cancellationToken));
 
-    public byte[] ReadToEnd()
+    public async ValueTask<string> ReadUTF8Async(int count, CancellationToken cancellationToken) => Encoding.UTF8.GetString(await ReadCountAsync(count, cancellationToken));
+
+    public async ValueTask<byte[]> ReadToEndAsync(CancellationToken cancellationToken)
     {
         using MemoryStream memoryStream = new MemoryStream();
-        stream.CopyTo(memoryStream);
+        await stream.CopyToAsync(memoryStream, cancellationToken);
         return memoryStream.ToArray();
     }
 }

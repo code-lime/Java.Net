@@ -5,11 +5,11 @@ namespace Java.Net.Progress;
 
 public class ProgressStream : Stream
 {
-    private readonly Stream m_input = null;
+    private readonly Stream m_input;
     private readonly long m_length = 0L;
     private long m_position = 0L;
     private readonly string m_name;
-    public event Action<ProgressEventArgs> UpdateProgress;
+    public event Action<ProgressEventArgs>? UpdateProgress;
 
     public ProgressStream(string name, Stream input)
     {

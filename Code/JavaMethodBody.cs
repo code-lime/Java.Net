@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Java.Net.Binary;
 using Java.Net.Code.Instruction;
 using Java.Net.Model;
@@ -18,7 +20,7 @@ namespace Java.Net.Code
         public JavaClass Handle => Method.Handle;
         public bool HasCode => Method.Annotations.Any(v => v is CodeAnnotation);
 
-        private byte[] Code
+        private byte[]? Code
         {
             get => GetCodeAttribute(false)?.Code;
             set
@@ -28,28 +30,25 @@ namespace Java.Net.Code
                     Method.Annotations.RemoveAll(v => v is CodeAnnotation);
                     return;
                 }
-                GetCodeAttribute(true).Code = value;
+                GetCodeAttribute(true)!.Code = value;
             }
         }
-        public IEnumerable<IInstruction> Instructions
+        public async ValueTask WriteInstructionsAsync(IEnumerable<IInstruction>? value, CancellationToken cancellationToken)
         {
-            get => ReadInstructions();
-            set
+            if (value == null)
             {
-                if (value == null)
-                {
-                    Code = null;
-                    return;
-                }
-                using MemoryStream stream = new MemoryStream();
-                JavaByteCodeWriter writer = new JavaByteCodeWriter(stream);
-                foreach (var inst in value) inst.Write(writer);
-                Code = stream.ToArray();
+                Code = null;
+                return;
             }
+            using MemoryStream stream = new MemoryStream();
+            JavaByteCodeWriter writer = new JavaByteCodeWriter(stream);
+            foreach (var instruction in value)
+                await instruction.WriteAsync(writer, cancellationToken);
+            Code = stream.ToArray();
         }
-        private List<IInstruction> ReadInstructions()
+        public async ValueTask<List<IInstruction>?> ReadInstructionsAsync(CancellationToken cancellationToken)
         {
-            byte[] code = Code;
+            byte[]? code = Code;
             if (code == null) return null;
             List<IInstruction> list = new List<IInstruction>();
             using MemoryStream stream = new MemoryStream(code);
@@ -58,15 +57,15 @@ namespace Java.Net.Code
             while (reader.CanReadNext)
             {
                 long offset = reader.Position - start_index;
-                IInstruction instruction = reader.ReadInstrustion(Handle);
+                IInstruction instruction = await reader.ReadInstrustion(Handle, cancellationToken);
                 instruction.Position = (ushort)offset;
                 list.Add(instruction);
             }
             return list;
         }
-        private CodeAnnotation GetCodeAttribute(bool create)
+        private CodeAnnotation? GetCodeAttribute(bool create)
         {
-            CodeAnnotation attribute = (CodeAnnotation)Method.Annotations.FirstOrDefault(v => v is CodeAnnotation);
+            CodeAnnotation? attribute = Method.Annotations.OfType<CodeAnnotation>().FirstOrDefault();
             if (attribute == null && create) Method.Annotations.Add(attribute = CodeAnnotation.Create(Handle, dat =>
             {
                 dat.MaxStack = ushort.MaxValue;

@@ -8,13 +8,13 @@ public sealed class EnumValue : ElementValue<EnumValue>
     [JavaRaw] public ushort TypeNameIndex { get; set; }
     public Utf8Constant TypeName
     {
-        get => Handle.Constants[TypeNameIndex] as Utf8Constant;
+        get => (Utf8Constant)Handle.Constants[TypeNameIndex];
         set => TypeNameIndex = Handle.OfConstant(value);
     }
     [JavaRaw] public ushort ConstantNameIndex { get; set; }
     public Utf8Constant ConstantName
     {
-        get => Handle.Constants[ConstantNameIndex] as Utf8Constant;
+        get => (Utf8Constant)Handle.Constants[ConstantNameIndex];
         set => ConstantNameIndex = Handle.OfConstant(value);
     }
 }

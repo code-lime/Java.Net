@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Java.Net.Binary;
 using Java.Net.Data;
 using Java.Net.Data.Attribute;
@@ -14,6 +16,6 @@ public class ArrayPropertyData : PropertyData
         LengthType = arrayAttribute.LengthType;
     }
 
-    protected override long? ReadLength(JavaByteCodeReader reader) => ReadLength(reader, LengthType);
-    protected override void WriteLength(JavaByteCodeWriter writer, long length) => WriteLength(writer, LengthType, length);
+    protected override async ValueTask<long?> ReadLengthAsync(JavaByteCodeReader reader, CancellationToken cancellationToken) => await ReadLengthAsync(reader, LengthType, cancellationToken);
+    protected override async ValueTask WriteLengthAsync(JavaByteCodeWriter writer, long length, CancellationToken cancellationToken) => await WriteLengthAsync(writer, LengthType, length, cancellationToken);
 }

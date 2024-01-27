@@ -7,6 +7,8 @@ using Java.Net.Model;
 using Java.Net.Data.Data;
 using Java.Net.Data.Attribute;
 using Java.Net.Binary;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Java.Net.Data;
 
@@ -14,10 +16,10 @@ public interface IRaw : IHandle
 {
     JavaRawData JavaData { get; }
 
-    void ReadProperty(JavaByteCodeReader reader, PropertyData data, object value);
-    IRaw Read(JavaByteCodeReader reader);
-    JavaByteCodeWriter WriteProperty(JavaByteCodeWriter writer, PropertyData data, object value);
-    JavaByteCodeWriter Write(JavaByteCodeWriter writer);
+    ValueTask ReadPropertyAsync(JavaByteCodeReader reader, PropertyData data, object? value, CancellationToken cancellationToken);
+    ValueTask<IRaw> ReadAsync(JavaByteCodeReader reader, CancellationToken cancellationToken);
+    ValueTask<JavaByteCodeWriter> WritePropertyAsync(JavaByteCodeWriter writer, PropertyData data, object? value, CancellationToken cancellationToken);
+    ValueTask<JavaByteCodeWriter> WriteAsync(JavaByteCodeWriter writer, CancellationToken cancellationToken);
 
     IRaw SetHandle(JavaClass handle);
     IRaw Load(JavaClass handle, Action<IRaw> action);
@@ -48,31 +50,43 @@ public interface IRaw : IHandle
                 : type;
 
         if (typeFormats.TryGetValue(type, out JavaType _type)) return _type;
-        return typeof(IRaw).IsAssignableFrom(type) ? JavaType.IJava : null;
+        return typeof(IRaw).IsAssignableFrom(type) ? JavaType.Raw : null;
     }
 
-    public static IRaw Read(Type type, MethodTag data, JavaByteCodeReader reader, IRaw? def = null) => JavaRawData.ReadOfType(type, data, reader, def);
-    public static I Read<I>(MethodTag data, JavaByteCodeReader reader, I? def = null) where I : class, IRaw => (I)Read(typeof(I), data, reader, def);
-    public static I Read<I>(JavaByteCodeReader reader, I? def = null) where I : class, IRaw => (I)Read(typeof(I), null, reader, def);
-    public static I Read<I>(IRaw handle, JavaByteCodeReader reader, I? def = null) where I : class, IRaw => Read(MethodTag.Create(reader, handle), reader, def);
-    public static I ReadArray<I>(MethodTag data, byte[] bytes, I? def = null) where I : class, IRaw
+    public static ValueTask<IRaw> ReadAsync(Type type, MethodTag data, JavaByteCodeReader reader, IRaw? def = null, CancellationToken cancellationToken = default)
+        => JavaRawData.ReadOfTypeAsync(type, data, reader, def, cancellationToken);
+    public static async ValueTask<I> ReadAsync<I>(MethodTag data, JavaByteCodeReader reader, I? def = null, CancellationToken cancellationToken = default) 
+        where I : class, IRaw
+        => (I)await ReadAsync(typeof(I), data, reader, def, cancellationToken);
+    public static async ValueTask<I> ReadAsync<I>(JavaByteCodeReader reader, I? def = null, CancellationToken cancellationToken = default) 
+        where I : class, IRaw
+        => (I)await ReadAsync(typeof(I), MethodTag.NULL, reader, def, cancellationToken);
+    public static ValueTask<I> ReadAsync<I>(IRaw handle, JavaByteCodeReader reader, I? def = null, CancellationToken cancellationToken = default) 
+        where I : class, IRaw
+        => ReadAsync(MethodTag.Create(reader, handle), reader, def, cancellationToken);
+    public static ValueTask<I> ReadArrayAsync<I>(MethodTag data, byte[] bytes, I? def = null, CancellationToken cancellationToken = default)
+        where I : class, IRaw
     {
         using MemoryStream stream = new MemoryStream(bytes);
-        return Read(data, new JavaByteCodeReader(stream), def);
+        return ReadAsync(data, new JavaByteCodeReader(stream), def, cancellationToken);
     }
-    public static I ReadArray<I>(byte[] bytes, I? def = null) where I : class, IRaw => ReadArray(MethodTag.NULL, bytes, def);
-    public static I ReadArray<I>(IRaw handle, byte[] bytes, I? def = null) where I : class, IRaw => ReadArray(MethodTag.Create(null, handle), bytes, def);
-    public static IRaw ReadArray(Type type, MethodTag data, byte[] bytes, IRaw? def = null)
+    public static ValueTask<I> ReadArrayAsync<I>(byte[] bytes, I? def = null, CancellationToken cancellationToken = default) 
+        where I : class, IRaw
+        => ReadArrayAsync(MethodTag.NULL, bytes, def, cancellationToken);
+    public static ValueTask<I> ReadArrayAsync<I>(IRaw handle, byte[] bytes, I? def = null, CancellationToken cancellationToken = default) 
+        where I : class, IRaw
+        => ReadArrayAsync(MethodTag.Create(null, handle), bytes, def, cancellationToken);
+    public static ValueTask<IRaw> ReadArrayAsync(Type type, MethodTag data, byte[] bytes, IRaw? def = null, CancellationToken cancellationToken = default)
     {
         using MemoryStream stream = new MemoryStream(bytes);
-        return Read(type, data, new JavaByteCodeReader(stream), def);
+        return ReadAsync(type, data, new JavaByteCodeReader(stream), def, cancellationToken);
     }
 
-    public static JavaByteCodeWriter Write(IRaw obj, JavaByteCodeWriter writer) => JavaRawData.WriteOfType(obj, writer);
-    public static byte[] WriteArray(IRaw java)
+    public static ValueTask<JavaByteCodeWriter> WriteAsync(IRaw raw, JavaByteCodeWriter writer, CancellationToken cancellationToken) => JavaRawData.WriteOfTypeAsync(raw, writer, cancellationToken);
+    public static async ValueTask<byte[]> WriteArrayAsync(IRaw raw, CancellationToken cancellationToken)
     {
         using MemoryStream stream = new MemoryStream();
-        java.Write(new JavaByteCodeWriter(stream));
+        await raw.WriteAsync(new JavaByteCodeWriter(stream), cancellationToken);
         stream.Position = 0;
         return stream.ToArray();
     }

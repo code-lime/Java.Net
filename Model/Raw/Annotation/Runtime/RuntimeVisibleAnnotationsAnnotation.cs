@@ -9,5 +9,5 @@ namespace Java.Net.Model.Raw.Annotation.Runtime;
 public sealed class RuntimeVisibleAnnotationsAnnotation : IAnnotation<RuntimeVisibleAnnotationsAnnotation>, IRuntimeAnnotations
 {
     public override AnnotationType Type => AnnotationType.RuntimeVisibleAnnotations;
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<Element.Annotation> Annotations { get; set; }
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<Element.Annotation> Annotations { get; set; } = null!;
 }

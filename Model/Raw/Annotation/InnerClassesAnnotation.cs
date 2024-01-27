@@ -13,22 +13,22 @@ public sealed class InnerClassesAnnotation : IAnnotation<InnerClassesAnnotation>
         [JavaRaw] public ushort InnerClassInfoIndex { get; set; }
         public ClassConstant InnerClassInfo
         {
-            get => Handle.Constants[InnerClassInfoIndex] as ClassConstant;
+            get => (ClassConstant)Handle.Constants[InnerClassInfoIndex];
             set => InnerClassInfoIndex = Handle.OfConstant(value);
         }
         [JavaRaw] public ushort OuterClassInfoIndex { get; set; }
         public ClassConstant OuterClassInfo
         {
-            get => Handle.Constants[OuterClassInfoIndex] as ClassConstant;
+            get => (ClassConstant)Handle.Constants[OuterClassInfoIndex];
             set => OuterClassInfoIndex = Handle.OfConstant(value);
         }
         [JavaRaw] public ushort InnerNameIndex { get; set; }
         public Utf8Constant InnerName
         {
-            get => Handle.Constants[InnerNameIndex] as Utf8Constant;
+            get => (Utf8Constant)Handle.Constants[InnerNameIndex];
             set => InnerNameIndex = Handle.OfConstant(value);
         }
         [JavaRaw(JavaType.UShort)] public Flags.AccessClass InnerClassAccessFlags { get; set; }
     }
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<ClassInfo> Classes { get; set; }
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<ClassInfo> Classes { get; set; } = null!;
 }

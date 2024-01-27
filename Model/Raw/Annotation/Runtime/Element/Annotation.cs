@@ -10,8 +10,8 @@ public sealed class Annotation : BaseRaw<Annotation>
     [JavaRaw] public ushort TypeIndex { get; set; }
     public Utf8Constant Type
     {
-        get => Handle.Constants[TypeIndex] as Utf8Constant;
+        get => (Utf8Constant)Handle.Constants[TypeIndex];
         set => TypeIndex = Handle.OfConstant(value);
     }
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<ElementValuePair> ElementValuePairs { get; set; }
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<ElementValuePair> ElementValuePairs { get; set; } = null!;
 }

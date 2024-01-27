@@ -6,5 +6,5 @@ namespace Java.Net.Model.Raw.Annotation.Runtime.Element;
 
 public sealed class ParameterAnnotation : BaseRaw<ParameterAnnotation>
 {
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<Annotation> Annotations { get; set; }
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<Annotation> Annotations { get; set; } = null!;
 }

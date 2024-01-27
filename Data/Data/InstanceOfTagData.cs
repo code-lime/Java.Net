@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Java.Net.Binary;
 using Java.Net.Data;
 using Java.Net.Data.Attribute;
@@ -17,10 +19,10 @@ public class InstanceOfTagData
         Arguments = arguments;
     }
 
-    public IRaw InvokeMethod(MethodTag data)
+    public async ValueTask<IRaw?> InvokeMethod(MethodTag data, CancellationToken cancellationToken)
     {
         int length = Arguments.Length;
-        object[] args = new object[length];
+        object?[] args = new object?[length];
         for (int i = 0; i < length; i++)
         {
             (TagTypeAttribute.Tag tag, bool _) = Arguments[i];
@@ -31,40 +33,56 @@ public class InstanceOfTagData
                 TagTypeAttribute.Tag.Reader => data.Reader,
                 TagTypeAttribute.Tag.IndexOfArray => data.IndexOfArray,
                 TagTypeAttribute.Tag.LastOfArray => data.LastOfArray,
+                TagTypeAttribute.Tag.CancelationToken => cancellationToken,
                 _ => new ArgumentException($"TagType '{Arguments[i]}' not supported!")
             };
         }
-        IRaw java = (IRaw)Method.Invoke(null, args);
+        dynamic _data = Method.Invoke(null, args)!;
+        IRaw? raw = (IRaw)await _data;
         for (int i = 0; i < length; i++)
         {
             (TagTypeAttribute.Tag tag, bool is_ref) = Arguments[i];
             if (!is_ref) continue;
-            object item = args[i];
+            object? item = args[i];
             switch (tag)
             {
-                case TagTypeAttribute.Tag.Parent: data.Parent = (IRaw)item; break;
-                case TagTypeAttribute.Tag.Handle: data.Parent.SetHandle((JavaClass)item); break;
-                case TagTypeAttribute.Tag.Reader: data.Reader = (JavaByteCodeReader)item; break;
-                case TagTypeAttribute.Tag.IndexOfArray: data.IndexOfArray = (int)item; break;
-                case TagTypeAttribute.Tag.LastOfArray: data.LastOfArray = (IRaw)item; break;
+                case TagTypeAttribute.Tag.Parent: data.Parent = (IRaw?)item; break;
+                case TagTypeAttribute.Tag.Handle: data.Parent?.SetHandle((JavaClass)item!); break;
+                case TagTypeAttribute.Tag.Reader: data.Reader = (JavaByteCodeReader)item!; break;
+                case TagTypeAttribute.Tag.IndexOfArray: data.IndexOfArray = (int)item!; break;
+                case TagTypeAttribute.Tag.LastOfArray: data.LastOfArray = (IRaw?)item; break;
             }
         }
-        return java;
+        return raw;
     }
 
-    public static InstanceOfTagData Of(MethodInfo method)
+    public static InstanceOfTagData? Of(MethodInfo method)
     {
-        if (method.GetCustomAttribute<InstanceOfTagAttribute>() == null) return null;
-        if (!method.DeclaringType.IsAssignableFrom(method.ReturnParameter.ParameterType)) return null;
+        if (method.GetCustomAttribute<InstanceOfTagAttribute>() == null)
+            return null;
+        if (!typeof(ValueTask<>).MakeGenericType(method.DeclaringType!)!.IsAssignableFrom(method.ReturnType))
+            throw new NotSupportedException($"Return type not equals: {typeof(ValueTask<>).MakeGenericType(method.DeclaringType!)} & {method.ReturnType}");
+
+        /*
+        public static async ValueTask<IInstruction> InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader, [TagType(TagTypeAttribute.Tag.Handle)] JavaClass handle, CancellationToken cancellationToken)
+        */
 
         ParameterInfo[] list = method.GetParameters();
         int length;
         (TagTypeAttribute.Tag tag, bool is_ref)[] arguments = new (TagTypeAttribute.Tag tag, bool is_ref)[length = list.Length];
         for (int i = 0; i < length; i++)
         {
-            TagTypeAttribute attribute = list[i].GetCustomAttribute<TagTypeAttribute>();
-            if (attribute == null) return null;
-            arguments[i] = (attribute.Type, list[i].ParameterType.IsByRef);
+            TagTypeAttribute? attribute = list[i].GetCustomAttribute<TagTypeAttribute>();
+            if (attribute == null)
+            {
+                if (list[i].ParameterType != typeof(CancellationToken))
+                    throw new NotSupportedException($"Parameter {list[i]} not supported");
+                arguments[i] = (TagTypeAttribute.Tag.CancelationToken, false);
+            }
+            else
+            {
+                arguments[i] = (attribute.Type, list[i].ParameterType.IsByRef);
+            }
         }
         return new InstanceOfTagData(method, arguments);
     }

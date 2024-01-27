@@ -2,8 +2,8 @@
 
 namespace Java.Net.Model.Raw.Constant;
 
-public sealed class InterfaceMethodrefConstant : IRefConstant<InterfaceMethodrefConstant>, IMethodRefConstant
+public sealed class InterfaceMethodRefConstant : BaseRefConstant<InterfaceMethodRefConstant>, IMethodRefConstant
 {
-    public override ConstantTag Tag => ConstantTag.InterfaceMethodref;
+    public override ConstantTag Tag => ConstantTag.InterfaceMethodRef;
     IRefConstant IMethodRefConstant.DeepClone(JavaClass handle) => DeepClone(handle);
 }

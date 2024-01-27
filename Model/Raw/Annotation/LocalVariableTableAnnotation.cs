@@ -14,17 +14,17 @@ public sealed class LocalVariableTableAnnotation : IAnnotation<LocalVariableTabl
         [JavaRaw] public ushort NameIndex { get; set; }
         public Utf8Constant Name
         {
-            get => Handle.Constants[NameIndex] as Utf8Constant;
+            get => (Utf8Constant)Handle.Constants[NameIndex];
             set => NameIndex = Handle.OfConstant(value);
         }
         [JavaRaw] public ushort DescriptorIndex { get; set; }
         public Utf8Constant Descriptor
         {
-            get => Handle.Constants[DescriptorIndex] as Utf8Constant;
+            get => (Utf8Constant)Handle.Constants[DescriptorIndex];
             set => DescriptorIndex = Handle.OfConstant(value);
         }
         [JavaRaw] public ushort Index { get; set; }
     }
     public override AnnotationType Type => AnnotationType.LocalVariableTable;
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<Variable> LocalVariableTable { get; set; }
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<Variable> LocalVariableTable { get; set; } = null!;
 }

@@ -9,13 +9,13 @@ public sealed class EnclosingMethodAnnotation : IAnnotation<EnclosingMethodAnnot
     [JavaRaw] public ushort ClassIndex { get; set; }
     public ClassConstant Class
     {
-        get => Handle.Constants[ClassIndex] as ClassConstant;
+        get => (ClassConstant)Handle.Constants[ClassIndex];
         set => ClassIndex = Handle.OfConstant(value);
     }
     [JavaRaw] public ushort MethodIndex { get; set; }
     public NameAndTypeConstant Method
     {
-        get => Handle.Constants[MethodIndex] as NameAndTypeConstant;
+        get => (NameAndTypeConstant)Handle.Constants[MethodIndex];
         set => MethodIndex = Handle.OfConstant(value);
     }
 }

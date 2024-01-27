@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Java.Net.Binary;
 using Java.Net.Data;
 using Java.Net.Data.Attribute;
@@ -15,13 +17,12 @@ public interface IAnnotation : IRaw
     AnnotationType Type { get; }
 
     [InstanceOfTag]
-    public static IAnnotation InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader, [TagType(TagTypeAttribute.Tag.Handle)] JavaClass handle)
+    public static async ValueTask<IAnnotation> InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader, [TagType(TagTypeAttribute.Tag.Handle)] JavaClass handle, CancellationToken cancellationToken)
     {
-        ushort name_index = reader.ReadUShort();
-        string name = (handle.Constants[name_index] as Utf8Constant).Value;
-        uint size = reader.ReadUInt();
-        AnnotationType type;
-        IAnnotation attribute = (type = Enum.TryParse(name, out type) ? type : AnnotationType.Unknown) switch
+        ushort name_index = await reader.ReadUShortAsync(cancellationToken);
+        string name = ((Utf8Constant)handle.Constants[name_index]).Value;
+        uint size = await reader.ReadUIntAsync(cancellationToken);
+        IAnnotation attribute = (Enum.TryParse(name, out AnnotationType type) ? type : AnnotationType.Unknown) switch
         {
             AnnotationType.ConstantValue => new ConstantValueAnnotation(),
             AnnotationType.Code => new CodeAnnotation(),
@@ -32,7 +33,7 @@ public interface IAnnotation : IRaw
             AnnotationType.Synthetic => new SyntheticAnnotation(),
             AnnotationType.Signature => new SignatureAnnotation(),
             AnnotationType.SourceFile => new SourceFileAnnotation(),
-            AnnotationType.SourceDebugExtension => new SourceDebugExtensionAnnotation(reader.ReadCount(size)),
+            AnnotationType.SourceDebugExtension => new SourceDebugExtensionAnnotation(await reader.ReadCountAsync(size, cancellationToken)),
             AnnotationType.LineNumberTable => new LineNumberTableAnnotation(),
             AnnotationType.LocalVariableTable => new LocalVariableTableAnnotation(),
             AnnotationType.LocalVariableTypeTable => new LocalVariableTypeTableAnnotation(),
@@ -43,7 +44,7 @@ public interface IAnnotation : IRaw
             AnnotationType.RuntimeInvisibleParameterAnnotations => new RuntimeInvisibleParameterAnnotationsAnnotation(),
             AnnotationType.AnnotationDefault => new AnnotationDefaultAnnotation(),
             AnnotationType.BootstrapMethods => new BootstrapMethodsAnnotation(),
-            _ => new UnknownAnnotation(reader.ReadCount(size))
+            _ => new UnknownAnnotation(await reader.ReadCountAsync(size, cancellationToken))
         };
         attribute.NameIndex = name_index;
         return attribute;
@@ -54,7 +55,7 @@ public abstract class IAnnotation<I> : BaseRaw<I>, IAnnotation where I : IAnnota
     public ushort NameIndex { get; set; }
     public string Name
     {
-        get => (Handle.Constants[NameIndex] as Utf8Constant).Value;
+        get => ((Utf8Constant)Handle.Constants[NameIndex]).Value;
         set => NameIndex = Handle.OfConstant(new Utf8Constant() { Value = value });
     }
     public abstract AnnotationType Type { get; }
@@ -64,14 +65,12 @@ public abstract class IAnnotation<I> : BaseRaw<I>, IAnnotation where I : IAnnota
         if (NameIndex == 0 && Type != AnnotationType.Unknown) Name = Type.ToString();
         return dat;
     }
-    public sealed override JavaByteCodeWriter Write(JavaByteCodeWriter writer)
+    public sealed override async ValueTask<JavaByteCodeWriter> WriteAsync(JavaByteCodeWriter writer, CancellationToken cancellationToken)
     {
         using System.IO.MemoryStream stream = new System.IO.MemoryStream();
-        JavaByteCodeWriter out_writer = base.Write(new JavaByteCodeWriter(stream));
-
-        return writer
-            .WriteUShort(NameIndex)
-            .WriteUInt((uint)stream.Length)
-            .Append(out_writer);
+        JavaByteCodeWriter out_writer = await base.WriteAsync(new JavaByteCodeWriter(stream), cancellationToken);
+        await writer.WriteUShortAsync(NameIndex, cancellationToken);
+        await writer.WriteUIntAsync((uint)stream.Length, cancellationToken);
+        return await writer.AppendAsync(out_writer, cancellationToken);
     }
 }

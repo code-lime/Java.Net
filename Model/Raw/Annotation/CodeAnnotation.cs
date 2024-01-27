@@ -15,7 +15,7 @@ public sealed class CodeAnnotation : IAnnotation<CodeAnnotation>
         [JavaRaw] public ushort CatchTypeIndex { get; set; }
         public ClassConstant CatchType
         {
-            get => Handle.Constants[CatchTypeIndex] as ClassConstant;
+            get => (ClassConstant)Handle.Constants[CatchTypeIndex];
             set => CatchTypeIndex = Handle.OfConstant(value);
         }
     }
@@ -23,7 +23,7 @@ public sealed class CodeAnnotation : IAnnotation<CodeAnnotation>
     public override AnnotationType Type => AnnotationType.Code;
     [JavaRaw] public ushort MaxStack { get; set; }
     [JavaRaw] public ushort MaxLocals { get; set; }
-    [JavaRaw][JavaArray(JavaType.UInt)] public byte[] Code { get; set; }
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<Exception> ExceptionTable { get; set; }
-    [JavaRaw][JavaArray(JavaType.UShort)] public List<IAnnotation> Attributes { get; set; }
+    [JavaRaw][JavaArray(JavaType.UInt)] public byte[] Code { get; set; } = null!;
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<Exception> ExceptionTable { get; set; } = null!;
+    [JavaRaw][JavaArray(JavaType.UShort)] public List<IAnnotation> Attributes { get; set; } = null!;
 }

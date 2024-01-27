@@ -10,6 +10,8 @@ using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Java.Net.Model.Raw.Base;
 
@@ -45,17 +47,17 @@ public class JavaClass : BaseRaw<JavaClass>, INet<TypeDefinition>, IFlag<AccessC
 
     [JavaRaw(Index: 3)][JavaArray] public List<IConstant> Constants { get; set; } = null!;
 
-    public override void ReadProperty(JavaByteCodeReader reader, PropertyData data, object value)
+    public override async ValueTask ReadPropertyAsync(JavaByteCodeReader reader, PropertyData data, object? value, CancellationToken cancellationToken)
     {
         switch (data.Index)
         {
             case 3:
                 {
-                    int constantCount = reader.ReadUShort();
+                    int constantCount = await reader.ReadUShortAsync(cancellationToken);
                     Constants = new IConstant[constantCount].ToList();
                     for (int i = 1; i < constantCount; i++)
                     {
-                        IConstant constant = IRaw.Read<IConstant>(new MethodTag() { Parent = this, Reader = reader }, reader);
+                        IConstant constant = await IRaw.ReadAsync<IConstant>(new MethodTag() { Parent = this, Reader = reader }, reader, cancellationToken: cancellationToken);
                         Constants[i] = constant;
                         switch (constant.Tag)
                         {
@@ -66,16 +68,16 @@ public class JavaClass : BaseRaw<JavaClass>, INet<TypeDefinition>, IFlag<AccessC
                     return;
                 }
         }
-        base.ReadProperty(reader, data, value);
+        await base.ReadPropertyAsync(reader, data, value, cancellationToken);
     }
-    public override JavaByteCodeWriter WriteProperty(JavaByteCodeWriter writer, PropertyData data, object value)
+    public override async ValueTask<JavaByteCodeWriter> WritePropertyAsync(JavaByteCodeWriter writer, PropertyData data, object? value, CancellationToken cancellationToken)
     {
         switch (data.Index)
         {
             case 3:
                 {
                     ushort constantCount = (ushort)Constants.Count;
-                    writer = writer.WriteUShort(constantCount);
+                    writer = await writer.WriteUShortAsync(constantCount, cancellationToken);
                     for (int i = 1; i < constantCount; i++)
                     {
                         IConstant old = Constants[i - 1];
@@ -87,17 +89,17 @@ public class JavaClass : BaseRaw<JavaClass>, INet<TypeDefinition>, IFlag<AccessC
                                 case ConstantTag.Long: continue;
                             }
                         }
-                        writer = IRaw.Write(Constants[i], writer);
+                        writer = await IRaw.WriteAsync(Constants[i], writer, cancellationToken);
                     }
                     return writer;
                 }
         }
-        return base.WriteProperty(writer, data, value);
+        return await base.WritePropertyAsync(writer, data, value, cancellationToken);
     }
 
-    public override IRaw Read(JavaByteCodeReader reader)
+    public override async ValueTask<IRaw> ReadAsync(JavaByteCodeReader reader, CancellationToken cancellationToken)
     {
-        IRaw _this = base.Read(reader);
+        IRaw _this = await base.ReadAsync(reader, cancellationToken);
         _this.SetHandle(this);
         return _this;
     }

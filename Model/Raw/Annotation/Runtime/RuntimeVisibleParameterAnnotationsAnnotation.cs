@@ -8,5 +8,5 @@ namespace Java.Net.Model.Raw.Annotation.Runtime;
 public sealed class RuntimeVisibleParameterAnnotationsAnnotation : IAnnotation<RuntimeVisibleParameterAnnotationsAnnotation>, IRuntimeParameterAnnotations
 {
     public override AnnotationType Type => AnnotationType.RuntimeVisibleParameterAnnotations;
-    [JavaRaw][JavaArray(JavaType.Byte)] public List<Element.ParameterAnnotation> ParameterAnnotations { get; set; }
+    [JavaRaw][JavaArray(JavaType.Byte)] public List<Element.ParameterAnnotation> ParameterAnnotations { get; set; } = null!;
 }

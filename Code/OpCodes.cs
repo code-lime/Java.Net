@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Java.Net.Code
 {
@@ -2864,7 +2866,7 @@ namespace Java.Net.Code
 
         public static IOpCode ByName(Names name) => OpCodeList[(byte)name];
 
-        public static IOpCode ReadOpCode(this JavaByteCodeReader reader) => OpCodeList[reader.ReadByte()];
-        public static IInstruction ReadInstrustion(this JavaByteCodeReader reader, IRaw handle) => IRaw.Read<IInstruction>(handle, reader);
+        public static async ValueTask<IOpCode> ReadOpCode(this JavaByteCodeReader reader, CancellationToken cancellationToken) => OpCodeList[await reader.ReadByteAsync(cancellationToken)];
+        public static ValueTask<IInstruction> ReadInstrustion(this JavaByteCodeReader reader, IRaw handle, CancellationToken cancellationToken) => IRaw.ReadAsync<IInstruction>(handle, reader, cancellationToken: cancellationToken);
     }
 }

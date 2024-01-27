@@ -12,7 +12,8 @@ public class TagTypeAttribute : System.Attribute
         Handle,
         Reader,
         IndexOfArray,
-        LastOfArray
+        LastOfArray,
+        CancelationToken
     }
     public TagTypeAttribute(Tag type) { Type = type; }
 }

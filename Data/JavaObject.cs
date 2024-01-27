@@ -1,27 +1,32 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Java.Net.Binary;
 
 namespace Java.Net.Data;
 
 public class JavaObject
 {
-    private readonly Action<JavaByteCodeReader> reader;
-    private readonly Func<JavaByteCodeWriter, JavaByteCodeWriter> writer;
+    private readonly Func<JavaByteCodeReader, CancellationToken, ValueTask> reader;
+    private readonly Func<JavaByteCodeWriter, CancellationToken, ValueTask<JavaByteCodeWriter>> writer;
 
-    public JavaObject(Action<JavaByteCodeReader> reader, Func<JavaByteCodeWriter, JavaByteCodeWriter> writer)
+    public JavaObject(Func<JavaByteCodeReader, CancellationToken, ValueTask> reader, Func<JavaByteCodeWriter, CancellationToken, ValueTask<JavaByteCodeWriter>> writer)
     {
         this.reader = reader;
         this.writer = writer;
     }
-    public JavaObject(Action<JavaByteCodeReader> reader, Action<JavaByteCodeWriter> writer) : this(reader, (a) => { writer.Invoke(a); return a; }) { }
-
+    public JavaObject(Func<JavaByteCodeReader, CancellationToken, ValueTask> reader, Func<JavaByteCodeWriter, CancellationToken, ValueTask> writer) : this(reader, async (a, c) => {
+        await writer.Invoke(a, c);
+        return a;
+    }) { }
+    /*
     public static JavaObject Property<T>(
         Func<JavaByteCodeReader, T> reader,
         Func<JavaByteCodeWriter, T, JavaByteCodeWriter> writer,
         Func<T> getter,
         Action<T> setter
     ) => new JavaObject((_reader) => setter.Invoke(reader.Invoke(_reader)), (_writer) => writer.Invoke(_writer, getter.Invoke()));
-
-    public void Read(JavaByteCodeReader reader) => this.reader.Invoke(reader);
-    public JavaByteCodeWriter Write(JavaByteCodeWriter writer) => this.writer.Invoke(writer);
+    */
+    public ValueTask ReadAsync(JavaByteCodeReader reader, CancellationToken cancellationToken) => this.reader.Invoke(reader, cancellationToken);
+    public ValueTask<JavaByteCodeWriter> WriteAsync(JavaByteCodeWriter writer, CancellationToken cancellationToken) => this.writer.Invoke(writer, cancellationToken);
 }

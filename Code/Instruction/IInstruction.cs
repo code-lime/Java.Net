@@ -5,6 +5,8 @@ using Java.Net.Data.Data;
 using Java.Net.Model.Raw.Base;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Java.Net.Code.Instruction;
 
@@ -17,8 +19,8 @@ public interface IInstruction : IRaw, IEquatable<IInstruction>
     object[] Operand { get; }
 
     [InstanceOfTag]
-    public static IInstruction InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader, [TagType(TagTypeAttribute.Tag.Handle)] JavaClass handle)
-        => OpCodes.OpCodeList[reader.ReadByte()].Instruction(handle);
+    public static async ValueTask<IInstruction> InstanceOfTag([TagType(TagTypeAttribute.Tag.Reader)] JavaByteCodeReader reader, [TagType(TagTypeAttribute.Tag.Handle)] JavaClass handle, CancellationToken cancellationToken)
+        => OpCodes.OpCodeList[await reader.ReadByteAsync(cancellationToken)].Instruction(handle);
 }
 public abstract class IInstruction<I> : BaseRaw<I>, IInstruction where I : IInstruction<I>
 {
@@ -29,8 +31,8 @@ public abstract class IInstruction<I> : BaseRaw<I>, IInstruction where I : IInst
     public abstract object[] IndexOperand { get; }
     public ushort Position { get; set; }
 
-    public override JavaByteCodeWriter WriteProperty(JavaByteCodeWriter writer, PropertyData data, object value)
-        => data.Index == 0 ? writer.WriteByte(OpCode.Index) : base.WriteProperty(writer, data, value);
+    public override ValueTask<JavaByteCodeWriter> WritePropertyAsync(JavaByteCodeWriter writer, PropertyData data, object? value, CancellationToken cancellationToken)
+        => data.Index == 0 ? writer.WriteByteAsync(OpCode.Index, cancellationToken) : base.WritePropertyAsync(writer, data, value, cancellationToken);
 
     public override bool Equals(object? obj) => obj is IInstruction op && Equals(op);
     public virtual bool Equals(I obj) => OpCode == obj.OpCode && IndexOperand.SequenceEqual(obj.IndexOperand);

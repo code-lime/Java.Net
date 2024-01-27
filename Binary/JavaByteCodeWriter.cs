@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Java.Net.Binary;
 
@@ -21,7 +23,7 @@ public class JavaByteCodeWriter : JavaByteCode
     }
 
 
-    public event Action<JavaByteCodeWriter, Handle> OnUpdate;
+    public event Action<JavaByteCodeWriter, Handle>? OnUpdate;
 
     protected T Debug<T>(T obj, Handle value)
     {
@@ -30,7 +32,7 @@ public class JavaByteCodeWriter : JavaByteCode
     }
     protected JavaByteCodeWriter Debug(Handle value)
     {
-        if (OnUpdate != null) OnUpdate.Invoke(this, value);
+        OnUpdate?.Invoke(this, value);
         return this;
     }
     protected T Debug<T>(T obj, string method, object value) => Debug(obj, new Handle(method, value));
@@ -40,48 +42,48 @@ public class JavaByteCodeWriter : JavaByteCode
 
     public JavaByteCodeWriter(Stream stream) : base(stream) { }
 
-    public JavaByteCodeWriter WriteCount(byte[] data)
+    public async ValueTask<JavaByteCodeWriter> WriteCountAsync(byte[] data, CancellationToken cancellationToken)
     {
-        stream.Write(data, 0, data.Length);
+        await stream.WriteAsync(data, cancellationToken);
         return this;
     }
-    private JavaByteCodeWriter WriteCountReverse(byte[] data)
+    private ValueTask<JavaByteCodeWriter> WriteCountReverseAsync(byte[] data, CancellationToken cancellationToken)
     {
         data = (byte[])data.Clone();
         Array.Reverse(data);
-        return WriteCount(data);
+        return WriteCountAsync(data, cancellationToken);
     }
 
-    public JavaByteCodeWriter WriteByte(byte value)
+    public async ValueTask<JavaByteCodeWriter> WriteByteAsync(byte value, CancellationToken cancellationToken)
     {
-        stream.WriteByte(value);
+        await stream.WriteAsync(new byte[] { value }, cancellationToken);
         return Debug(value);
     }
 
-    public JavaByteCodeWriter WriteUShort(ushort value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
-    public JavaByteCodeWriter WriteUInt(uint value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
+    public async ValueTask<JavaByteCodeWriter> WriteUShortAsync(ushort value, CancellationToken cancellationToken) => (await WriteCountReverseAsync(BitConverter.GetBytes(value), cancellationToken)).Debug(value);
+    public async ValueTask<JavaByteCodeWriter> WriteUIntAsync(uint value, CancellationToken cancellationToken) => (await WriteCountReverseAsync(BitConverter.GetBytes(value), cancellationToken)).Debug(value);
 
-    public JavaByteCodeWriter WriteShort(short value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
-    public JavaByteCodeWriter WriteInt(int value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
-    public JavaByteCodeWriter WriteLong(long value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
+    public async ValueTask<JavaByteCodeWriter> WriteShortAsync(short value, CancellationToken cancellationToken) => (await WriteCountReverseAsync(BitConverter.GetBytes(value), cancellationToken)).Debug(value);
+    public async ValueTask<JavaByteCodeWriter> WriteIntAsync(int value, CancellationToken cancellationToken) => (await WriteCountReverseAsync(BitConverter.GetBytes(value), cancellationToken)).Debug(value);
+    public async ValueTask<JavaByteCodeWriter> WriteLongAsync(long value, CancellationToken cancellationToken) => (await WriteCountReverseAsync(BitConverter.GetBytes(value), cancellationToken)).Debug(value);
 
-    public JavaByteCodeWriter WriteFloat(float value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
-    public JavaByteCodeWriter WriteDouble(double value) => WriteCountReverse(BitConverter.GetBytes(value)).Debug(value);
+    public async ValueTask<JavaByteCodeWriter> WriteFloatAsync(float value, CancellationToken cancellationToken) => (await WriteCountReverseAsync(BitConverter.GetBytes(value), cancellationToken)).Debug(value);
+    public async ValueTask<JavaByteCodeWriter> WriteDoubleAsync(double value, CancellationToken cancellationToken) => (await WriteCountReverseAsync(BitConverter.GetBytes(value), cancellationToken)).Debug(value);
 
-    public JavaByteCodeWriter WriteUTF8(string text) => WriteCount(Encoding.UTF8.GetBytes(text)).Debug(text);
-    public JavaByteCodeWriter WriteUTF8<T>(string text, Func<T, JavaByteCodeWriter> length)
+    public async ValueTask<JavaByteCodeWriter> WriteUTF8Async(string text, CancellationToken cancellationToken) => (await WriteCountAsync(Encoding.UTF8.GetBytes(text), cancellationToken)).Debug(text);
+    public async ValueTask<JavaByteCodeWriter> WriteUTF8Async<T>(string text, Func<T, CancellationToken, ValueTask<JavaByteCodeWriter>> length, CancellationToken cancellationToken)
     {
         byte[] bytes = Encoding.UTF8.GetBytes(text);
-        return length.Invoke((T)Convert.ChangeType(bytes.LongLength, typeof(T))).WriteCount(bytes).Debug(text);
+        return (await (await length.Invoke((T)Convert.ChangeType(bytes.LongLength, typeof(T)), cancellationToken)).WriteCountAsync(bytes, cancellationToken)).Debug(text);
     }
-    public JavaByteCodeWriter WriteUTF8<T>(string text, Func<JavaByteCodeWriter, T, JavaByteCodeWriter> length)
+    public async ValueTask<JavaByteCodeWriter> WriteUTF8Async<T>(string text, Func<JavaByteCodeWriter, T, CancellationToken, ValueTask<JavaByteCodeWriter>> length, CancellationToken cancellationToken)
     {
         byte[] bytes = Encoding.UTF8.GetBytes(text);
-        return length.Invoke(this, (T)(object)bytes.LongLength).WriteCount(bytes).Debug(text);
+        return (await (await length.Invoke(this, (T)(object)bytes.LongLength, cancellationToken)).WriteCountAsync(bytes, cancellationToken)).Debug(text);
     }
-    public JavaByteCodeWriter Append(JavaByteCodeWriter writer)
+    public async ValueTask<JavaByteCodeWriter> AppendAsync(JavaByteCodeWriter writer, CancellationToken cancellationToken)
     {
         writer.Stream.Position = 0;
-        return WriteCount(writer.Stream.ReadAllBytes());
+        return await WriteCountAsync(await writer.Stream.ReadAllBytesAsync(cancellationToken), cancellationToken);
     }
 }

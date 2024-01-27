@@ -12,13 +12,15 @@ public enum ConstantTag : byte
     Double = 6,
     Class = 7,
     String = 8,
-    Fieldref = 9,
-    Methodref = 10,
-    InterfaceMethodref = 11,
+    FieldRef = 9,
+    MethodRef = 10,
+    InterfaceMethodRef = 11,
     NameAndType = 12,
 
     MethodHandle = 15,
     MethodType = 16,
 
     InvokeDynamic = 18,
+    ModuleInfo = 19,
+    PackageInfo = 20
 }

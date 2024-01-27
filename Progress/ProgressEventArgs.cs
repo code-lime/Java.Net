@@ -10,7 +10,7 @@ public class ProgressEventArgs : EventArgs
     public long ProgressPercentage { get; }
 
     public ProgressEventArgs(string name, long received, long total_to_receive) : 
-        this(name, received, total_to_receive, (received * 100) / total_to_receive) {}
+        this(name, received, total_to_receive, total_to_receive == 0 ? 0 : ((received * 100) / total_to_receive)) {}
     public ProgressEventArgs(string name, long received, long total_to_receive, long progress_percentage)
     {
         Name = name;

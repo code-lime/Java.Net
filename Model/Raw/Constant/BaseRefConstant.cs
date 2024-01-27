@@ -1,5 +1,6 @@
 ﻿using Java.Net.Data.Attribute;
 using Java.Net.Model.Raw.Base;
+using Newtonsoft.Json.Linq;
 
 namespace Java.Net.Model.Raw.Constant;
 
@@ -13,21 +14,29 @@ public interface IRefConstant : IConstant
     new IRefConstant DeepClone(JavaClass handle);
 }
 
-public abstract class IRefConstant<I> : IConstant<I>, IRefConstant where I : IRefConstant<I>
+public abstract class BaseRefConstant<I> : IConstant<I>, IRefConstant where I : BaseRefConstant<I>
 {
     [JavaRaw] public ushort ClassIndex { get; set; }
     [JavaRaw] public ushort NameAndTypeIndex { get; set; }
+
+    public override JObject JsonData => new JObject()
+    {
+        ["tag"] = Tag.ToString(),
+        ["class"] = Class.JsonData,
+        ["nameAndType"] = NameAndType.JsonData
+    };
+
     public ClassConstant Class
     {
-        get => Handle.Constants[ClassIndex] as ClassConstant;
+        get => (ClassConstant)Handle.Constants[ClassIndex];
         set => ClassIndex = Handle.OfConstant(value);
     }
     public NameAndTypeConstant NameAndType
     {
-        get => Handle.Constants[NameAndTypeIndex] as NameAndTypeConstant;
+        get => (NameAndTypeConstant)Handle.Constants[NameAndTypeIndex];
         set => NameAndTypeIndex = Handle.OfConstant(value);
     }
-    public override bool Equals(I other) => other?.ClassIndex == ClassIndex && other?.NameAndTypeIndex == NameAndTypeIndex;
+    public override bool Equals(I? other) => other?.ClassIndex == ClassIndex && other?.NameAndTypeIndex == NameAndTypeIndex;
     public override string ToString() => $"{base.ToString()} ({Class}, {NameAndType})";
 
     public override I DeepClone(JavaClass handle) => Create(handle, v =>

@@ -12,8 +12,8 @@ namespace Java.Net.Binary;
 
 public class ParallelZipArchive
 {
-    public static Dictionary<string, MemoryStream> ReadAll(string file) => From(file).Extract();
-    public static Dictionary<string, MemoryStream> ReadAll(byte[] data) => From(data).Extract();
+    public static ValueTask<Dictionary<string, MemoryStream>> ReadAllAsync(string file, CancellationToken cancellationToken) => From(file).ExtractAsync(cancellationToken);
+    public static ValueTask<Dictionary<string, MemoryStream>> ReadAllAsync(byte[] data, CancellationToken cancellationToken) => From(data).ExtractAsync(cancellationToken);
 
     public static ParallelZipArchive From(string file, Action<ProgressEventArgs>? progress = null) => new ParallelZipArchive(file, progress);
     public static ParallelZipArchive From(byte[] data, Action<ProgressEventArgs>? progress = null) => new ParallelZipArchive(data, progress);
@@ -49,15 +49,15 @@ public class ParallelZipArchive
         using var archive = new ZipArchive(fs, ZipArchiveMode.Read, true);
         return archive.Entries.Select(e => e.FullName).ToList();
     }
-    public Dictionary<string, MemoryStream> Extract() => Extract(GetEntries(), 1000, CancellationToken.None);
-    public MemoryStream Extract(string path) => Extract(new string[] { path }, 1000, CancellationToken.None)[path];
-    private Dictionary<string, MemoryStream> Extract(IEnumerable<string> entries, int maxFilesPerThread, CancellationToken cancellationToken)
+    public ValueTask<Dictionary<string, MemoryStream>> ExtractAsync(CancellationToken cancellationToken) => ExtractAsync(GetEntries(), 1000, cancellationToken);
+    public async ValueTask<MemoryStream> ExtractAsync(string path, CancellationToken cancellationToken) => (await ExtractAsync(new string[] { path }, 1000, cancellationToken))[path];
+    private async ValueTask<Dictionary<string, MemoryStream>> ExtractAsync(IEnumerable<string> entries, int maxFilesPerThread, CancellationToken cancellationToken)
     {
         var result = new ConcurrentDictionary<string, MemoryStream>();
         IEnumerable<IEnumerable<string>> batched = Chunk(entries, maxFilesPerThread);
         try
         {
-            Parallel.ForEach(batched, new ParallelOptions { CancellationToken = cancellationToken }, entry => ExtractSequentiall(entry, result, cancellationToken));
+            await Parallel.ForEachAsync(batched, cancellationToken, (entry, cancellationToken) => ExtractSequentiallAsync(entry, result, cancellationToken));
         }
         catch (OperationCanceledException)
         {
@@ -65,7 +65,7 @@ public class ParallelZipArchive
         }
         return new Dictionary<string, MemoryStream>(result);
     }
-    private void ExtractSequentiall(IEnumerable<string> entries, ConcurrentDictionary<string, MemoryStream> result, CancellationToken cancellationToken)
+    private async ValueTask ExtractSequentiallAsync(IEnumerable<string> entries, ConcurrentDictionary<string, MemoryStream> result, CancellationToken cancellationToken)
     {
         using Stream fs = GetStream();
         using var archive = new ZipArchive(fs, ZipArchiveMode.Read, true);
@@ -76,21 +76,21 @@ public class ParallelZipArchive
             if (entry.Name == "") continue;
             using Stream stream = entry.Open();
             MemoryStream memory = new MemoryStream();
-            stream.CopyTo(memory);
+            await stream.CopyToAsync(memory, cancellationToken);
             result[entryName] = memory;
         }
     }
-    public static void ToZip(Stream output, Dictionary<string, Stream> files)
+    public static async ValueTask ToZipAsync(Stream output, Dictionary<string, Stream> files, CancellationToken cancellationToken)
     {
         using var archive = new ZipArchive(output, ZipArchiveMode.Create, true);
         foreach (var file in files)
         {
             ZipArchiveEntry entry = archive.CreateEntry(file.Key);
             using Stream to = entry.Open();
-            file.Value.CopyTo(to);
+            await file.Value.CopyToAsync(to, cancellationToken);
         }
     }
-    public static void SetToZip(Stream archive, Dictionary<string, Stream> files)
+    public static async ValueTask SetToZipAsync(Stream archive, Dictionary<string, Stream> files, CancellationToken cancellationToken)
     {
         using var _archive = new ZipArchive(archive, ZipArchiveMode.Update, true);
         foreach (var file in files)
@@ -98,7 +98,7 @@ public class ParallelZipArchive
             ZipArchiveEntry entry = _archive.GetEntry(file.Key) ?? _archive.CreateEntry(file.Key);
             using Stream to = entry.Open();
             file.Value.Position = 0;
-            file.Value.CopyTo(to);
+            await file.Value.CopyToAsync(to, cancellationToken);
         }
     }
 }

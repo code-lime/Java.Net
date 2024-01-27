@@ -9,7 +9,7 @@ public sealed class SignatureAnnotation : IAnnotation<SignatureAnnotation>
     [JavaRaw] public ushort SignatureIndex { get; set; }
     public Utf8Constant Signature
     {
-        get => Handle.Constants[SignatureIndex] as Utf8Constant;
+        get => (Utf8Constant)Handle.Constants[SignatureIndex];
         set => SignatureIndex = Handle.OfConstant(value);
     }
 }
